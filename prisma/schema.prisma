@@ -1,0 +1,82 @@
+-- Create bookings table
+CREATE TABLE IF NOT EXISTS bookings (
+  id SERIAL PRIMARY KEY,
+  booking_id VARCHAR(50) UNIQUE NOT NULL,
+  
+  -- Payment information
+  payment_method VARCHAR(10) NOT NULL CHECK (payment_method IN ('card', 'cash')),
+  payment_status VARCHAR(20) NOT NULL CHECK (payment_status IN ('paid', 'pending', 'cancelled', 'refunded')),
+  stripe_session_id VARCHAR(255),
+  stripe_payment_intent_id VARCHAR(255),
+  
+  -- Customer details
+  customer_first_name VARCHAR(100) NOT NULL,
+  customer_last_name VARCHAR(100) NOT NULL,
+  customer_email VARCHAR(255) NOT NULL,
+  customer_phone VARCHAR(50) NOT NULL,
+  customer_country_code VARCHAR(10) NOT NULL,
+  
+  -- Booking details
+  service_type VARCHAR(20) NOT NULL,
+  pickup_address TEXT NOT NULL,
+  dropoff_address TEXT NOT NULL,
+  pickup_date DATE NOT NULL,
+  pickup_time TIME NOT NULL,
+  
+  -- Location metadata (optional but useful)
+  pickup_lat DECIMAL(10, 8),
+  pickup_lng DECIMAL(11, 8),
+  dropoff_lat DECIMAL(10, 8),
+  dropoff_lng DECIMAL(11, 8),
+  distance_km DECIMAL(10, 2),
+  duration_minutes INT,
+  
+  -- Vehicle and passengers
+  vehicle_name VARCHAR(100) NOT NULL,
+  vehicle_category VARCHAR(50) NOT NULL,
+  passengers_count INT NOT NULL,
+  luggage_count INT NOT NULL,
+  child_seats_count INT DEFAULT 0,
+  
+  -- Pricing breakdown
+  base_price DECIMAL(10, 2) NOT NULL,
+  distance_charge DECIMAL(10, 2) DEFAULT 0,
+  airport_fee DECIMAL(10, 2) DEFAULT 0,
+  child_seats_charge DECIMAL(10, 2) DEFAULT 0,
+  total_price DECIMAL(10, 2) NOT NULL,
+  currency VARCHAR(3) DEFAULT 'EUR',
+  
+  -- Optional fields
+  flight_number VARCHAR(20),
+  special_requests TEXT,
+  
+  -- Booking status and metadata
+  booking_status VARCHAR(20) DEFAULT 'confirmed' CHECK (booking_status IN ('confirmed', 'in_progress', 'completed', 'cancelled')),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create indexes for faster queries
+CREATE INDEX IF NOT EXISTS idx_booking_id ON bookings(booking_id);
+CREATE INDEX IF NOT EXISTS idx_customer_email ON bookings(customer_email);
+CREATE INDEX IF NOT EXISTS idx_pickup_date ON bookings(pickup_date);
+CREATE INDEX IF NOT EXISTS idx_payment_status ON bookings(payment_status);
+CREATE INDEX IF NOT EXISTS idx_booking_status ON bookings(booking_status);
+CREATE INDEX IF NOT EXISTS idx_stripe_session_id ON bookings(stripe_session_id);
+CREATE INDEX IF NOT EXISTS idx_created_at ON bookings(created_at);
+
+-- Create function to update updated_at timestamp automatically
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Create trigger to auto-update updated_at
+CREATE TRIGGER update_bookings_updated_at BEFORE UPDATE ON bookings
+FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Confirm table creation
+SELECT 'Bookings table created successfully!' AS status;

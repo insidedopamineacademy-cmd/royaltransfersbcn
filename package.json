@@ -1,0 +1,47 @@
+{
+  "name": "royaltransfers",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@googlemaps/js-api-loader": "^2.0.2",
+    "@hookform/resolvers": "^3.9.1",
+    "@prisma/client": "^7.3.0",
+    "@stripe/stripe-js": "^2.4.0",
+    "@vercel/postgres": "^0.10.0",
+    "autoprefixer": "^10.4.23",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.28.1",
+    "lucide-react": "^0.469.0",
+    "next": "16.1.4",
+    "next-intl": "^4.7.0",
+    "nodemailer": "^7.0.13",
+    "postcss": "^8.5.6",
+    "prisma": "^7.3.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-hook-form": "^7.53.2",
+    "react-hot-toast": "^2.4.1",
+    "stripe": "^14.25.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@stripe/stripe-js": "^8.6.4",
+    "@tailwindcss/postcss": "^4",
+    "@types/google.maps": "^3.54.10",
+    "@types/node": "^20",
+    "@types/nodemailer": "^7.0.9",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/stripe": "^8.0.417",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.4",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5"
+  }
+}
