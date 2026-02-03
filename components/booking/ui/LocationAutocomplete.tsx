@@ -75,10 +75,15 @@ export default function LocationAutocomplete({
   );
 
   // Debounced search
-  const debouncedSearch = useCallback(
-    debounce((query: string) => searchLocations(query), 300),
-    [searchLocations]
-  );
+  // Debounced search
+const debouncedSearch = useCallback(
+  debounce((query: unknown) => {
+    if (typeof query === 'string') {
+      searchLocations(query);
+    }
+  }, 300),
+  [searchLocations]
+);
 
   // ============================================================================
   // INPUT CHANGE HANDLER
