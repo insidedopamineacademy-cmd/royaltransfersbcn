@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
 
     // Get origin URL for redirect URLs
     // FIXED: Hardcoded for local testing
-    const origin = 'http://localhost:3000';
+    const origin = request.headers.get('origin') || request.headers.get('referer')?.split('/').slice(0, 3).join('/') || 'http://localhost:3000';
     console.log('🔗 Using origin for Stripe redirects:', origin);
 
     // Create Stripe Checkout Session
