@@ -101,11 +101,11 @@ const HeroBookingForm = memo(function HeroBookingForm() {
             </div>
           )}
 
-          {/* Compact Form Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3">
+          {/* Form Fields - All Stacked on Mobile */}
+          <div className="space-y-3">
             {/* Pickup Location */}
-            <div className="sm:col-span-2 md:col-span-2">
-              <label htmlFor="pickup-location" className="sr-only">
+            <div>
+              <label htmlFor="pickup-location" className="block text-xs font-medium text-gray-700 mb-1.5">
                 {t('fields.pickup.label')}
               </label>
               <LocationAutocomplete
@@ -118,8 +118,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
             </div>
 
             {/* Dropoff Location */}
-            <div className="sm:col-span-2 md:col-span-2">
-              <label htmlFor="dropoff-location" className="sr-only">
+            <div>
+              <label htmlFor="dropoff-location" className="block text-xs font-medium text-gray-700 mb-1.5">
                 {t('fields.dropoff.label')}
               </label>
               <LocationAutocomplete
@@ -131,81 +131,94 @@ const HeroBookingForm = memo(function HeroBookingForm() {
               />
             </div>
 
-            {/* Date */}
-            <div className="sm:col-span-1 md:col-span-1">
-              <label htmlFor="pickup-date" className="sr-only">
-                {t('fields.date.label')}
-              </label>
-              <input
-                id="pickup-date"
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                min={minDateString}
-                aria-label={t('fields.date.label')}
-                className="w-full px-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-              />
+            {/* Date & Time Row */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Date */}
+              <div>
+                <label htmlFor="pickup-date" className="block text-xs font-medium text-gray-700 mb-1.5">
+                  {t('fields.date.label')}
+                </label>
+                <div className="relative">
+                  <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
+                  <input
+                    id="pickup-date"
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    min={minDateString}
+                    aria-label={t('fields.date.label')}
+                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
+                    style={{ 
+                      WebkitAppearance: 'none',
+                      MozAppearance: 'textfield'
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Time */}
+              <div>
+                <label htmlFor="pickup-time" className="block text-xs font-medium text-gray-700 mb-1.5">
+                  {t('fields.time.label')}
+                </label>
+                <div className="relative">
+                  <ClockIconSmall className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
+                  <input
+                    id="pickup-time"
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    aria-label={t('fields.time.label')}
+                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
+                    style={{ 
+                      WebkitAppearance: 'none',
+                      MozAppearance: 'textfield'
+                    }}
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Time */}
-            <div className="sm:col-span-1 md:col-span-1">
-              <label htmlFor="pickup-time" className="sr-only">
-                {t('fields.time.label')}
-              </label>
-              <input
-                id="pickup-time"
-                type="time"
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                aria-label={t('fields.time.label')}
-                className="w-full px-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-              />
-            </div>
-          </div>
-
-          {/* Passengers & Search Button Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 mt-3">
             {/* Passengers */}
-            <div className="sm:col-span-2 md:col-span-2">
-              <label htmlFor="passengers" className="sr-only">
+            <div>
+              <label htmlFor="passengers" className="block text-xs font-medium text-gray-700 mb-1.5">
                 {t('fields.passengers.label')}
               </label>
-              <select
-                id="passengers"
-                value={passengers}
-                onChange={(e) => setPassengers(Number(e.target.value))}
-                aria-label={t('fields.passengers.label')}
-                className="w-full px-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
-              >
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-                  <option key={num} value={num}>
-                    {num} {t('fields.passengers.count', { count: num })}
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
+                <select
+                  id="passengers"
+                  value={passengers}
+                  onChange={(e) => setPassengers(Number(e.target.value))}
+                  aria-label={t('fields.passengers.label')}
+                  className="w-full pl-10 pr-10 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                    <option key={num} value={num}>
+                      {num} {t('fields.passengers.count', { count: num })}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+              </div>
             </div>
-
-            {/* Spacer (desktop only) */}
-            <div className="hidden md:block md:col-span-2" />
 
             {/* Search Button */}
-            <div className="sm:col-span-2 md:col-span-2">
-              <button
-                onClick={handleSearch}
-                disabled={!isValid}
-                aria-label={t('button.search')}
-                className={`w-full px-4 sm:px-6 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 shadow-lg active:scale-95 ${
-                  isValid
-                    ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-amber-500/25'
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                }`}
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <SearchIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span>{t('button.search')}</span>
-                </div>
-              </button>
-            </div>
+            <button
+              onClick={handleSearch}
+              disabled={!isValid}
+              aria-label={t('button.search')}
+              className={`w-full px-6 py-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg active:scale-95 ${
+                isValid
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-amber-500/25'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <SearchIcon className="w-5 h-5" />
+                <span>{t('button.search')}</span>
+              </div>
+            </button>
           </div>
         </div>
       </motion.div>
@@ -234,14 +247,14 @@ const ServiceTypeButton = memo(function ServiceTypeButton({
       role="tab"
       aria-selected={active}
       aria-label={label}
-      className={`flex-1 px-3 sm:px-4 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-all duration-200 ${
+      className={`flex-1 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
         active
           ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md'
           : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:scale-95'
       }`}
     >
-      <div className="flex items-center justify-center gap-1.5 sm:gap-2">
-        <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+      <div className="flex items-center justify-center gap-2">
+        <Icon className="w-4 h-4" />
         <span>{label}</span>
       </div>
     </button>
@@ -264,14 +277,14 @@ const TransferTypeButton = memo(function TransferTypeButton({
       onClick={onClick}
       aria-pressed={active}
       aria-label={label}
-      className={`px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border-2 font-semibold text-xs sm:text-sm transition-all duration-200 active:scale-95 ${
+      className={`px-4 py-3 rounded-xl border-2 font-semibold text-sm transition-all duration-200 active:scale-95 ${
         active
           ? 'border-blue-500 bg-blue-50 text-blue-700'
           : 'border-gray-200 text-gray-700 hover:border-gray-300'
       }`}
     >
-      <div className="flex items-center justify-center gap-1.5 sm:gap-2">
-        <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+      <div className="flex items-center justify-center gap-2">
+        <Icon className="w-4 h-4" />
         <span>{label}</span>
       </div>
     </button>
@@ -298,6 +311,30 @@ const ClockIcon = memo(function ClockIcon({ className }: { className?: string })
   );
 });
 
+const ClockIconSmall = memo(function ClockIconSmall({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  );
+});
+
+const CalendarIcon = memo(function CalendarIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  );
+});
+
+const UserIcon = memo(function UserIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+    </svg>
+  );
+});
+
 const SearchIcon = memo(function SearchIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -318,6 +355,14 @@ const ArrowsIcon = memo(function ArrowsIcon({ className }: { className?: string 
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+    </svg>
+  );
+});
+
+const ChevronDownIcon = memo(function ChevronDownIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
     </svg>
   );
 });
