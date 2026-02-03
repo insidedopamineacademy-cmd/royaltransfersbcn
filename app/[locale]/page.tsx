@@ -1,10 +1,9 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/lib/navigation';
-import { useEffect, useState } from 'react';
 import BookingWizard from '@/components/booking/BookingWizard';
 import { BookingProvider } from '@/lib/booking/context';
 
@@ -26,165 +25,103 @@ export default function HomePage() {
 }
 
 // ============================================================================
-// HERO SECTION
+// HERO SECTION - Optimized
 // ============================================================================
 function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 100]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section
       ref={ref}
-      className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+      className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
     >
-      {/* Animated background */}
-      <AnimatedBackground />
+      {/* Simplified background - no animations on mobile */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 -left-20 w-64 sm:w-96 h-64 sm:h-96 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-20 w-64 sm:w-96 h-64 sm:h-96 bg-amber-500/10 rounded-full blur-3xl" />
+      </div>
       
-      {/* Grid pattern overlay */}
+      {/* Lighter grid overlay */}
       <div 
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.015]"
         style={{
           backgroundImage: 'linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)',
           backgroundSize: '50px 50px'
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         <div className="max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, type: "spring", damping: 20 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
           >
             {/* Trust badges */}
-            <div className="flex flex-wrap gap-3 mb-8">
-              {['trustBadge1', 'trustBadge2', 'trustBadge3'].map((badge, index) => (
-                <motion.span
+            <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8">
+              {['trustBadge1', 'trustBadge2', 'trustBadge3'].map((badge) => (
+                <span
                   key={badge}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="px-4 py-1.5 text-sm font-medium bg-white/10 backdrop-blur-sm text-gray-300 rounded-full border border-white/10"
+                  className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-medium bg-white/10 backdrop-blur-sm text-gray-300 rounded-full border border-white/10"
                 >
                   {t(`hero.${badge}`)}
-                </motion.span>
+                </span>
               ))}
             </div>
 
-            {/* Main headline with floating animation */}
-            <motion.h1 
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight"
-              animate={isInView ? { y: [0, -10, 0] } : { y: 0 }}
-              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-            >
+            {/* Main headline - responsive sizing */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
               {t('hero.title')}{' '}
               <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
                 {t('hero.titleHighlight')}
               </span>
-            </motion.h1>
+            </h1>
 
             {/* Subtitle */}
-            <p className="text-lg sm:text-xl text-gray-400 mb-10 max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 max-w-2xl leading-relaxed">
               {t('hero.subtitle')}
             </p>
 
-            {/* CTA Buttons with hover effects */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <a
+                href="#booking"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-900 bg-gradient-to-r from-amber-400 to-amber-500 rounded-xl hover:from-amber-500 hover:to-amber-600 transition-all shadow-lg shadow-amber-500/25"
               >
-                <a
-                  href="#booking"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-gray-900 bg-gradient-to-r from-amber-400 to-amber-500 rounded-xl hover:from-amber-500 hover:to-amber-600 transition-all shadow-lg shadow-amber-500/25"
-                >
-                  {t('hero.bookNow')}
-                  <ArrowRightIcon className="w-5 h-5 ml-2" />
-                </a>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                {t('hero.bookNow')}
+                <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+              </a>
+              <Link
+                href="/fleet/standard"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all"
               >
-                <Link
-                  href="/fleet/standard"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all"
-                >
-                  {t('hero.viewFleet')}
-                </Link>
-              </motion.div>
+                {t('hero.viewFleet')}
+              </Link>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
-        >
+      {/* Scroll indicator - hidden on mobile */}
+      {!prefersReducedMotion && (
+        <div className="hidden sm:block absolute bottom-8 left-1/2 transform -translate-x-1/2">
           <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="w-1 h-3 bg-white/50 rounded-full mt-2"
-          />
-        </motion.div>
-      </motion.div>
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
+          >
+            <div className="w-1 h-3 bg-white/50 rounded-full mt-2" />
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }
 
-// GPU-friendly animated background
-function AnimatedBackground() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100
-      });
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      <motion.div
-        className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
-        animate={{
-          x: mousePosition.x * 0.5 - 25,
-          y: mousePosition.y * 0.5 - 25,
-        }}
-        transition={{ type: "spring", damping: 20, stiffness: 100 }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 -right-20 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"
-        animate={{
-          x: -mousePosition.x * 0.3 + 25,
-          y: -mousePosition.y * 0.3 + 25,
-        }}
-        transition={{ type: "spring", damping: 20, stiffness: 100 }}
-      />
-    </div>
-  );
-}
-
 // ============================================================================
-// BOOKING SECTION - Integrated Wizard
+// BOOKING SECTION - Optimized
 // ============================================================================
 function BookingSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
@@ -194,12 +131,12 @@ function BookingSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }
     <section 
       id="booking"
       ref={ref} 
-      className="py-20 lg:py-28 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden"
+      className="py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden"
     >
-      {/* Decorative background elements */}
+      {/* Decorative elements - simplified */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
+        <div className="absolute -top-24 -right-24 w-64 sm:w-96 h-64 sm:h-96 bg-blue-500/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 w-64 sm:w-96 h-64 sm:h-96 bg-cyan-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,41 +144,32 @@ function BookingSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-8 sm:mb-12"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={isInView ? { scale: 1 } : { scale: 0 }}
-            transition={{ duration: 0.5, type: "spring" }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full mb-6"
-          >
-            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-blue-600">
-              {/* Updated: Use translation key */}
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full mb-4 sm:mb-6">
+            <span className="w-2 h-2 bg-blue-500 rounded-full" />
+            <span className="text-xs sm:text-sm font-semibold text-blue-600">
               {t('hero.bookingSteps.title')}
             </span>
-          </motion.div>
+          </div>
           
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            {/* Updated: Use translation key */}
-            {t('hero.bookingSteps.subtitle')}
-            {' '}
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            {t('hero.bookingSteps.subtitle')}{' '}
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               Journey
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {/* Updated: Use translation key */}
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
             {t('hero.bookingSteps.description')}
           </p>
         </motion.div>
 
         {/* Booking Wizard */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
         >
           <BookingProvider>
             <BookingWizard />
@@ -252,24 +180,23 @@ function BookingSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600"
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-8 sm:mt-12 grid grid-cols-2 lg:flex lg:flex-wrap items-center justify-center gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-sm text-gray-600"
         >
           <div className="flex items-center gap-2">
-            <CheckCircleIcon className="w-5 h-5 text-emerald-500" />
-            {/* Updated: Use translation keys */}
+            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500 flex-shrink-0" />
             <span>{t('hero.features.freeCancellation')}</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircleIcon className="w-5 h-5 text-emerald-500" />
+            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500 flex-shrink-0" />
             <span>{t('hero.features.instantConfirmation')}</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircleIcon className="w-5 h-5 text-emerald-500" />
+            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500 flex-shrink-0" />
             <span>{t('hero.features.bestPriceGuarantee')}</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircleIcon className="w-5 h-5 text-emerald-500" />
+            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500 flex-shrink-0" />
             <span>{t('hero.features.support24')}</span>
           </div>
         </motion.div>
@@ -277,12 +204,13 @@ function BookingSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }
     </section>
   );
 }
+
 // ============================================================================
-// SERVICES SECTION - Optimized with minimal cards
+// SERVICES SECTION - Optimized
 // ============================================================================
 function ServicesSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   const services = [
     { key: 'airportTaxi', href: '/services/airport-taxi', icon: PlaneIcon, color: 'from-blue-500 to-cyan-400' },
@@ -292,65 +220,52 @@ function ServicesSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> 
   ];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-white">
+    <section ref={ref} className="py-12 sm:py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, type: "spring" }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10 sm:mb-14"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
             {t('services.title')}{' '}
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               {t('services.titleHighlight')}
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto px-4">
             {t('services.subtitle')}
           </p>
         </motion.div>
 
-        {/* Services grid - Optimized for mobile */}
+        {/* Services grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {services.map((service, index) => (
             <motion.div
               key={service.key}
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
-              transition={{ duration: 0.4, delay: 0.1 + index * 0.1, type: "spring" }}
-              whileHover={{ y: -5 }}
-              className="group relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="group"
             >
-              {/* Animated border on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md" />
-              
               <Link
                 href={service.href}
-                className="relative block h-full p-6 bg-gray-50 rounded-2xl border border-gray-100 hover:border-transparent transition-all"
+                className="block h-full p-5 sm:p-6 bg-gray-50 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all"
               >
-                <motion.div
-                  className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} text-white mb-6`}
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <service.icon className="w-7 h-7" />
-                </motion.div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                <div className={`inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4 sm:mb-6`}>
+                  <service.icon className="w-6 h-6 sm:w-7 sm:h-7" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-blue-600 transition-colors">
                   {t(`services.${service.key}.title`)}
                 </h3>
-                <p className="text-gray-600 mb-4 leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed">
                   {t(`services.${service.key}.description`)}
                 </p>
-                <span className="inline-flex items-center text-sm font-semibold text-blue-600">
+                <span className="inline-flex items-center text-xs sm:text-sm font-semibold text-blue-600">
                   {t('services.learnMore')}
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                  >
-                    <ArrowRightIcon className="w-4 h-4 ml-1" />
-                  </motion.div>
+                  <ArrowRightIcon className="w-3 h-3 sm:w-4 sm:h-4 ml-1" />
                 </span>
               </Link>
             </motion.div>
@@ -362,11 +277,11 @@ function ServicesSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> 
 }
 
 // ============================================================================
-// HOW IT WORKS SECTION - Simplified animations
+// HOW IT WORKS SECTION - Optimized
 // ============================================================================
 function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   const steps = [
     { key: 'step1', icon: CalendarIcon, color: 'from-blue-500 to-cyan-400', bgColor: 'bg-blue-50' },
@@ -375,62 +290,51 @@ function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'home'>
   ];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-gradient-to-b from-gray-50 to-white">
+    <section ref={ref} className="py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10 sm:mb-14"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
             {t('howItWorks.title')}{' '}
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               {t('howItWorks.titleHighlight')}
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto px-4">
             {t('howItWorks.subtitle')}
           </p>
         </motion.div>
 
-        {/* Steps with minimal animations */}
+        {/* Steps */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {steps.map((step, index) => (
             <motion.div
               key={step.key}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4, delay: index * 0.2 }}
-              whileHover={{ scale: 1.02 }}
-              className="relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
             >
-              {/* Animated step number */}
-              <div className="flex justify-center mb-6">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={isInView ? { scale: 1 } : { scale: 0 }}
-                  transition={{ delay: 0.5 + index * 0.2, type: "spring" }}
-                  className={`relative z-10 w-16 h-16 rounded-full bg-gradient-to-br ${step.color} text-white flex items-center justify-center text-2xl font-bold shadow-lg`}
-                >
+              {/* Step number */}
+              <div className="flex justify-center mb-4 sm:mb-6">
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br ${step.color} text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-lg`}>
                   {index + 1}
-                </motion.div>
+                </div>
               </div>
 
               {/* Card */}
-              <div className={`${step.bgColor} rounded-2xl p-6 md:p-8 text-center border border-gray-100 hover:shadow-lg transition-shadow`}>
-                <motion.div
-                  className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${step.color} text-white mb-5`}
-                  animate={isInView ? { rotate: 360 } : { rotate: 0 }}
-                  transition={{ delay: 0.8 + index * 0.2, duration: 0.6 }}
-                >
-                  <step.icon className="w-6 h-6" />
-                </motion.div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+              <div className={`${step.bgColor} rounded-2xl p-6 md:p-8 text-center border border-gray-100`}>
+                <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${step.color} text-white mb-4 sm:mb-5`}>
+                  <step.icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   {t(`howItWorks.${step.key}.title`)}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                   {t(`howItWorks.${step.key}.description`)}
                 </p>
               </div>
@@ -443,11 +347,11 @@ function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'home'>
 }
 
 // ============================================================================
-// FLEET SECTION - Optimized with hover cards
+// FLEET SECTION - Optimized
 // ============================================================================
 function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   const vehicles = [
     { key: 'standard', href: '/fleet/standard', passengers: 3, luggage: 2, price: '€35' },
@@ -457,85 +361,70 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) 
   ];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-white">
+    <section ref={ref} className="py-12 sm:py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10 sm:mb-14"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
             {t('fleet.title')}{' '}
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               {t('fleet.titleHighlight')}
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto px-4">
             {t('fleet.subtitle')}
           </p>
         </motion.div>
 
-        {/* Fleet grid with staggered animation */}
+        {/* Fleet grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {vehicles.map((vehicle, index) => (
             <motion.div
               key={vehicle.key}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.5, delay: index * 0.1, type: "spring" }}
-              whileHover={{ scale: 1.03 }}
-              className="group"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
             >
               <Link
                 href={vehicle.href}
                 className="block h-full bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-300 hover:shadow-xl transition-all"
               >
-                {/* Image placeholder with animation */}
-                <motion.div 
-                  className="aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.div
-                    animate={{ x: [0, 10, 0] }}
-                    transition={{ repeat: Infinity, duration: 3 }}
-                  >
-                    <CarIcon className="w-16 h-16 text-gray-400" />
-                  </motion.div>
-                </motion.div>
+                {/* Image placeholder */}
+                <div className="aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                  <CarIcon className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400" />
+                </div>
 
                 <div className="p-4 md:p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                     {t(`fleet.${vehicle.key}.title`)}
                   </h3>
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                  <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 line-clamp-2">
                     {t(`fleet.${vehicle.key}.description`)}
                   </p>
 
                   {/* Specs */}
-                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                  <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
                     <span className="flex items-center gap-1">
-                      <UserIcon className="w-4 h-4" />
-                      {vehicle.passengers} {t('fleet.passengers')}
+                      <UserIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      {vehicle.passengers}
                     </span>
                     <span className="flex items-center gap-1">
-                      <BriefcaseIcon className="w-4 h-4" />
-                      {vehicle.luggage} {t('fleet.luggage')}
+                      <BriefcaseIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      {vehicle.luggage}
                     </span>
                   </div>
 
-                  {/* Price with pulse animation */}
+                  {/* Price */}
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">{t('fleet.from')}</span>
-                    <motion.span
-                      className="text-xl font-bold text-blue-600"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ repeat: Infinity, duration: 2, delay: index * 0.2 }}
-                    >
+                    <span className="text-xs sm:text-sm text-gray-500">{t('fleet.from')}</span>
+                    <span className="text-lg sm:text-xl font-bold text-blue-600">
                       {vehicle.price}
-                    </motion.span>
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -548,11 +437,11 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) 
 }
 
 // ============================================================================
-// WHY CHOOSE US SECTION - Minimal animations
+// WHY CHOOSE US SECTION - Optimized
 // ============================================================================
 function WhyChooseUsSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   const features = [
     { key: 'feature1', icon: UserCheckIcon },
@@ -564,48 +453,43 @@ function WhyChooseUsSection({ t }: { t: ReturnType<typeof useTranslations<'home'
   ];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <section ref={ref} className="py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10 sm:mb-14"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
             {t('whyChooseUs.title')}{' '}
             <span className="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
               {t('whyChooseUs.titleHighlight')}
             </span>
           </h2>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto px-4">
             {t('whyChooseUs.subtitle')}
           </p>
         </motion.div>
 
-        {/* Features grid with minimal animations */}
+        {/* Features grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={feature.key}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="p-4 md:p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-amber-500/30 transition-all"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="p-5 sm:p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-amber-500/30 transition-all"
             >
-              <motion.div
-                className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 text-gray-900 mb-5"
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-              >
-                <feature.icon className="w-6 h-6" />
-              </motion.div>
-              <h3 className="text-lg font-bold text-white mb-2">
+              <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 text-gray-900 mb-4 sm:mb-5">
+                <feature.icon className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-white mb-2">
                 {t(`whyChooseUs.${feature.key}.title`)}
               </h3>
-              <p className="text-gray-400 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
                 {t(`whyChooseUs.${feature.key}.description`)}
               </p>
             </motion.div>
@@ -617,31 +501,31 @@ function WhyChooseUsSection({ t }: { t: ReturnType<typeof useTranslations<'home'
 }
 
 // ============================================================================
-// TESTIMONIALS SECTION - Optimized animations
+// TESTIMONIALS SECTION - Optimized
 // ============================================================================
 function TestimonialsSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   const reviews = ['review1', 'review2', 'review3'];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-gray-50">
+    <section ref={ref} className="py-12 sm:py-16 lg:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10 sm:mb-14"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
             {t('testimonials.title')}{' '}
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               {t('testimonials.titleHighlight')}
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto px-4">
             {t('testimonials.subtitle')}
           </p>
         </motion.div>
@@ -651,51 +535,33 @@ function TestimonialsSection({ t }: { t: ReturnType<typeof useTranslations<'home
           {reviews.map((review, index) => (
             <motion.div
               key={review}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.4, delay: index * 0.15 }}
-              whileHover={{ scale: 1.02 }}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="bg-white rounded-2xl p-5 sm:p-6 shadow-lg border border-gray-100"
             >
-              {/* Animated stars */}
-              <div className="flex gap-1 mb-4">
+              {/* Stars */}
+              <div className="flex gap-1 mb-3 sm:mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.5 + i * 0.1 }}
-                  >
-                    <StarIcon className="w-5 h-5 text-amber-400 fill-amber-400" />
-                  </motion.div>
+                  <StarIcon key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 fill-amber-400" />
                 ))}
               </div>
 
-              {/* Quote with typing animation */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-                className="text-gray-700 mb-6 leading-relaxed"
-              >
+              {/* Quote */}
+              <p className="text-sm sm:text-base text-gray-700 mb-5 sm:mb-6 leading-relaxed">
                 &ldquo;{t(`testimonials.${review}.text`)}&rdquo;
-              </motion.p>
+              </p>
 
               {/* Author */}
               <div className="flex items-center gap-3">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 1, type: "spring" }}
-                  className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold"
-                >
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-sm sm:text-base">
                   {t(`testimonials.${review}.name`).charAt(0)}
-                </motion.div>
+                </div>
                 <div>
-                  <p className="font-semibold text-gray-900">
+                  <p className="font-semibold text-gray-900 text-sm sm:text-base">
                     {t(`testimonials.${review}.name`)}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs sm:text-sm text-gray-500">
                     {t(`testimonials.${review}.location`)}
                   </p>
                 </div>
@@ -709,91 +575,52 @@ function TestimonialsSection({ t }: { t: ReturnType<typeof useTranslations<'home
 }
 
 // ============================================================================
-// CTA SECTION - Eye-catching animation
+// CTA SECTION - Optimized
 // ============================================================================
 function CTASection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-white">
+    <section ref={ref} className="py-12 sm:py-16 lg:py-24 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.6, type: "spring" }}
-          className="relative overflow-hidden rounded-3xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-600 via-blue-700 to-cyan-600"
         >
-          {/* Animated background */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-cyan-600"
-            animate={{
-              backgroundPosition: ['0% 0%', '100% 100%'],
-            }}
-            transition={{
-              repeat: Infinity,
-              repeatType: "mirror",
-              duration: 10,
-            }}
-            style={{
-              backgroundSize: '200% 200%',
-            }}
-          />
+          {/* Simplified shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           
-          {/* Shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-          
-          <div className="relative p-10 lg:p-16">
-            <motion.h2
-              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-center"
-              animate={isInView ? { y: [0, -10, 0] } : { y: 0 }}
-              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-            >
+          <div className="relative p-8 sm:p-10 lg:p-16">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 text-center">
               {t('cta.title')}
-            </motion.h2>
+            </h2>
             
-            <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto text-center">
+            <p className="text-base sm:text-lg text-blue-100 mb-6 sm:mb-8 max-w-2xl mx-auto text-center">
               {t('cta.subtitle')}
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+              <a
+                href="#booking"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-blue-700 bg-white rounded-xl hover:bg-gray-100 transition-colors shadow-lg"
               >
-                <a
-                  href="#booking"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-blue-700 bg-white rounded-xl hover:bg-gray-100 transition-colors shadow-lg"
-                >
-                  {t('cta.bookNow')}
-                  <motion.span
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                  >
-                    <ArrowRightIcon className="w-5 h-5 ml-2" />
-                  </motion.span>
-                </a>
-              </motion.div>
+                {t('cta.bookNow')}
+                <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+              </a>
               
-              <motion.span
-                className="text-blue-200"
-                animate={{ opacity: [1, 0.5, 1] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-              >
+              <span className="text-blue-200 text-sm hidden sm:inline">
                 {t('cta.or')}
-              </motion.span>
+              </span>
               
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <Link
+                href="/contact"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-colors"
               >
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-colors"
-                >
-                  {t('cta.contactUs')}
-                </Link>
-              </motion.div>
+                {t('cta.contactUs')}
+              </Link>
             </div>
           </div>
         </motion.div>

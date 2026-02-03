@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@prisma/engines'
+  - '@swc/core'
+  - bufferutil
+  - prisma
+  - sharp
+  - unrs-resolver
