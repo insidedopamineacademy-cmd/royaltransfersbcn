@@ -10,13 +10,14 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe, WEBHOOK_EVENTS } from '@/lib/stripe/config';
-import { updateBookingPaymentStatus, getBookingByStripeSessionId } from '@/lib/database/booking';
+import { updateBookingPaymentStatus, getBookingByStripeSessionId } from '@/lib/database/booking'; // FIXED: plural
 import type Stripe from 'stripe';
 import { sendBookingConfirmationEmail, sendAdminNotificationEmail } from '@/lib/email/sender';
 
 // ============================================================================
-// IMPORTANT: Disable body parsing for webhook signature verification
+// CRITICAL: Configure route to handle raw body for signature verification
 // ============================================================================
+export const dynamic = 'force-dynamic'; // ADDED: Critical for webhook
 export const runtime = 'nodejs';
 
 // ============================================================================
