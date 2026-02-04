@@ -9,7 +9,7 @@
 import { useEffect } from 'react';
 import { BookingProvider, useBooking } from '@/lib/booking/context';
 import BookingStepsWizard from '@/components/booking/BookingStepsWizard';
-import type { ServiceType, Location } from '@/lib/booking/types';
+import type { ServiceType, Location, TransferType } from '@/lib/booking/types';
 
 function BookingPageContent() {
   const { updateBookingData, goToStep } = useBooking();
@@ -25,7 +25,7 @@ function BookingPageContent() {
         // Build the complete booking data object with proper typing
         interface BookingUpdate {
           serviceType?: ServiceType | null;
-          transferType?: string;
+          transferType?: TransferType;
           pickup?: Location;
           dropoff?: Location;
           dateTime?: {
@@ -47,10 +47,13 @@ function BookingPageContent() {
           console.log('  ✓ Service type:', parsed.serviceType);
         }
         
-        // Transfer type for distance-based bookings
+        // Transfer type for distance-based bookings (with validation)
         if (parsed.transferType) {
-          bookingUpdate.transferType = parsed.transferType;
-          console.log('  ✓ Transfer type:', parsed.transferType);
+          // Validate that it's actually 'oneWay' or 'return'
+          if (parsed.transferType === 'oneWay' || parsed.transferType === 'return') {
+            bookingUpdate.transferType = parsed.transferType as TransferType;
+            console.log('  ✓ Transfer type:', parsed.transferType);
+          }
         }
         
         // Pickup location (required)
@@ -65,7 +68,7 @@ function BookingPageContent() {
           console.log('  ✓ Pickup:', bookingUpdate.pickup.address);
         }
         
-        // Dropoff location (required)
+        // Dropoff location (optional for hourly bookings)
         if (parsed.dropoff) {
           bookingUpdate.dropoff = {
             address: parsed.dropoff.address || '',
