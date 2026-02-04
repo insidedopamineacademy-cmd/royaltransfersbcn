@@ -203,18 +203,42 @@ export const VEHICLES: Vehicle[] = [
 
 export const PRICING_RULES: PricingRules = {
   baseRates: {
+    // Step 2 vehicle categories (current)
+    'standard-sedan': 35,
+    'premium-sedan': 55,
+    'standard-minivan-7': 75,
+    'executive-minivan': 95,
+    'standard-minivan-8': 85,
+    
+    // Legacy categories (for backwards compatibility)
     'standard': 33,
     'luxury-sedan': 55,
     '8-seater-van': 73,
     'luxury-van': 95,
   },
   perKmRate: {
+    // Step 2 vehicle categories (current)
+    'standard-sedan': 1.2,
+    'premium-sedan': 1.5,
+    'standard-minivan-7': 1.8,
+    'executive-minivan': 2.0,
+    'standard-minivan-8': 1.9,
+    
+    // Legacy categories (for backwards compatibility)
     'standard': 1.0,
     'luxury-sedan': 1.8,
     '8-seater-van': 1.4,
     'luxury-van': 2.0,
   },
   perHourRate: {
+    // Step 2 vehicle categories (current)
+    'standard-sedan': 45,
+    'premium-sedan': 60,
+    'standard-minivan-7': 75,
+    'executive-minivan': 90,
+    'standard-minivan-8': 80,
+    
+    // Legacy categories (for backwards compatibility)
     'standard': 40,
     'luxury-sedan': 70,
     '8-seater-van': 82,
