@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
-import { motion, AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion';
+import { m, AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useBooking } from '@/lib/booking/context';
 import LocationAutocomplete from '../ui/LocationAutocomplete';
@@ -16,8 +16,24 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   const { bookingData, updateBookingData } = useBooking();
   const prefersReducedMotion = useReducedMotion();
   
-  const [serviceCategory, setServiceCategory] = useState<ServiceCategory>('distance');
-  const [transferType, setTransferType] = useState<TransferType>('oneWay');
+  // Initialize state from bookingData (preserves homepage selections)
+  const [serviceCategory, setServiceCategory] = useState<ServiceCategory>(() => {
+    // Check if coming from homepage with serviceType set
+    if (bookingData.serviceType === 'airport' || bookingData.serviceType === 'cityToCity') {
+      return 'distance';
+    } else if (bookingData.serviceType === 'hourly') {
+      return 'hourly';
+    }
+    // Default
+    return 'distance';
+  });
+  
+  const [transferType, setTransferType] = useState<TransferType>(() => {
+    // Preserve transfer type from homepage
+    const bookingDataWithTransfer = bookingData as { transferType?: string };
+    return bookingDataWithTransfer.transferType === 'return' ? 'return' : 'oneWay';
+  });
+  
   const [duration, setDuration] = useState<number>(3);
   const [isCalculating, setIsCalculating] = useState(false);
   const [distanceInfo, setDistanceInfo] = useState<{
@@ -29,24 +45,34 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   const minDate = getMinBookableDate();
   const minDateString = minDate.toISOString().split('T')[0];
 
-  // Memoized time options for performance
+  // Memoized time options in 12-hour AM/PM format
   const timeOptions = useMemo(() => 
     Array.from({ length: 48 }, (_, i) => {
-      const hour = Math.floor(i / 2);
+      const hour24 = Math.floor(i / 2);
       const minute = i % 2 === 0 ? '00' : '30';
-      return `${hour.toString().padStart(2, '0')}:${minute}`;
+      
+      // Convert to 12-hour format with AM/PM
+      let hour12 = hour24 % 12;
+      if (hour12 === 0) hour12 = 12;
+      const ampm = hour24 < 12 ? 'AM' : 'PM';
+      const display = `${hour12}:${minute} ${ampm}`;
+      const value24 = `${hour24.toString().padStart(2, '0')}:${minute}`;
+      
+      return { display, value: value24 };
     }), []
   );
 
   // Memoized duration options
-  const durationOptions = useMemo(() => [1,2,3, 4, 5, 6, 7, 8, 9, 10, 11, 12], []);
+  const durationOptions = useMemo(() => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], []);
 
   // Memoized passenger options
   const passengerOptions = useMemo(() => Array.from({ length: 8 }, (_, i) => i + 1), []);
 
-  // Debounced distance calculation
+  // Debounced distance calculation - Only for distance-based bookings
   const calculateDistance = useCallback(async () => {
+    // Only calculate distance for distance-based bookings
     if (
+      serviceCategory === 'distance' &&
       bookingData.pickup.placeId &&
       bookingData.dropoff.placeId &&
       bookingData.pickup.placeId !== bookingData.dropoff.placeId
@@ -76,24 +102,36 @@ const RideDetailsStep = memo(function RideDetailsStep() {
         setIsCalculating(false);
       }
     }
-  }, [bookingData.pickup.placeId, bookingData.dropoff.placeId, updateBookingData]);
+  }, [serviceCategory, bookingData.pickup.placeId, bookingData.dropoff.placeId, updateBookingData]);
 
   useEffect(() => {
     calculateDistance();
   }, [calculateDistance]);
 
-  // Update service type
+  // Update service type when category changes
   useEffect(() => {
+    const mappedServiceType = serviceCategory === 'distance' ? 'airport' : 'hourly';
+    console.log('🔄 Service category changed:', serviceCategory, '→', mappedServiceType);
     updateBookingData({
-      serviceType: serviceCategory === 'distance' ? 'airport' : 'hourly',
+      serviceType: mappedServiceType,
     });
   }, [serviceCategory, updateBookingData]);
 
+  // Update transfer type in booking data
+  useEffect(() => {
+    console.log('🔄 Transfer type changed:', transferType);
+    updateBookingData({
+      transferType: transferType,
+    } as Partial<typeof bookingData & { transferType: string }>);
+  }, [transferType, updateBookingData]);
+
   const handleServiceCategoryChange = useCallback((category: ServiceCategory) => {
+    console.log('👆 User clicked service tab:', category);
     setServiceCategory(category);
   }, []);
 
   const handleTransferTypeChange = useCallback((type: TransferType) => {
+    console.log('👆 User clicked transfer type:', type);
     setTransferType(type);
   }, []);
 
@@ -138,7 +176,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
 
         {/* Form Content */}
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={serviceCategory}
             initial={!prefersReducedMotion ? { opacity: 0, x: 20 } : { opacity: 1 }}
             animate={{ opacity: 1, x: 0 }}
@@ -182,7 +220,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                 </div>
               </div>
 
-              {/* Pickup Time */}
+              {/* Pickup Time - 12-hour AM/PM format */}
               <div>
                 <label 
                   htmlFor="pickup-time"
@@ -207,8 +245,8 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                   >
                     <option value="">{t('fields.time.placeholder')}</option>
                     {timeOptions.map((time) => (
-                      <option key={time} value={time}>
-                        {time}
+                      <option key={time.value} value={time.value}>
+                        {time.display}
                       </option>
                     ))}
                   </select>
@@ -221,6 +259,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
 
             {/* Locations */}
             <div className="space-y-3 sm:space-y-4">
+              {/* Pickup Location - Always visible */}
               <LocationAutocomplete
                 value={bookingData.pickup.address}
                 onChange={(location) => updateBookingData({ pickup: location })}
@@ -229,13 +268,17 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                 type="pickup"
               />
 
-              <LocationAutocomplete
-                value={bookingData.dropoff.address}
-                onChange={(location) => updateBookingData({ dropoff: location })}
-                placeholder={t('fields.dropoff.placeholder')}
-                label={t('fields.dropoff.label')}
-                type="dropoff"
-              />
+              {/* Dropoff Location - Only for Distance-Based Bookings */}
+              {serviceCategory === 'distance' && (
+                <LocationAutocomplete
+                  value={bookingData.dropoff.address}
+                  onChange={(location) => updateBookingData({ dropoff: location })}
+                  placeholder={t('fields.dropoff.placeholder')}
+                  label={t('fields.dropoff.label')}
+                  type="dropoff"
+                  pickupLocation={bookingData.pickup}
+                />
+              )}
             </div>
 
             {/* Distance-Based: Transfer Type */}
@@ -341,7 +384,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
 
             {/* Distance Info */}
             {distanceInfo && !isCalculating && serviceCategory === 'distance' && (
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
@@ -365,7 +408,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                     </p>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* Calculating Indicator */}
@@ -377,7 +420,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                 </div>
               </div>
             )}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
     </LazyMotion>

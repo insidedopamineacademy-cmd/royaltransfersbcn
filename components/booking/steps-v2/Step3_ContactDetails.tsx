@@ -8,19 +8,29 @@
  * - i18n ready
  */
 
-import React, { useState, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useCallback, useEffect } from 'react';
+import { m } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useBooking } from '@/lib/booking/context';
 import { formatPrice } from '@/lib/booking/utils';
 import { COUNTRY_CODES } from '@/lib/booking/constants';
-
-type PaymentMethod = 'cash' | 'card';
+import type { PaymentMethod } from '@/lib/booking/types';
 
 export default function ContactDetailsStep() {
   const t = useTranslations('step3');
   const { bookingData, updateBookingData } = useBooking();
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cash');
+  
+  // Initialize payment method from booking data or default to 'cash'
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(() => {
+    return bookingData.paymentMethod || 'cash';
+  });
+
+  // Save payment method to booking context whenever it changes
+  useEffect(() => {
+    updateBookingData({
+      paymentMethod,
+    });
+  }, [paymentMethod, updateBookingData]);
 
   const handleInputChange = useCallback((field: string, value: string) => {
     updateBookingData({
@@ -30,6 +40,10 @@ export default function ContactDetailsStep() {
       },
     });
   }, [bookingData.passengerDetails, updateBookingData]);
+
+  const handlePaymentMethodChange = useCallback((method: PaymentMethod) => {
+    setPaymentMethod(method);
+  }, []);
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -201,7 +215,7 @@ export default function ContactDetailsStep() {
             >
               {/* Cash */}
               <button
-                onClick={() => setPaymentMethod('cash')}
+                onClick={() => handlePaymentMethodChange('cash')}
                 role="radio"
                 aria-checked={paymentMethod === 'cash'}
                 aria-label={t('payment.cash.aria')}
@@ -216,7 +230,7 @@ export default function ContactDetailsStep() {
                     paymentMethod === 'cash' ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
                   }`}>
                     {paymentMethod === 'cash' && (
-                      <motion.div
+                      <m.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full"
@@ -235,7 +249,7 @@ export default function ContactDetailsStep() {
 
               {/* Card */}
               <button
-                onClick={() => setPaymentMethod('card')}
+                onClick={() => handlePaymentMethodChange('card')}
                 role="radio"
                 aria-checked={paymentMethod === 'card'}
                 aria-label={t('payment.card.aria')}
@@ -250,7 +264,7 @@ export default function ContactDetailsStep() {
                     paymentMethod === 'card' ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
                   }`}>
                     {paymentMethod === 'card' && (
-                      <motion.div
+                      <m.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full"
@@ -269,7 +283,7 @@ export default function ContactDetailsStep() {
             </div>
 
             {paymentMethod === 'card' && (
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 className="mt-3 sm:mt-4 p-3 sm:p-4 bg-blue-50 rounded-xl border border-blue-100"
@@ -278,7 +292,7 @@ export default function ContactDetailsStep() {
                 <p className="text-xs sm:text-sm text-blue-900">
                   <strong>{t('payment.card.note.title')}:</strong> {t('payment.card.note.description')}
                 </p>
-              </motion.div>
+              </m.div>
             )}
           </section>
         </div>
@@ -296,13 +310,18 @@ export default function ContactDetailsStep() {
             <div className="space-y-3 sm:space-y-4">
               <SummaryItem label={t('summary.service')} value={bookingData.serviceType === 'hourly' ? t('summary.hourly') : t('summary.distance')} />
               <SummaryItem label={t('summary.from')} value={bookingData.pickup.address || t('summary.notSet')} />
-              <SummaryItem label={t('summary.to')} value={bookingData.dropoff.address || t('summary.notSet')} />
+              
+              {/* Only show dropoff for distance-based bookings */}
+              {bookingData.serviceType !== 'hourly' && (
+                <SummaryItem label={t('summary.to')} value={bookingData.dropoff.address || t('summary.notSet')} />
+              )}
+              
               <SummaryItem 
                 label={t('summary.dateTime')} 
                 value={`${bookingData.dateTime.date} ${t('summary.at')} ${bookingData.dateTime.time}`} 
               />
               
-              {bookingData.distance && (
+              {bookingData.distance && bookingData.serviceType !== 'hourly' && (
                 <SummaryItem label={t('summary.distance')} value={`${bookingData.distance.toFixed(1)} km`} />
               )}
               

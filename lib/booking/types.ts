@@ -73,7 +73,7 @@ export interface ChildSeat {
 // VEHICLE TYPES
 // ============================================================================
 
-export type VehicleCategory = 'standard' | 'luxury-sedan' | '8-seater-van' | 'luxury-van';
+export type VehicleCategory = 'standard-sedan' | 'premium-sedan' | 'standard-minivan-7' | 'executive-minivan' | 'standard-minivan-8' | 'standard' | 'luxury-sedan' | '8-seater-van' | 'luxury-van';
 
 export interface Vehicle {
   id: string;
@@ -159,32 +159,64 @@ export interface PricingRules {
 }
 
 // ============================================================================
+// PAYMENT TYPES
+// ============================================================================
+
+// Simple payment method selection (cash or card)
+export type PaymentMethod = 'cash' | 'card';
+
+// Transfer type for distance-based bookings
+export type TransferType = 'oneWay' | 'return';
+
+// Detailed payment information (for Stripe integration)
+export interface PaymentIntent {
+  id: string;
+  amount: number;
+  currency: string;
+  status: 'pending' | 'processing' | 'succeeded' | 'failed' | 'canceled';
+  clientSecret?: string;
+}
+
+export interface PaymentMethodDetails {
+  type: 'card' | 'paypal' | 'bank_transfer';
+  last4?: string;
+  brand?: string;
+}
+
+export interface PaymentDetails {
+  paymentIntent: PaymentIntent;
+  paymentMethod: PaymentMethodDetails;
+}
+
+// ============================================================================
 // BOOKING DATA TYPES
 // ============================================================================
 
 export interface BookingData {
-  // Step 1: Service Type
+  // Step 1: Service Type & Ride Details
   serviceType: ServiceType | null;
+  transferType?: TransferType; // Only for distance-based bookings
 
-  // Step 2: Locations
+  // Step 1: Locations
   pickup: Location;
   dropoff: Location;
   distance?: number; // in kilometers
   duration?: number; // in minutes
 
-  // Step 3: Date & Time
+  // Step 1: Date & Time
   dateTime: DateTime;
 
-  // Step 4: Passengers & Luggage
+  // Step 1: Passengers & Luggage
   passengers: PassengerInfo;
 
-  // Step 5: Vehicle Selection
+  // Step 2: Vehicle Selection
   selectedVehicle: Vehicle | null;
 
-  // Step 6: Passenger Details
+  // Step 3: Passenger Details & Payment Method
   passengerDetails: PassengerDetails;
+  paymentMethod?: PaymentMethod; // 'cash' or 'card'
 
-  // Step 7: Extras
+  // Step 4: Extras (optional)
   extras: Extras;
 
   // Pricing
@@ -282,27 +314,4 @@ export interface GeocodeResult {
     lng: number;
   };
   types: string[];
-}
-
-// ============================================================================
-// PAYMENT TYPES (Mock for now, Stripe-ready structure)
-// ============================================================================
-
-export interface PaymentIntent {
-  id: string;
-  amount: number;
-  currency: string;
-  status: 'pending' | 'processing' | 'succeeded' | 'failed' | 'canceled';
-  clientSecret?: string;
-}
-
-export interface PaymentMethod {
-  type: 'card' | 'paypal' | 'bank_transfer';
-  last4?: string;
-  brand?: string;
-}
-
-export interface PaymentDetails {
-  paymentIntent: PaymentIntent;
-  paymentMethod: PaymentMethod;
 }

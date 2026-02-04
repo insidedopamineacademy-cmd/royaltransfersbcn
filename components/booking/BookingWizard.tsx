@@ -25,26 +25,74 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   const [passengers, setPassengers] = useState(1);
 
   const handleSearch = useCallback(() => {
-    if (!pickup.address || !dropoff.address || !date || !time) {
+    // For hourly bookings, dropoff is not required
+    const requiresDropoff = serviceType === 'distance';
+    
+    if (!pickup.address || !date || !time || (requiresDropoff && !dropoff.address)) {
       alert(t('validation.fillAllFields'));
       return;
     }
 
+    // Map serviceType to match booking wizard's expected format
+    const mappedServiceType = serviceType === 'distance' ? 'airport' : 'hourly';
+
     const bookingData = {
-      serviceType,
-      transferType,
-      pickup,
-      dropoff,
-      date,
-      time,
-      passengers,
+      // Service configuration
+      serviceType: mappedServiceType,
+      serviceCategory: serviceType, // Store original 'distance' or 'hourly'
+      transferType, // 'oneWay' or 'return' for distance-based
+      
+      // Locations with full details
+      pickup: {
+        address: pickup.address,
+        placeId: pickup.placeId || '',
+        lat: pickup.lat,
+        lng: pickup.lng,
+        type: pickup.type || 'address',
+      },
+      // Only include dropoff for distance-based bookings
+      ...(serviceType === 'distance' && {
+        dropoff: {
+          address: dropoff.address,
+          placeId: dropoff.placeId || '',
+          lat: dropoff.lat,
+          lng: dropoff.lng,
+          type: dropoff.type || 'address',
+        },
+      }),
+      
+      // Date and time
+      dateTime: {
+        date,
+        time,
+      },
+      
+      // Passengers
+      passengers: {
+        count: passengers,
+        luggage: 0,
+        childSeats: 0,
+      },
+      
+      // Metadata to help wizard pre-fill Step 1
+      fromHomepage: true,
     };
     
+    console.log('📦 Saving complete booking draft:', bookingData);
+    console.log('  - Service:', serviceType, '→', mappedServiceType);
+    console.log('  - Transfer:', transferType);
+    console.log('  - Date/Time:', date, time);
+    console.log('  - Passengers:', passengers);
+    
+    // Save to sessionStorage
     sessionStorage.setItem('booking-draft', JSON.stringify(bookingData));
+    
+    // Navigate to booking page
     router.push(`/${locale}/book`);
   }, [pickup, dropoff, date, time, serviceType, transferType, passengers, t, router, locale]);
 
-  const isValid = pickup.address && dropoff.address && date && time;
+  // Validation: dropoff only required for distance-based bookings
+  const isValid = pickup.address && date && time && (serviceType === 'hourly' || dropoff.address);
 
   const minDate = new Date();
   minDate.setHours(minDate.getHours() + 2);
@@ -110,27 +158,35 @@ const HeroBookingForm = memo(function HeroBookingForm() {
               </label>
               <LocationAutocomplete
                 value={pickup.address}
-                onChange={setPickup}
+                onChange={(location) => {
+                  console.log('🔵 Pickup selected:', location);
+                  setPickup(location);
+                }}
                 placeholder={t('fields.pickup.placeholder')}
                 type="pickup"
                 aria-label={t('fields.pickup.label')}
               />
             </div>
 
-            {/* Dropoff Location - WITH 30km RADIUS INTELLIGENCE */}
-            <div>
-              <label htmlFor="dropoff-location" className="block text-xs font-medium text-gray-700 mb-1.5">
-                {t('fields.dropoff.label')}
-              </label>
-              <LocationAutocomplete
-                value={dropoff.address}
-                onChange={setDropoff}
-                placeholder={t('fields.dropoff.placeholder')}
-                type="dropoff"
-                pickupLocation={pickup} // 🎯 Pass pickup for 30km radius
-                aria-label={t('fields.dropoff.label')}
-              />
-            </div>
+            {/* Dropoff Location - Only for Distance-Based Bookings */}
+            {serviceType === 'distance' && (
+              <div>
+                <label htmlFor="dropoff-location" className="block text-xs font-medium text-gray-700 mb-1.5">
+                  {t('fields.dropoff.label')}
+                </label>
+                <LocationAutocomplete
+                  value={dropoff.address}
+                  onChange={(location) => {
+                    console.log('🟢 Dropoff selected:', location);
+                    setDropoff(location);
+                  }}
+                  placeholder={t('fields.dropoff.placeholder')}
+                  type="dropoff"
+                  pickupLocation={pickup} // 🎯 Pass pickup for 30km radius
+                  aria-label={t('fields.dropoff.label')}
+                />
+              </div>
+            )}
 
             {/* Date & Time Row */}
             <div className="grid grid-cols-2 gap-3">

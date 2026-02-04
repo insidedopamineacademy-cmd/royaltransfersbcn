@@ -91,7 +91,7 @@ export function BookingProvider({ children, initialStep = 0 }: BookingProviderPr
   // ============================================================================
 
   const goToNextStep = useCallback(() => {
-    setCurrentStep((prev) => Math.min(prev + 1, 7)); // Max 8 steps (0-7)
+    setCurrentStep((prev) => Math.min(prev + 1, 3)); // Max 4 steps (0-3)
   }, []);
 
   const goToPreviousStep = useCallback(() => {
@@ -99,7 +99,7 @@ export function BookingProvider({ children, initialStep = 0 }: BookingProviderPr
   }, []);
 
   const goToStep = useCallback((step: number) => {
-    if (step >= 0 && step <= 7) {
+    if (step >= 0 && step <= 3) {
       setCurrentStep(step);
     }
   }, []);
@@ -137,39 +137,31 @@ export function BookingProvider({ children, initialStep = 0 }: BookingProviderPr
 
   const canProceedToNextStep = useCallback((): boolean => {
     switch (currentStep) {
-      case 0: // Service Type
-        return bookingData.serviceType !== null;
-      
-      case 1: // Location
-        return (
-          bookingData.pickup.address.length > 0 &&
-          bookingData.dropoff.address.length > 0
+      case 0: // Step 1: Ride Details
+        // Check if service type is hourly
+        const isHourlyBooking = bookingData.serviceType === 'hourly';
+        
+        return Boolean(
+          bookingData.pickup.address &&
+          bookingData.dateTime.date &&
+          bookingData.dateTime.time &&
+          // Dropoff only required for distance-based bookings (airport/cityToCity)
+          // For hourly bookings, dropoff is optional
+          (isHourlyBooking || bookingData.dropoff.address)
         );
       
-      case 2: // Date & Time
-        return (
-          bookingData.dateTime.date.length > 0 &&
-          bookingData.dateTime.time.length > 0
-        );
-      
-      case 3: // Passengers
-        return bookingData.passengers.count > 0;
-      
-      case 4: // Vehicle
+      case 1: // Step 2: Vehicle Selection
         return bookingData.selectedVehicle !== null;
       
-      case 5: // Details
-        return (
-          bookingData.passengerDetails.firstName.length > 0 &&
-          bookingData.passengerDetails.lastName.length > 0 &&
-          bookingData.passengerDetails.email.length > 0 &&
-          bookingData.passengerDetails.phone.length > 0
+      case 2: // Step 3: Contact Details
+        return Boolean(
+          bookingData.passengerDetails.firstName &&
+          bookingData.passengerDetails.lastName &&
+          bookingData.passengerDetails.email &&
+          bookingData.passengerDetails.phone
         );
       
-      case 6: // Extras
-        return true; // Optional step
-      
-      case 7: // Review
+      case 3: // Step 4: Booking Summary (Final step)
         return true;
       
       default:

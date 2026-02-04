@@ -10,7 +10,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useBooking } from '@/lib/booking/context';
 import { formatPrice } from '@/lib/booking/utils';
@@ -98,7 +98,7 @@ export default function BookingSummaryStep() {
 
       {/* Error Message */}
       {error && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-5xl mx-auto"
@@ -121,7 +121,7 @@ export default function BookingSummaryStep() {
               </svg>
             </button>
           </div>
-        </motion.div>
+        </m.div>
       )}
 
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -199,7 +199,7 @@ export default function BookingSummaryStep() {
 
             {/* Payment Method Info */}
             {paymentMethod === 'card' && (
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
@@ -214,7 +214,7 @@ export default function BookingSummaryStep() {
                     <p className="text-xs">You&apos;ll be redirected to Stripe&apos;s secure checkout page to complete your payment.</p>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </EditableSection>
 
@@ -316,7 +316,7 @@ export default function BookingSummaryStep() {
                 </div>
 
                 {/* Confirm Button */}
-                <motion.button
+                <m.button
                   whileHover={!isProcessing ? { scale: 1.02 } : {}}
                   whileTap={!isProcessing ? { scale: 0.98 } : {}}
                   onClick={handleConfirmBooking}
@@ -338,7 +338,7 @@ export default function BookingSummaryStep() {
                   ) : (
                     t('confirmButton')
                   )}
-                </motion.button>
+                </m.button>
 
                 {/* Security Badge */}
                 {paymentMethod === 'card' && (

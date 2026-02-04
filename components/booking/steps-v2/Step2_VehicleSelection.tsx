@@ -9,7 +9,7 @@
  */
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useBooking } from '@/lib/booking/context';
 import { formatPrice, calculatePrice } from '@/lib/booking/utils';
@@ -67,6 +67,9 @@ export default function VehicleSelectionStep() {
   const { bookingData, updateBookingData, updatePricing } = useBooking();
   const [childSeats, setChildSeats] = useState(0);
   const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(null);
+
+  // Check if booking is hourly type
+  const isHourlyBooking = bookingData.serviceType === 'hourly';
 
   // Memoized filtered vehicles
   const availableVehicles = useMemo(
@@ -146,21 +149,30 @@ export default function VehicleSelectionStep() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           <SummaryItem 
             label={t('summary.serviceType')} 
-            value={bookingData.serviceType === 'hourly' ? t('summary.hourly') : t('summary.distance')} 
+            value={isHourlyBooking ? t('summary.hourly') : t('summary.distance')} 
           />
           <SummaryItem label={t('summary.transferType')} value={t('summary.oneWay')} />
           <SummaryItem label={t('summary.pickup')} value={bookingData.pickup.address || t('summary.notSet')} />
-          <SummaryItem label={t('summary.dropoff')} value={bookingData.dropoff.address || t('summary.notSet')} />
+          
+          {/* Only show dropoff for distance-based bookings */}
+          {!isHourlyBooking && (
+            <SummaryItem label={t('summary.dropoff')} value={bookingData.dropoff.address || t('summary.notSet')} />
+          )}
+          
           <SummaryItem 
             label={t('summary.dateTime')} 
             value={`${bookingData.dateTime.date} ${bookingData.dateTime.time}`} 
           />
-          {bookingData.distance && (
+          
+          {/* Distance info only for distance-based bookings */}
+          {!isHourlyBooking && bookingData.distance && (
             <SummaryItem label={t('summary.distance')} value={`${bookingData.distance.toFixed(1)} km`} />
           )}
-          {bookingData.duration && (
+          
+          {!isHourlyBooking && bookingData.duration && (
             <SummaryItem label={t('summary.time')} value={`${Math.round(bookingData.duration)} min`} />
           )}
+          
           <SummaryItem label={t('summary.passengers')} value={`${bookingData.passengers.count}`} />
         </div>
       </section>
@@ -198,7 +210,7 @@ export default function VehicleSelectionStep() {
 
       {/* Optional Extras */}
       {selectedVehicleId && (
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-6xl mx-auto"
@@ -253,12 +265,12 @@ export default function VehicleSelectionStep() {
               </div>
             </div>
           </div>
-        </motion.section>
+        </m.section>
       )}
 
       {/* Pricing Summary */}
       {bookingData.pricing && (
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-6xl mx-auto bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200"
@@ -286,7 +298,7 @@ export default function VehicleSelectionStep() {
               </p>
             </div>
           </div>
-        </motion.section>
+        </m.section>
       )}
     </div>
   );
@@ -320,7 +332,7 @@ const VehicleCard = React.memo(({
   const t = useTranslations('step2');
 
   return (
-    <motion.button
+    <m.button
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
@@ -372,7 +384,7 @@ const VehicleCard = React.memo(({
           <span className="text-xl sm:text-2xl font-bold text-blue-600">{formatPrice(vehicle.basePrice)}</span>
         </div>
       </div>
-    </motion.button>
+    </m.button>
   );
 });
 VehicleCard.displayName = 'VehicleCard';

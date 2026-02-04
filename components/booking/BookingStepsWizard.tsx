@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Suspense, lazy, memo, useCallback } from 'react';
-import { motion, AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion';
+import { m, AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useBooking } from '@/lib/booking/context';
 
@@ -76,7 +76,7 @@ const BookingWizard = memo(function BookingWizard() {
           {/* Step Content with Loading Fallback */}
           <Suspense fallback={<StepLoadingFallback />}>
             <AnimatePresence mode="wait">
-              <motion.div
+              <m.div
                 key={currentStep}
                 initial={!prefersReducedMotion ? { opacity: 0, x: 20 } : { opacity: 1 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -88,7 +88,7 @@ const BookingWizard = memo(function BookingWizard() {
                 style={{ willChange: prefersReducedMotion ? 'auto' : 'opacity, transform' }}
               >
                 <CurrentStepComponent />
-              </motion.div>
+              </m.div>
             </AnimatePresence>
           </Suspense>
 
@@ -167,7 +167,7 @@ const ProgressBar = memo(function ProgressBar({ currentStep, totalSteps, steps }
       <div className="flex items-center justify-between relative px-2 sm:px-0">
         {/* Progress Line */}
         <div className="absolute top-1/2 left-0 right-0 h-0.5 sm:h-1 bg-gray-200 -translate-y-1/2 -z-10 mx-6 sm:mx-0">
-          <motion.div
+          <m.div
             className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
             initial={{ width: '0%' }}
             animate={{ width: `${(currentStep / (totalSteps - 1)) * 100}%` }}
@@ -229,7 +229,7 @@ const StepIndicator = memo(function StepIndicator({
 
   return (
     <div className="flex flex-col items-center">
-      <motion.div
+      <m.div
         initial={!prefersReducedMotion ? { scale: 0.8 } : { scale: 1 }}
         animate={{
           scale: isCurrent ? 1.1 : 1,
@@ -254,7 +254,7 @@ const StepIndicator = memo(function StepIndicator({
         ) : (
           <span className="text-xs sm:text-sm md:text-base">{step.icon}</span>
         )}
-      </motion.div>
+      </m.div>
       
       {/* Step Title - Hidden on mobile, shown on tablet+ */}
       <p className={`
