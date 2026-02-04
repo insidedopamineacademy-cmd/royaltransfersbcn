@@ -3,7 +3,7 @@
 import { useState, memo, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
-import { motion, useReducedMotion, LazyMotion, domAnimation } from 'framer-motion';
+import { m, useReducedMotion, LazyMotion, domAnimation } from 'framer-motion';
 import LocationAutocomplete from './ui/LocationAutocomplete';
 import type { Location } from '@/lib/booking/types';
 
@@ -52,7 +52,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
 
   return (
     <LazyMotion features={domAnimation} strict>
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -117,7 +117,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
               />
             </div>
 
-            {/* Dropoff Location */}
+            {/* Dropoff Location - WITH 30km RADIUS INTELLIGENCE */}
             <div>
               <label htmlFor="dropoff-location" className="block text-xs font-medium text-gray-700 mb-1.5">
                 {t('fields.dropoff.label')}
@@ -127,6 +127,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                 onChange={setDropoff}
                 placeholder={t('fields.dropoff.placeholder')}
                 type="dropoff"
+                pickupLocation={pickup} // 🎯 Pass pickup for 30km radius
                 aria-label={t('fields.dropoff.label')}
               />
             </div>
@@ -221,7 +222,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
             </button>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </LazyMotion>
   );
 });

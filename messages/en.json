@@ -1410,7 +1410,23 @@
       "tryAgain": "Try Booking Again",
       "contactSupport": "Contact Support"
     }
+  },
+  "booking": {
+  "location": {
+    "pickupPlaceholder": "Enter pickup location...",
+    "dropoffPlaceholder": "Enter destination...",
+    "useMyLocation": "Use my current location",
+    "fallbackMode": "Autocomplete unavailable. You can still type addresses manually.",
+    "noResults": "No locations found. Try a different search.",
+    "errors": {
+      "geolocationUnsupported": "Geolocation is not supported by your browser",
+      "geolocationDenied": "Location permission denied",
+      "geolocationUnavailable": "Location information unavailable",
+      "geolocationTimeout": "Location request timed out",
+      "geocodingFailed": "Could not determine address"
+    }
   }
+ }
 }
 
 
