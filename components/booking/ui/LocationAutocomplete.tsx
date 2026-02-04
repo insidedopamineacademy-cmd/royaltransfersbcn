@@ -238,7 +238,7 @@ export default function LocationAutocomplete({
   // ============================================================================
 // GEOLOCATION: "USE MY LOCATION" BUTTON - PRODUCTION READY
 // ============================================================================
-
+// ✅ REPLACE WITH THIS NEW VERSION:
 const handleUseMyLocation = async () => {
   setLocationError('');
   
@@ -262,7 +262,6 @@ const handleUseMyLocation = async () => {
   console.log('🔍 Requesting location...');
   setIsGettingLocation(true);
 
-  // Step 3: Request location with comprehensive error handling
   navigator.geolocation.getCurrentPosition(
     async (position) => {
       console.log('✅ Location obtained:', position.coords.latitude, position.coords.longitude);
@@ -270,15 +269,11 @@ const handleUseMyLocation = async () => {
       try {
         const { latitude, longitude } = position.coords;
         
-        // Step 4: Ensure Google Maps is loaded for reverse geocoding
         const isReady = await ensureGoogleMapsLoaded();
         
         if (isReady) {
           console.log('🗺️ Reverse geocoding...');
-          
-          // Reverse geocode to get address
           const result = await reverseGeocode(latitude, longitude);
-          
           console.log('✅ Address:', result.address);
           
           setInputValue(result.address);
@@ -290,7 +285,6 @@ const handleUseMyLocation = async () => {
             type: 'address',
           });
         } else {
-          // Fallback: Use coordinates as address
           console.warn('⚠️ Google Maps unavailable, using coordinates');
           const coordsAddress = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
           setInputValue(coordsAddress);
@@ -309,22 +303,21 @@ const handleUseMyLocation = async () => {
       }
     },
     (error) => {
-      // Step 5: Handle all geolocation errors
       console.error('❌ Geolocation error:', error.code, error.message);
       setIsGettingLocation(false);
       
       let errorMessage = t('errors.geolocationDenied') || 'Location permission denied';
       
       switch (error.code) {
-        case 1: // PERMISSION_DENIED
+        case 1:
           errorMessage = t('errors.geolocationDenied') || 'Location permission denied. Please enable location in your browser settings.';
           console.error('💡 User denied location permission');
           break;
-        case 2: // POSITION_UNAVAILABLE
+        case 2:
           errorMessage = t('errors.geolocationUnavailable') || 'Location unavailable. Please check your device settings.';
           console.error('💡 Position unavailable - GPS/network issue');
           break;
-        case 3: // TIMEOUT
+        case 3:
           errorMessage = t('errors.geolocationTimeout') || 'Location request timed out. Please try again.';
           console.error('💡 Request timed out');
           break;
@@ -337,11 +330,12 @@ const handleUseMyLocation = async () => {
     },
     {
       enableHighAccuracy: true,
-      timeout: 15000, // 15 seconds (increased from 12)
-      maximumAge: 0, // Don't use cached position
+      timeout: 15000,
+      maximumAge: 0,
     }
   );
-}:
+};
+  
   
 
   // ============================================================================
