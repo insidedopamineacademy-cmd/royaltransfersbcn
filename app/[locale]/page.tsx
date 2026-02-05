@@ -12,8 +12,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HeroSection t={t} />
-      <BookingSection t={t} />
+      <HeroWithBookingSection t={t} />
       <ServicesSection t={t} />
       <HowItWorksSection t={t} />
       <FleetSection t={t} />
@@ -25,25 +24,27 @@ export default function HomePage() {
 }
 
 // ============================================================================
-// HERO SECTION - Optimized
+// HERO SECTION WITH INTEGRATED BOOKING FORM - Fully Optimized
 // ============================================================================
-function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
+function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const prefersReducedMotion = useReducedMotion();
 
   return (
     <section
+      id="booking"
       ref={ref}
-      className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+      className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
     >
-      {/* Simplified background - no animations on mobile */}
+      {/* Background decorative elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 -left-20 w-64 sm:w-96 h-64 sm:h-96 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-20 w-64 sm:w-96 h-64 sm:h-96 bg-amber-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 -left-20 w-64 sm:w-96 lg:w-[500px] h-64 sm:h-96 lg:h-[500px] bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-20 w-64 sm:w-96 lg:w-[500px] h-64 sm:h-96 lg:h-[500px] bg-amber-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 sm:w-[600px] h-96 sm:h-[600px] bg-cyan-500/5 rounded-full blur-3xl" />
       </div>
       
-      {/* Lighter grid overlay */}
+      {/* Grid overlay */}
       <div 
         className="absolute inset-0 opacity-[0.015]"
         style={{
@@ -52,61 +53,105 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        <div className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Trust badges */}
-            <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8">
-              {['trustBadge1', 'trustBadge2', 'trustBadge3'].map((badge) => (
-                <span
-                  key={badge}
-                  className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-medium bg-white/10 backdrop-blur-sm text-gray-300 rounded-full border border-white/10"
-                >
-                  {t(`hero.${badge}`)}
-                </span>
-              ))}
-            </div>
-
-            {/* Main headline - responsive sizing */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-              {t('hero.title')}{' '}
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                {t('hero.titleHighlight')}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        {/* Hero Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-8 sm:mb-12 lg:mb-16"
+        >
+          {/* Trust badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+            {['trustBadge1', 'trustBadge2', 'trustBadge3'].map((badge) => (
+              <span
+                key={badge}
+                className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-medium bg-white/10 backdrop-blur-sm text-gray-300 rounded-full border border-white/10"
+              >
+                {t(`hero.${badge}`)}
               </span>
-            </h1>
+            ))}
+          </div>
 
-            {/* Subtitle */}
-            <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 max-w-2xl leading-relaxed">
-              {t('hero.subtitle')}
-            </p>
+          {/* Main headline */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight px-4">
+            {t('hero.title')}{' '}
+            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              {t('hero.titleHighlight')}
+            </span>
+          </h1>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <a
-                href="#booking"
-                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-900 bg-gradient-to-r from-amber-400 to-amber-500 rounded-xl hover:from-amber-500 hover:to-amber-600 transition-all shadow-lg shadow-amber-500/25"
-              >
-                {t('hero.bookNow')}
-                <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-              </a>
-              <Link
-                href="/fleet/standard"
-                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all"
-              >
-                {t('hero.viewFleet')}
-              </Link>
-            </div>
-          </motion.div>
-        </div>
+          {/* Subtitle */}
+          <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
+            {t('hero.subtitle')}
+          </p>
+
+          {/* Booking section title */}
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full mb-6 sm:mb-8">
+            <span className="w-2 h-2 bg-blue-500 rounded-full" />
+            <span className="text-xs sm:text-sm font-semibold text-blue-400">
+              {t('hero.bookingSteps.title')}
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Booking Form */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mb-8 sm:mb-12"
+        >
+          <BookingProvider>
+            <BookingWizard />
+          </BookingProvider>
+        </motion.div>
+
+        {/* Trust indicators below form */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="grid grid-cols-2 lg:flex lg:flex-wrap items-center justify-center gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm text-gray-400"
+        >
+          <div className="flex items-center gap-2">
+            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
+            <span className="text-gray-300">{t('hero.features.freeCancellation')}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
+            <span className="text-gray-300">{t('hero.features.instantConfirmation')}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
+            <span className="text-gray-300">{t('hero.features.bestPriceGuarantee')}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
+            <span className="text-gray-300">{t('hero.features.support24')}</span>
+          </div>
+        </motion.div>
+
+        {/* Additional CTA Buttons (optional - can be removed if not needed) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10"
+        >
+          <Link
+            href="/fleet/standard"
+            className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all"
+          >
+            {t('hero.viewFleet')}
+            <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+          </Link>
+        </motion.div>
       </div>
 
       {/* Scroll indicator - hidden on mobile */}
       {!prefersReducedMotion && (
-        <div className="hidden sm:block absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="hidden lg:block absolute bottom-8 left-1/2 transform -translate-x-1/2">
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
@@ -116,91 +161,6 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
           </motion.div>
         </div>
       )}
-    </section>
-  );
-}
-
-// ============================================================================
-// BOOKING SECTION - Optimized
-// ============================================================================
-function BookingSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.1 });
-
-  return (
-    <section 
-      id="booking"
-      ref={ref} 
-      className="py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden"
-    >
-      {/* Decorative elements - simplified */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-64 sm:w-96 h-64 sm:h-96 bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-64 sm:w-96 h-64 sm:h-96 bg-cyan-500/5 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-8 sm:mb-12"
-        >
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full mb-4 sm:mb-6">
-            <span className="w-2 h-2 bg-blue-500 rounded-full" />
-            <span className="text-xs sm:text-sm font-semibold text-blue-600">
-              {t('hero.bookingSteps.title')}
-            </span>
-          </div>
-          
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
-            {t('hero.bookingSteps.subtitle')}{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-              Journey
-            </span>
-          </h2>
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-            {t('hero.bookingSteps.description')}
-          </p>
-        </motion.div>
-
-        {/* Booking Wizard */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <BookingProvider>
-            <BookingWizard />
-          </BookingProvider>
-        </motion.div>
-
-        {/* Trust indicators */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-8 sm:mt-12 grid grid-cols-2 lg:flex lg:flex-wrap items-center justify-center gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-sm text-gray-600"
-        >
-          <div className="flex items-center gap-2">
-            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500 flex-shrink-0" />
-            <span>{t('hero.features.freeCancellation')}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500 flex-shrink-0" />
-            <span>{t('hero.features.instantConfirmation')}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500 flex-shrink-0" />
-            <span>{t('hero.features.bestPriceGuarantee')}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500 flex-shrink-0" />
-            <span>{t('hero.features.support24')}</span>
-          </div>
-        </motion.div>
-      </div>
     </section>
   );
 }
