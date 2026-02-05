@@ -7,6 +7,7 @@
  * - Barcelona bias + Spain restriction
  * - 30km radius intelligence (pickup → nearby dropoffs)
  * - Geolocation button with reverse geocoding
+ * - iOS-SPECIFIC: Proper permission handling for iPhone/iPad
  * - Error handling and validation
  * - Fallback mode for manual entry
  */
@@ -95,12 +96,23 @@ export default function LocationAutocomplete({
   const [googleFailed, setGoogleFailed] = useState(false);
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [locationError, setLocationError] = useState<string>('');
+  const [permissionDenied, setPermissionDenied] = useState(false);
   
   // Refs
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const autocompleteServiceRef = useRef<google.maps.places.AutocompleteService | null>(null);
   const loadingPromiseRef = useRef<Promise<void> | null>(null);
+
+  // ============================================================================
+  // 🎯 iOS DETECTION
+  // ============================================================================
+
+  const isIOS = useCallback(() => {
+    if (typeof window === 'undefined') return false;
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }, []);
 
   // ============================================================================
   // LAZY LOAD GOOGLE MAPS (ON INPUT FOCUS)
@@ -234,109 +246,188 @@ export default function LocationAutocomplete({
     }, 300);
   }, [searchLocations]);
 
-
   // ============================================================================
-// GEOLOCATION: "USE MY LOCATION" BUTTON - PRODUCTION READY
-// ============================================================================
-// ✅ REPLACE WITH THIS NEW VERSION:
-const handleUseMyLocation = async () => {
-  setLocationError('');
-  
-  // Step 1: Check if geolocation is supported
-  if (!navigator.geolocation) {
-    setLocationError(t('errors.geolocationUnsupported') || 'Geolocation is not supported by your browser');
-    console.error('❌ Geolocation API not available');
-    return;
-  }
+  // 🎯 iOS-OPTIMIZED GEOLOCATION: "USE MY LOCATION" BUTTON
+  // ============================================================================
 
-  // Step 2: Check secure context (HTTPS required)
-  if (typeof window !== 'undefined') {
-    const isSecure = window.isSecureContext || window.location.protocol === 'https:' || window.location.hostname === 'localhost';
-    if (!isSecure) {
-      setLocationError('Location requires HTTPS connection');
-      console.error('❌ Not in secure context:', window.location.protocol);
+  const handleUseMyLocation = async () => {
+    console.log('🎯 [iOS Fix] Starting location request...', { 
+      isIOS: isIOS(),
+      platform: navigator.platform,
+      userAgent: navigator.userAgent 
+    });
+
+    setLocationError('');
+    setPermissionDenied(false);
+    
+    // Step 1: Check if geolocation is supported
+    if (!navigator.geolocation) {
+      const errorMsg = t('errors.geolocationUnsupported') || 'Geolocation is not supported by your browser';
+      setLocationError(errorMsg);
+      console.error('❌ Geolocation API not available');
       return;
     }
-  }
 
-  console.log('🔍 Requesting location...');
-  setIsGettingLocation(true);
-
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      console.log('✅ Location obtained:', position.coords.latitude, position.coords.longitude);
+    // Step 2: Check secure context (HTTPS required for iOS)
+    if (typeof window !== 'undefined') {
+      const isSecure = window.isSecureContext || 
+                      window.location.protocol === 'https:' || 
+                      window.location.hostname === 'localhost' ||
+                      window.location.hostname === '127.0.0.1';
       
-      try {
-        const { latitude, longitude } = position.coords;
+      if (!isSecure) {
+        const errorMsg = 'Location requires HTTPS connection';
+        setLocationError(errorMsg);
+        console.error('❌ [iOS Fix] Not in secure context:', {
+          protocol: window.location.protocol,
+          hostname: window.location.hostname,
+          isSecureContext: window.isSecureContext
+        });
         
-        const isReady = await ensureGoogleMapsLoaded();
-        
-        if (isReady) {
-          console.log('🗺️ Reverse geocoding...');
-          const result = await reverseGeocode(latitude, longitude);
-          console.log('✅ Address:', result.address);
-          
-          setInputValue(result.address);
-          onChange({
-            address: result.address,
-            placeId: result.placeId,
-            lat: result.location.lat,
-            lng: result.location.lng,
-            type: 'address',
-          });
-        } else {
-          console.warn('⚠️ Google Maps unavailable, using coordinates');
-          const coordsAddress = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
-          setInputValue(coordsAddress);
-          onChange({
-            address: coordsAddress,
-            lat: latitude,
-            lng: longitude,
-            type: 'address',
-          });
+        if (isIOS()) {
+          alert('⚠️ HTTPS Required\n\nLocation services require a secure HTTPS connection on iOS.\n\nPlease access this site using https://');
         }
-      } catch (error) {
-        console.error('❌ Reverse geocoding error:', error);
-        setLocationError(t('errors.geocodingFailed') || 'Could not determine address from location');
-      } finally {
-        setIsGettingLocation(false);
+        return;
       }
-    },
-    (error) => {
-      console.error('❌ Geolocation error:', error.code, error.message);
-      setIsGettingLocation(false);
-      
-      let errorMessage = t('errors.geolocationDenied') || 'Location permission denied';
-      
-      switch (error.code) {
-        case 1:
-          errorMessage = t('errors.geolocationDenied') || 'Location permission denied. Please enable location in your browser settings.';
-          console.error('💡 User denied location permission');
-          break;
-        case 2:
-          errorMessage = t('errors.geolocationUnavailable') || 'Location unavailable. Please check your device settings.';
-          console.error('💡 Position unavailable - GPS/network issue');
-          break;
-        case 3:
-          errorMessage = t('errors.geolocationTimeout') || 'Location request timed out. Please try again.';
-          console.error('💡 Request timed out');
-          break;
-        default:
-          errorMessage = 'Could not get your location. Please enter manually.';
-          console.error('💡 Unknown error:', error);
-      }
-      
-      setLocationError(errorMessage);
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 15000,
-      maximumAge: 0,
     }
-  );
-};
-  
-  
+
+    console.log('✅ [iOS Fix] Security checks passed, requesting location...');
+    setIsGettingLocation(true);
+
+    // Step 3: 🔥 iOS-OPTIMIZED geolocation options
+    const options: PositionOptions = {
+      enableHighAccuracy: true,  // 🎯 CRITICAL for iOS precise location
+      timeout: 15000,            // 🎯 15 seconds for iOS (slower than Android)
+      maximumAge: 0              // 🎯 Don't use cached position
+    };
+
+    console.log('📍 [iOS Fix] Calling getCurrentPosition with options:', options);
+
+    // Step 4: Request location with comprehensive iOS-specific error handling
+    navigator.geolocation.getCurrentPosition(
+      // ✅ SUCCESS CALLBACK
+      async (position) => {
+        console.log('✅ [iOS Fix] Location permission GRANTED!', {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          accuracy: position.coords.accuracy,
+          timestamp: position.timestamp
+        });
+        
+        try {
+          const { latitude, longitude, accuracy } = position.coords;
+          
+          console.log(`📍 [iOS Fix] Coordinates obtained: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} (accuracy: ${accuracy}m)`);
+          
+          // Step 5: Ensure Google Maps is loaded for reverse geocoding
+          const isReady = await ensureGoogleMapsLoaded();
+          
+          if (isReady) {
+            console.log('🗺️ [iOS Fix] Google Maps loaded, reverse geocoding...');
+            
+            // Reverse geocode to get address
+            const result = await reverseGeocode(latitude, longitude);
+            
+            console.log('✅ [iOS Fix] Address resolved:', result.address);
+            
+            setInputValue(result.address);
+            onChange({
+              address: result.address,
+              placeId: result.placeId,
+              lat: result.location.lat,
+              lng: result.location.lng,
+              type: 'address',
+            });
+            
+            setPermissionDenied(false);
+          } else {
+            // Fallback: Use coordinates as address
+            console.warn('⚠️ [iOS Fix] Google Maps unavailable, using coordinates as fallback');
+            const coordsAddress = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+            setInputValue(coordsAddress);
+            onChange({
+              address: coordsAddress,
+              lat: latitude,
+              lng: longitude,
+              type: 'address',
+            });
+          }
+        } catch (error) {
+          console.error('❌ [iOS Fix] Reverse geocoding error:', error);
+          setLocationError(t('errors.geocodingFailed') || 'Could not determine address from location');
+        } finally {
+          setIsGettingLocation(false);
+        }
+      },
+      // ❌ ERROR CALLBACK with iOS-specific handling
+      (error) => {
+        console.error('❌ [iOS Fix] Geolocation error:', {
+          code: error.code,
+          message: error.message,
+          isIOS: isIOS()
+        });
+        
+        setIsGettingLocation(false);
+        
+        let errorMessage = '';
+        let userMessage = '';
+
+        switch (error.code) {
+          case 1: // PERMISSION_DENIED
+            console.error('🚫 [iOS Fix] User DENIED location permission');
+            errorMessage = 'Location permission denied';
+            setPermissionDenied(true); // 🎯 Set iOS permission denied state
+            
+            // 🎯 iOS-SPECIFIC instructions
+            if (isIOS()) {
+              userMessage = '📍 Location Permission Denied\n\n' +
+                '⚙️ To enable on iPhone/iPad:\n\n' +
+                '1. Open Settings app\n' +
+                '2. Scroll down and tap "Safari"\n' +
+                '3. Tap "Location"\n' +
+                '4. Select "Allow"\n' +
+                '5. Return here and refresh the page\n\n' +
+                '💡 Also check:\n' +
+                'Settings → Privacy & Security → Location Services → ON';
+            } else {
+              userMessage = 'Please enable location permissions in your browser settings.';
+            }
+            break;
+
+          case 2: // POSITION_UNAVAILABLE
+            console.error('📡 [iOS Fix] Position unavailable - GPS/network issue');
+            errorMessage = 'Location information unavailable';
+            userMessage = '⚠️ Unable to retrieve your location.\n\n' +
+              'Please check:\n' +
+              '• Location Services are enabled\n' +
+              '• You have a GPS signal\n' +
+              '• Try moving outdoors\n' +
+              '• Try again in a moment';
+            break;
+
+          case 3: // TIMEOUT
+            console.error('⏱️ [iOS Fix] Location request timed out after 15 seconds');
+            errorMessage = 'Location request timed out';
+            userMessage = '⏱️ Location request took too long.\n\n' +
+              'This can happen if:\n' +
+              '• GPS signal is weak\n' +
+              '• You\'re indoors\n' +
+              '• Location Services are slow to respond\n\n' +
+              'Please try again.';
+            break;
+
+          default:
+            console.error('❓ [iOS Fix] Unknown error:', error);
+            errorMessage = 'Unknown error occurred';
+            userMessage = 'An unexpected error occurred. Please try again.';
+        }
+        
+        setLocationError(errorMessage);
+        alert(userMessage);
+      },
+      options // 🎯 Pass iOS-optimized options
+    );
+  };
 
   // ============================================================================
   // INPUT CHANGE HANDLER
@@ -347,6 +438,7 @@ const handleUseMyLocation = async () => {
     setInputValue(newValue);
     setSelectedIndex(-1);
     setLocationError('');
+    setPermissionDenied(false);
     
     if (newValue.length >= 2) {
       debouncedSearchRef.current(newValue);
@@ -535,8 +627,33 @@ const handleUseMyLocation = async () => {
         )}
       </div>
 
-      {/* Error Messages */}
-      {(error || locationError) && (
+      {/* 🎯 iOS-SPECIFIC: Permission Denied Error with Settings Instructions */}
+      {permissionDenied && isIOS() && (
+        <m.div
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg"
+        >
+          <div className="flex items-start gap-2">
+            <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-red-700 mb-1">
+                📍 Location Permission Denied
+              </p>
+              <p className="text-xs text-red-600 leading-relaxed">
+                To enable: <span className="font-medium">Settings → Safari → Location → Allow</span>
+                <br />
+                Then refresh this page.
+              </p>
+            </div>
+          </div>
+        </m.div>
+      )}
+
+      {/* Error Messages (non-iOS or non-permission errors) */}
+      {(error || (locationError && !permissionDenied)) && (
         <m.p
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
