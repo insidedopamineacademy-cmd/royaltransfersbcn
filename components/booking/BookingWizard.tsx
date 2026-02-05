@@ -20,8 +20,28 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   const [transferType, setTransferType] = useState<TransferType>('oneWay');
   const [pickup, setPickup] = useState<Location>({ address: '' });
   const [dropoff, setDropoff] = useState<Location>({ address: '' });
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  
+  // 🎯 AUTO-FILL: Initialize date and time with current date/time + 2 hours
+  const getDefaultDateTime = useCallback(() => {
+    const now = new Date();
+    now.setHours(now.getHours() + 2); // Add 2 hours minimum
+    
+    // Format date as YYYY-MM-DD for input[type="date"]
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const dateString = `${year}-${month}-${day}`;
+    
+    // Format time as HH:MM for input[type="time"]
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const timeString = `${hours}:${minutes}`;
+    
+    return { dateString, timeString };
+  }, []);
+  
+  const [date, setDate] = useState(() => getDefaultDateTime().dateString);
+  const [time, setTime] = useState(() => getDefaultDateTime().timeString);
   const [passengers, setPassengers] = useState(1);
 
   const handleSearch = useCallback(() => {
@@ -94,9 +114,17 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   // Validation: dropoff only required for distance-based bookings
   const isValid = pickup.address && date && time && (serviceType === 'hourly' || dropoff.address);
 
-  const minDate = new Date();
-  minDate.setHours(minDate.getHours() + 2);
-  const minDateString = minDate.toISOString().split('T')[0];
+  // Calculate minimum date (current date + 2 hours)
+  const getMinDate = useCallback(() => {
+    const now = new Date();
+    now.setHours(now.getHours() + 2);
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }, []);
+  
+  const minDateString = getMinDate();
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -203,9 +231,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     min={minDateString}
-                    placeholder="mm/dd/yyyy"
                     aria-label={t('fields.date.label')}
-                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light] placeholder:text-gray-400"
+                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
                     style={{ 
                       WebkitAppearance: 'none',
                       MozAppearance: 'textfield'
@@ -226,9 +253,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     type="time"
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
-                    placeholder="--:--"
                     aria-label={t('fields.time.label')}
-                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light] placeholder:text-gray-400"
+                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
                     style={{ 
                       WebkitAppearance: 'none',
                       MozAppearance: 'textfield'
