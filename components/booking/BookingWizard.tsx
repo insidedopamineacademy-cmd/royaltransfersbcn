@@ -203,8 +203,9 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     min={minDateString}
+                    placeholder="mm/dd/yyyy"
                     aria-label={t('fields.date.label')}
-                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
+                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light] placeholder:text-gray-400"
                     style={{ 
                       WebkitAppearance: 'none',
                       MozAppearance: 'textfield'
@@ -225,8 +226,9 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     type="time"
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
+                    placeholder="--:--"
                     aria-label={t('fields.time.label')}
-                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
+                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light] placeholder:text-gray-400"
                     style={{ 
                       WebkitAppearance: 'none',
                       MozAppearance: 'textfield'
