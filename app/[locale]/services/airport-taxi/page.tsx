@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 export default function AirportTaxiPage() {
@@ -333,6 +334,14 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.ai
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
+  // Create a mapping of vehicle keys to image paths
+  const vehicleImages = {
+    tesla: '/images/tesla.png',
+    prius: '/images/toyota-prius.png',
+    vito: '/images/vito.png',
+    vclass: '/images/vclass.png'
+  };
+
   const vehicles = [
     { key: 'tesla', pax: 4, features: ['eco', 'luxury'] },
     { key: 'prius', pax: 4, features: ['hybrid', 'efficient'] },
@@ -368,10 +377,16 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.ai
               transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
               className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-sky-500/30 transition-all hover:shadow-2xl"
             >
-              {/* Image placeholder */}
-              <div className="aspect-[4/3] bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-sky-900/20 to-transparent" />
-                <CarIcon className="w-16 h-16 text-gray-500" />
+              {/* Image container */}
+              <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
+                <Image
+                  src={vehicleImages[vehicle.key as keyof typeof vehicleImages]}
+                  alt={t(`fleet.${vehicle.key}.name`)}
+                  fill
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent" />
               </div>
               <div className="p-5">
                 <h3 className="text-lg font-bold text-white mb-1">
