@@ -24,7 +24,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 2,
     basePrice: 35,
-    image: '/images/fleet/toyota-prius-plus.jpg', // or tesla-model-3.jpg
+    image: '/images/fleet/toyota-prius.png', // or tesla-model-3.jpg
     features: ['Air-conditioned', 'Hybrid efficiency', 'Professional driver'],
   },
   {
@@ -34,7 +34,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 3,
     basePrice: 55,
-    image: '/images/fleet/mercedes-e-class.jpg', // or bmw-5-series.jpg
+    image: '/images/fleet/eclass.png', // or bmw-5-series.jpg
     features: ['Executive seating', 'Premium interior', 'Climate control'],
   },
   {
@@ -44,7 +44,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 3,
     basePrice: 103,
-    image: '/images/fleet/mercedes-s-class.jpg',
+    image: '/images/fleet/sclass.png',
     features: ['First-class seating', 'Massage seats', 'Premium sound system'],
   },
   {
@@ -55,7 +55,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 7,
     luggage: 7,
     basePrice: 75,
-    image: '/images/fleet/mercedes-vclass.jpg',
+    image: '/images/fleet/vclass.png',
     features: ['Spacious interior', 'Dual climate control', 'Large luggage space'],
   },
   {
@@ -66,7 +66,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 8,
     luggage: 8,
     basePrice: 85,
-    image: '/images/fleet/mercedes-vito.jpg', // or ford-tourneo-custom.jpg
+    image: '/images/fleet/vito.png', // or ford-tourneo-custom.jpg
     features: ['8 full-size seats', 'Ample legroom', 'Large luggage capacity'],
   },
   {
@@ -77,7 +77,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 7,
     luggage: 7,
     basePrice: 95,
-    image: '/images/fleet/mercedes-vclass-executive.jpg',
+    image: '/images/fleet/vclass.png',
     features: ['Premium leather seats', 'Conference seating', 'Executive comfort'],
   },
 ] as const;
