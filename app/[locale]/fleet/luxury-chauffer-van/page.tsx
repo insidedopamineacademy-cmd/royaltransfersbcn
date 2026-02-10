@@ -3,6 +3,7 @@
 import { useRef, useMemo, memo } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 // ============================================================================
 // PERFORMANCE: Memoized main component
@@ -120,49 +121,81 @@ const VehicleSection = memo(function VehicleSection({
 
   const features = useMemo(() => ['luggage', 'passengers', 'climate', 'interiors', 'chauffeur'], []);
   const perfectFor = useMemo(() => ['airport', 'cruise', 'longDistance', 'business', 'hourly', 'tours'], []);
+  
+  // Add image path for vclass luxury van
+  const vanImage = '/images/fleet/vclass.png';
 
   return (
     <section ref={ref} className="py-16 sm:py-20 lg:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Image Side - PERFORMANCE FIX: Explicit dimensions to prevent CLS */}
+          {/* Image Side - UPDATED with actual vclass.png image */}
           <motion.div
             initial={shouldReduceMotion ? {} : { opacity: 0, x: -20 }}
             animate={isInView && !shouldReduceMotion ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
             <div 
-              className="relative aspect-[4/3] bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl sm:rounded-3xl flex items-center justify-center border-2 border-amber-200 hover:border-amber-400 transition-colors overflow-hidden"
+              className="relative aspect-[4/3] bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl sm:rounded-3xl border-2 border-amber-200 hover:border-amber-400 transition-colors overflow-hidden group"
               style={{ minHeight: '250px', willChange: isInView ? 'auto' : 'transform' }}
             >
-              {/* VIP Badge - MOBILE FIX: Responsive sizing */}
-              <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+              {/* VIP Badge */}
+              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
                 <span className="px-2 sm:px-3 py-1 text-xs font-bold text-white bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full flex items-center gap-1">
                   <StarIcon className="w-3 h-3" />
                   {t('vehicle.vipBadge')}
                 </span>
               </div>
-              {/* 7 Passengers badge - MOBILE FIX: Responsive sizing */}
-              <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+              {/* 7 Passengers badge */}
+              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
                 <span className="px-2 sm:px-3 py-1 text-xs font-bold text-amber-700 bg-amber-100 rounded-full flex items-center gap-1">
                   <UsersIcon className="w-3 h-3" />
                   {t('vehicle.passengersBadge')}
                 </span>
               </div>
-              <div className="text-center p-6 sm:p-8">
-                <VanIcon className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 text-amber-300 mx-auto mb-3 sm:mb-4" />
-                <p className="text-gray-500 text-xs sm:text-sm font-medium">{t('vehicle.name')}</p>
-              </div>
+              
+              {/* Luxury V-Class van image */}
+              <Image
+                src={vanImage}
+                alt={t('vehicle.name')}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                quality={90}
+                priority
+                onError={(e) => {
+                  // Fallback if vclass image fails to load
+                  console.error(`Failed to load luxury van image: ${vanImage}`);
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  
+                  // Show fallback content
+                  const fallback = document.createElement('div');
+                  fallback.className = 'absolute inset-0 flex items-center justify-center';
+                  fallback.innerHTML = `
+                    <div class="text-center p-6 sm:p-8">
+                      <svg class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 text-amber-300 mx-auto mb-3 sm:mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M8 17a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 11l2-6h12l2 6M4 11h16M4 11v6h16v-6" />
+                      </svg>
+                      <p class="text-gray-500 text-xs sm:text-sm font-medium">${t('vehicle.name')}</p>
+                    </div>
+                  `;
+                  target.parentElement?.appendChild(fallback);
+                }}
+              />
+              {/* Gradient overlay for luxury appearance */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
             </div>
           </motion.div>
 
-          {/* Content Side */}
+          {/* Content Side - remains the same */}
           <motion.div
             initial={shouldReduceMotion ? {} : { opacity: 0, x: 20 }}
             animate={isInView && !shouldReduceMotion ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.15 }}
           >
-            {/* Vehicle Title - MOBILE FIX: Responsive sizing */}
+            {/* Vehicle Title */}
             <div className="mb-4 sm:mb-6">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 break-words">
                 {t('vehicle.name')}
@@ -198,7 +231,6 @@ const VehicleSection = memo(function VehicleSection({
                 <CheckBadgeIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" />
                 {t('labels.perfectFor')}
               </h3>
-              {/* MOBILE FIX: Better wrapping and spacing */}
               <div className="flex flex-wrap gap-2">
                 {perfectFor.map((use) => (
                   <span
@@ -212,14 +244,13 @@ const VehicleSection = memo(function VehicleSection({
               </div>
             </div>
 
-            {/* Pricing & CTA - MOBILE FIX: Better mobile layout */}
+            {/* Pricing & CTA */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4 border-t border-gray-200">
               <div className="w-full sm:w-auto">
                 <p className="text-xs sm:text-sm text-gray-500">{t('labels.startingFrom')}</p>
                 <p className="text-2xl sm:text-3xl font-bold text-gray-900">{t('vehicle.price')}</p>
                 <p className="text-xs text-gray-500">{t('vehicle.priceNote')}</p>
               </div>
-              {/* MOBILE FIX: Proper touch targets (44x44px minimum) */}
               <div className="flex flex-col sm:flex-row gap-3 sm:ml-auto w-full sm:w-auto">
                 <a
                   href="https://wa.me/34617629115"
@@ -249,7 +280,7 @@ const VehicleSection = memo(function VehicleSection({
 });
 
 // ============================================================================
-// FEATURES GRID SECTION - Optimized
+// FEATURES GRID SECTION - Optimized (remains the same)
 // ============================================================================
 const FeaturesGridSection = memo(function FeaturesGridSection({ 
   t 
@@ -288,7 +319,7 @@ const FeaturesGridSection = memo(function FeaturesGridSection({
           </p>
         </motion.div>
 
-        {/* Highlights grid - MOBILE FIX: Better spacing on small screens */}
+        {/* Highlights grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {highlights.map((highlight, index) => (
             <HighlightCard

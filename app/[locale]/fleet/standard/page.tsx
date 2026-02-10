@@ -3,7 +3,7 @@
 import { useRef, useMemo, memo } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-
+import Image from 'next/image';
 // ============================================================================
 // PERFORMANCE: Memoized main component
 // ============================================================================
@@ -112,6 +112,12 @@ const VehiclesSection = memo(function VehiclesSection({
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px -50px 0px" });
 
+  // Define image paths for each vehicle
+  const vehicleImages = {
+    tesla: '/images/fleet/tesla.png',
+    prius: '/images/fleet/toyata-prius.png', // or toyota-prius.png based on actual filename
+  };
+
   const vehicles = useMemo(() => [
     {
       key: 'tesla',
@@ -121,6 +127,7 @@ const VehiclesSection = memo(function VehiclesSection({
       iconBg: 'bg-blue-100 text-blue-600',
       features: ['electric', 'leather', 'climate', 'navigation', 'drivers'],
       perfectFor: ['eco', 'airport', 'business', 'hourly', 'tours'],
+      image: vehicleImages.tesla, // Add image path
     },
     {
       key: 'prius',
@@ -130,8 +137,9 @@ const VehiclesSection = memo(function VehiclesSection({
       iconBg: 'bg-emerald-100 text-emerald-600',
       features: ['hybrid', 'luggage', 'climate', 'infotainment', 'drivers'],
       perfectFor: ['airport', 'hotel', 'cruise', 'local', 'hourly'],
+      image: vehicleImages.prius, // Add image path
     },
-  ], []);
+  ], [vehicleImages]);
 
   return (
     <section ref={ref} className="py-16 sm:py-20 lg:py-24 bg-gray-50">
@@ -167,6 +175,7 @@ const VehicleCard = memo(function VehicleCard({
     iconBg: string;
     features: string[];
     perfectFor: string[];
+    image: string; // Add this property
   };
   t: ReturnType<typeof useTranslations<'fleet.standard'>>;
   index: number;
@@ -182,16 +191,43 @@ const VehicleCard = memo(function VehicleCard({
       transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : index * 0.15 }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        {/* Image Side - PERFORMANCE FIX: Explicit dimensions to prevent CLS */}
+        {/* Image Side - UPDATED with actual images */}
         <div className={`${isReversed ? 'lg:order-2' : ''}`}>
           <div 
-            className={`aspect-[4/3] bg-gradient-to-br ${vehicle.bgColor} rounded-2xl sm:rounded-3xl flex items-center justify-center border-2 ${vehicle.borderColor} transition-colors overflow-hidden`}
+            className={`relative aspect-[4/3] bg-gradient-to-br ${vehicle.bgColor} rounded-2xl sm:rounded-3xl border-2 ${vehicle.borderColor} transition-colors overflow-hidden group`}
             style={{ minHeight: '250px', willChange: isInView ? 'auto' : 'transform' }}
           >
-            <div className="text-center p-6 sm:p-8">
-              <CarIcon className="w-20 h-20 sm:w-24 sm:h-24 text-gray-400 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-500 text-xs sm:text-sm font-medium">{t(`vehicles.${vehicle.key}.name`)}</p>
-            </div>
+            {/* Use Next.js Image component for optimization */}
+            <Image
+              src={vehicle.image}
+              alt={t(`vehicles.${vehicle.key}.name`)}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              quality={85}
+              priority={index < 2} // Load first 2 images with priority
+              onError={(e) => {
+                // Fallback if image fails to load
+                console.error(`Failed to load image: ${vehicle.image}`);
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                
+                // Show fallback content
+                const fallback = document.createElement('div');
+                fallback.className = 'absolute inset-0 flex items-center justify-center';
+                fallback.innerHTML = `
+                  <div class="text-center p-6 sm:p-8">
+                    <svg class="w-20 h-20 sm:w-24 sm:h-24 text-gray-400 mx-auto mb-3 sm:mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M8 17a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 11l2-6h12l2 6M4 11h16M4 11v6h16v-6" />
+                    </svg>
+                    <p class="text-gray-500 text-xs sm:text-sm font-medium">${t(`vehicles.${vehicle.key}.name`)}</p>
+                  </div>
+                `;
+                target.parentElement?.appendChild(fallback);
+              }}
+            />
+            {/* Gradient overlay for better visual appeal */}
+            <div className="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-transparent" />
           </div>
         </div>
 

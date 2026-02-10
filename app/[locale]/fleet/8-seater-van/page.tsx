@@ -3,6 +3,7 @@
 import { useRef, useMemo, memo } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 // ============================================================================
 // PERFORMANCE: Memoized main component
@@ -111,6 +112,12 @@ const VehiclesSection = memo(function VehiclesSection({
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px -50px 0px" });
 
+  // Define image paths for each van
+  const vehicleImages = {
+    vito: '/images/fleet/vito.png',
+    tourneo: '/images/fleet/ford.png', // Assuming ford.png is the Tourneo
+  };
+
   const vehicles = useMemo(() => [
     {
       key: 'vito',
@@ -120,6 +127,7 @@ const VehiclesSection = memo(function VehiclesSection({
       iconBg: 'bg-indigo-100 text-indigo-600',
       features: ['passengers', 'luggage', 'seats', 'climate', 'driver'],
       perfectFor: ['airport', 'cruise', 'hotel', 'sightseeing', 'hourly', 'longDistance'],
+      image: vehicleImages.vito, // Add image path
     },
     {
       key: 'tourneo',
@@ -129,8 +137,9 @@ const VehiclesSection = memo(function VehiclesSection({
       iconBg: 'bg-slate-100 text-slate-600',
       features: ['luggage', 'passengers', 'connectivity', 'climate', 'driver'],
       perfectFor: ['airport', 'cruise', 'hotel', 'tours', 'hourly', 'intercity'],
+      image: vehicleImages.tourneo, // Add image path
     },
-  ], []);
+  ], [vehicleImages]);
 
   return (
     <section ref={ref} className="py-16 sm:py-20 lg:py-24 bg-gray-50">
@@ -166,6 +175,7 @@ const VehicleCard = memo(function VehicleCard({
     iconBg: string;
     features: string[];
     perfectFor: string[];
+    image: string; // Add image property
   };
   t: ReturnType<typeof useTranslations<'fleet.eightSeaterVan'>>;
   index: number;
@@ -181,29 +191,58 @@ const VehicleCard = memo(function VehicleCard({
       transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : index * 0.15 }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        {/* Image Side - PERFORMANCE FIX: Explicit dimensions to prevent CLS */}
+        {/* Image Side - UPDATED with actual van images */}
         <div className={`${isReversed ? 'lg:order-2' : ''}`}>
           <div 
-            className={`relative aspect-[4/3] bg-gradient-to-br ${vehicle.bgColor} rounded-2xl sm:rounded-3xl flex items-center justify-center border-2 ${vehicle.borderColor} transition-colors overflow-hidden`}
+            className={`relative aspect-[4/3] bg-gradient-to-br ${vehicle.bgColor} rounded-2xl sm:rounded-3xl border-2 ${vehicle.borderColor} transition-colors overflow-hidden group`}
             style={{ minHeight: '250px', willChange: isInView ? 'auto' : 'transform' }}
           >
-            {/* 8 Passengers badge - MOBILE FIX: Responsive sizing */}
-            <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+            {/* 8 Passengers badge */}
+            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
               <span className={`px-2 sm:px-3 py-1 text-xs font-bold text-white bg-gradient-to-r ${vehicle.color} rounded-full flex items-center gap-1`}>
                 <UsersIcon className="w-3 h-3" />
                 {t('labels.eightPassengers')}
               </span>
             </div>
-            <div className="text-center p-6 sm:p-8">
-              <VanIcon className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 text-gray-400 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-500 text-xs sm:text-sm font-medium">{t(`vehicles.${vehicle.key}.name`)}</p>
-            </div>
+            
+            {/* Van image using Next.js Image component */}
+            <Image
+              src={vehicle.image}
+              alt={t(`vehicles.${vehicle.key}.name`)}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              quality={85}
+              priority={index < 2} // Load both images with priority
+              onError={(e) => {
+                // Fallback if van image fails to load
+                console.error(`Failed to load van image: ${vehicle.image}`);
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                
+                // Show fallback content
+                const fallback = document.createElement('div');
+                fallback.className = 'absolute inset-0 flex items-center justify-center';
+                fallback.innerHTML = `
+                  <div class="text-center p-6 sm:p-8">
+                    <svg class="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 text-gray-400 mx-auto mb-3 sm:mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M8 17a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 11l2-6h12l2 6M4 11h16M4 11v6h16v-6" />
+                    </svg>
+                    <p class="text-gray-500 text-xs sm:text-sm font-medium">${t(`vehicles.${vehicle.key}.name`)}</p>
+                  </div>
+                `;
+                target.parentElement?.appendChild(fallback);
+              }}
+            />
+            {/* Gradient overlay for better visibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
           </div>
         </div>
 
         {/* Content Side */}
         <div className={`${isReversed ? 'lg:order-1' : ''}`}>
-          {/* Vehicle Title - MOBILE FIX: Responsive sizing */}
+          {/* Vehicle Title */}
           <div className="mb-4 sm:mb-6">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 break-words">
               {t(`vehicles.${vehicle.key}.name`)}
@@ -239,7 +278,6 @@ const VehicleCard = memo(function VehicleCard({
               <CheckBadgeIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" />
               {t('labels.perfectFor')}
             </h3>
-            {/* MOBILE FIX: Better wrapping and spacing */}
             <div className="flex flex-wrap gap-2">
               {vehicle.perfectFor.map((use) => (
                 <span
@@ -253,14 +291,13 @@ const VehicleCard = memo(function VehicleCard({
             </div>
           </div>
 
-          {/* Pricing & CTA - MOBILE FIX: Better mobile layout */}
+          {/* Pricing & CTA */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4 border-t border-gray-200">
             <div className="w-full sm:w-auto">
               <p className="text-xs sm:text-sm text-gray-500">{t('labels.startingFrom')}</p>
               <p className="text-2xl sm:text-3xl font-bold text-gray-900">{t(`vehicles.${vehicle.key}.price`)}</p>
               <p className="text-xs text-gray-500">{t(`vehicles.${vehicle.key}.priceNote`)}</p>
             </div>
-            {/* MOBILE FIX: Proper touch targets (44x44px minimum) */}
             <a
               href="https://wa.me/34617629115"
               target="_blank"
@@ -277,7 +314,6 @@ const VehicleCard = memo(function VehicleCard({
     </motion.div>
   );
 });
-
 // ============================================================================
 // CTA SECTION - Optimized
 // ============================================================================

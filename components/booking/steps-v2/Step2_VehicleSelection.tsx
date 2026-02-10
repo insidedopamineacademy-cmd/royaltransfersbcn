@@ -20,48 +20,67 @@ const VEHICLE_CATEGORIES = [
   {
     id: 'standard-sedan' as VehicleCategory,
     name: 'Standard Sedan',
+    description: 'Toyota Prius+ or similar',
     capacity: 3,
     luggage: 2,
     basePrice: 35,
-    image: '/vehicles/standard-sedan.jpg',
+    image: '/images/fleet/toyota-prius-plus.jpg', // or tesla-model-3.jpg
+    features: ['Air-conditioned', 'Hybrid efficiency', 'Professional driver'],
   },
   {
     id: 'premium-sedan' as VehicleCategory,
     name: 'Premium Sedan',
+    description: 'Mercedes E-Class or BMW 5 Series',
     capacity: 3,
-    luggage: 2,
+    luggage: 3,
     basePrice: 55,
-    image: '/vehicles/premium-sedan.jpg',
+    image: '/images/fleet/mercedes-e-class.jpg', // or bmw-5-series.jpg
+    features: ['Executive seating', 'Premium interior', 'Climate control'],
+  },
+  {
+    id: 'luxury-sedan' as VehicleCategory,
+    name: 'Luxury Sedan',
+    description: 'Mercedes S-Class',
+    capacity: 3,
+    luggage: 3,
+    basePrice: 103,
+    image: '/images/fleet/mercedes-s-class.jpg',
+    features: ['First-class seating', 'Massage seats', 'Premium sound system'],
   },
   {
     id: 'standard-minivan-7' as VehicleCategory,
     name: 'Standard Minivan',
     subtitle: '7 seats',
+    description: 'Mercedes V-Class',
     capacity: 7,
     luggage: 7,
     basePrice: 75,
-    image: '/vehicles/standard-minivan.jpg',
-  },
-  {
-    id: 'executive-minivan' as VehicleCategory,
-    name: 'Executive Minivan',
-    subtitle: '7 seats',
-    capacity: 7,
-    luggage: 7,
-    basePrice: 95,
-    image: '/vehicles/executive-minivan.jpg',
+    image: '/images/fleet/mercedes-vclass.jpg',
+    features: ['Spacious interior', 'Dual climate control', 'Large luggage space'],
   },
   {
     id: 'standard-minivan-8' as VehicleCategory,
     name: 'Standard Minivan',
     subtitle: 'up to 8 passengers',
+    description: 'Mercedes Vito or Ford Tourneo',
     capacity: 8,
     luggage: 8,
     basePrice: 85,
-    image: '/vehicles/standard-minivan-8.jpg',
+    image: '/images/fleet/mercedes-vito.jpg', // or ford-tourneo-custom.jpg
+    features: ['8 full-size seats', 'Ample legroom', 'Large luggage capacity'],
+  },
+  {
+    id: 'executive-minivan' as VehicleCategory,
+    name: 'Executive Minivan',
+    subtitle: '7-8 seats',
+    description: 'Mercedes V-Class Executive',
+    capacity: 7,
+    luggage: 7,
+    basePrice: 95,
+    image: '/images/fleet/mercedes-vclass-executive.jpg',
+    features: ['Premium leather seats', 'Conference seating', 'Executive comfort'],
   },
 ] as const;
-
 export default function VehicleSelectionStep() {
   const t = useTranslations('step2');
   const { bookingData, updateBookingData, updatePricing } = useBooking();

@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 export default function LongDistancePage() {
   const t = useTranslations('services.longDistance');
@@ -306,6 +307,14 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.lo
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
+  // Define image paths for each vehicle
+  const vehicleImages = {
+    tesla: '/images/fleet/tesla.png',
+    prius: '/images/fleet/toyata-prius.png', // Note: spelling "toyata" not "toyota"
+    vito: '/images/fleet/vito.png',
+    vclass: '/images/fleet/vclass.png'
+  };
+
   const vehicles = [
     { key: 'tesla', pax: 4 },
     { key: 'prius', pax: 4 },
@@ -339,11 +348,33 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.lo
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-              className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/30 transition-colors"
+              className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/30 transition-all hover:shadow-2xl group"
             >
-              {/* Image placeholder */}
-              <div className="aspect-[4/3] bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                <CarIcon className="w-16 h-16 text-gray-500" />
+              {/* Image container */}
+              <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
+                <img 
+                  src={vehicleImages[vehicle.key as keyof typeof vehicleImages]}
+                  alt={t(`fleet.${vehicle.key}.name`)}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  onError={(e) => {
+                    // Fallback if image fails to load
+                    console.error(`Failed to load image: ${vehicleImages[vehicle.key as keyof typeof vehicleImages]}`);
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const fallback = document.createElement('div');
+                    fallback.className = 'w-full h-full flex items-center justify-center';
+                    fallback.innerHTML = `
+                      <div class="text-center">
+                        <svg class="w-16 h-16 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17h8M8 17a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 11l2-6h12l2 6M4 11h16M4 11v6h16v-6" />
+                        </svg>
+                      </div>
+                    `;
+                    target.parentElement?.appendChild(fallback);
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent" />
               </div>
               <div className="p-5">
                 <h3 className="text-lg font-bold text-white mb-1">

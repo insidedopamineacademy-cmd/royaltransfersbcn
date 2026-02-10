@@ -2,9 +2,8 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-
+import Image from 'next/image';
 export default function AirportTaxiPage() {
   const t = useTranslations('services.airportTaxi');
 
@@ -336,10 +335,10 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.ai
 
   // Create a mapping of vehicle keys to image paths
   const vehicleImages = {
-    tesla: '/images/tesla.png',
-    prius: '/images/toyota-prius.png',
-    vito: '/images/vito.png',
-    vclass: '/images/vclass.png'
+    tesla: '/images/fleet/tesla.png',
+    prius: '/images/fleet/toyata-prius.png',
+    vito: '/images/fleet/vito.png',
+    vclass: '/images/fleet/vclass.png'
   };
 
   const vehicles = [

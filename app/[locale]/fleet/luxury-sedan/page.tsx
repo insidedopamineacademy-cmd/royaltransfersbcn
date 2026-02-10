@@ -3,6 +3,7 @@
 import { useRef, useMemo, memo } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 // ============================================================================
 // PERFORMANCE: Memoized main component
@@ -112,6 +113,13 @@ const VehiclesSection = memo(function VehiclesSection({
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.1, margin: "0px 0px -50px 0px" });
 
+  // Define image paths for each luxury vehicle
+  const vehicleImages = {
+    sclass: '/images/fleet/sclass.png',
+    eclass: '/images/fleet/eclass.png',
+    bmw5: '/images/fleet/bmw.png',
+  };
+
   const vehicles = useMemo(() => [
     {
       key: 'sclass',
@@ -122,6 +130,7 @@ const VehiclesSection = memo(function VehiclesSection({
       features: ['seating', 'cabin', 'massage', 'sound', 'chauffeur'],
       perfectFor: ['business', 'vip', 'diplomatic', 'wedding', 'hourly', 'tours'],
       flagship: true,
+      image: vehicleImages.sclass, // Add image path
     },
     {
       key: 'eclass',
@@ -132,6 +141,7 @@ const VehiclesSection = memo(function VehiclesSection({
       features: ['luggage', 'passengers', 'climate', 'quiet', 'chauffeur'],
       perfectFor: ['airport', 'cruise', 'longDistance', 'meetings', 'hourly', 'tours'],
       flagship: false,
+      image: vehicleImages.eclass, // Add image path
     },
     {
       key: 'bmw5',
@@ -142,8 +152,9 @@ const VehiclesSection = memo(function VehiclesSection({
       features: ['trunk', 'seating', 'sound', 'comfort', 'chauffeur'],
       perfectFor: ['airport', 'cruise', 'longDistance', 'business', 'hourly', 'tours'],
       flagship: false,
+      image: vehicleImages.bmw5, // Add image path
     },
-  ], []);
+  ], [vehicleImages]);
 
   return (
     <section ref={ref} className="py-16 sm:py-20 lg:py-24 bg-gray-50">
@@ -180,6 +191,7 @@ const VehicleCard = memo(function VehicleCard({
     features: string[];
     perfectFor: string[];
     flagship: boolean;
+    image: string; // Add image property
   };
   t: ReturnType<typeof useTranslations<'fleet.luxurySedan'>>;
   index: number;
@@ -195,30 +207,59 @@ const VehicleCard = memo(function VehicleCard({
       transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : index * 0.15 }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        {/* Image Side - PERFORMANCE FIX: Explicit dimensions to prevent CLS */}
+        {/* Image Side - UPDATED with actual luxury car images */}
         <div className={`${isReversed ? 'lg:order-2' : ''}`}>
           <div 
-            className={`relative aspect-[4/3] bg-gradient-to-br ${vehicle.bgColor} rounded-2xl sm:rounded-3xl flex items-center justify-center border-2 ${vehicle.borderColor} transition-colors overflow-hidden`}
+            className={`relative aspect-[4/3] bg-gradient-to-br ${vehicle.bgColor} rounded-2xl sm:rounded-3xl border-2 ${vehicle.borderColor} transition-colors overflow-hidden group`}
             style={{ minHeight: '250px', willChange: isInView ? 'auto' : 'transform' }}
           >
-            {/* Flagship badge - MOBILE FIX: Responsive sizing */}
+            {/* Flagship badge */}
             {vehicle.flagship && (
-              <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
                 <span className="px-2 sm:px-3 py-1 text-xs font-bold text-white bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full">
                   {t('labels.flagship')}
                 </span>
               </div>
             )}
-            <div className="text-center p-6 sm:p-8">
-              <CarIcon className="w-20 h-20 sm:w-24 sm:h-24 text-gray-400 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-500 text-xs sm:text-sm font-medium">{t(`vehicles.${vehicle.key}.name`)}</p>
-            </div>
+            
+            {/* Luxury car image using Next.js Image component */}
+            <Image
+              src={vehicle.image}
+              alt={t(`vehicles.${vehicle.key}.name`)}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              quality={90} // Higher quality for luxury images
+              priority={index < 2} // Load first 2 images with priority
+              onError={(e) => {
+                // Fallback if luxury car image fails to load
+                console.error(`Failed to load luxury car image: ${vehicle.image}`);
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                
+                // Show fallback content
+                const fallback = document.createElement('div');
+                fallback.className = 'absolute inset-0 flex items-center justify-center';
+                fallback.innerHTML = `
+                  <div class="text-center p-6 sm:p-8">
+                    <svg class="w-20 h-20 sm:w-24 sm:h-24 text-gray-400 mx-auto mb-3 sm:mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M8 17a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 11l2-6h12l2 6M4 11h16M4 11v6h16v-6" />
+                    </svg>
+                    <p class="text-gray-500 text-xs sm:text-sm font-medium">${t(`vehicles.${vehicle.key}.name`)}</p>
+                    ${vehicle.flagship ? '<span class="mt-2 inline-block px-2 py-1 text-xs font-bold text-amber-700 bg-amber-100 rounded-full">Flagship</span>' : ''}
+                  </div>
+                `;
+                target.parentElement?.appendChild(fallback);
+              }}
+            />
+            {/* Gradient overlay for luxury appearance */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
           </div>
         </div>
 
         {/* Content Side */}
         <div className={`${isReversed ? 'lg:order-1' : ''}`}>
-          {/* Vehicle Title - MOBILE FIX: Responsive sizing */}
+          {/* Vehicle Title */}
           <div className="mb-4 sm:mb-6">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 break-words">
               {t(`vehicles.${vehicle.key}.name`)}
@@ -228,7 +269,7 @@ const VehicleCard = memo(function VehicleCard({
             </p>
           </div>
 
-          {/* Description - MOBILE FIX: Better readability */}
+          {/* Description */}
           <p className="text-sm sm:text-base text-gray-600 mb-5 sm:mb-6 leading-relaxed">
             {t(`vehicles.${vehicle.key}.description`)}
           </p>
@@ -259,7 +300,6 @@ const VehicleCard = memo(function VehicleCard({
               <CheckBadgeIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" />
               {t('labels.perfectFor')}
             </h3>
-            {/* MOBILE FIX: Better wrapping and spacing */}
             <div className="flex flex-wrap gap-2">
               {vehicle.perfectFor.map((use) => (
                 <span
@@ -273,14 +313,13 @@ const VehicleCard = memo(function VehicleCard({
             </div>
           </div>
 
-          {/* Pricing & CTA - MOBILE FIX: Better mobile layout */}
+          {/* Pricing & CTA */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4 border-t border-gray-200">
             <div className="w-full sm:w-auto">
               <p className="text-xs sm:text-sm text-gray-500">{t('labels.startingFrom')}</p>
               <p className="text-2xl sm:text-3xl font-bold text-gray-900">{t(`vehicles.${vehicle.key}.price`)}</p>
               <p className="text-xs text-gray-500">{t(`vehicles.${vehicle.key}.priceNote`)}</p>
             </div>
-            {/* MOBILE FIX: Proper touch targets (44x44px minimum) */}
             <div className="flex flex-col sm:flex-row gap-3 sm:ml-auto w-full sm:w-auto">
               <a
                 href="https://wa.me/34617629115"
