@@ -4,7 +4,7 @@ import { useRef, useMemo, memo } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/lib/navigation';
-
+import Image from 'next/image';
 // ============================================================================
 // PERFORMANCE: Memoized main component
 // ============================================================================
@@ -101,6 +101,11 @@ const HeroSection = memo(function HeroSection({
 // ============================================================================
 // STORY SECTION - Optimized
 // ============================================================================
+
+
+
+// Adjust import path as needed
+
 const StorySection = memo(function StorySection({ 
   t 
 }: { 
@@ -135,36 +140,66 @@ const StorySection = memo(function StorySection({
             </p>
           </motion.div>
 
-          {/* Image Placeholder - PERFORMANCE FIX: Explicit dimensions to prevent CLS */}
+          {/* Image Container */}
           <motion.div
             initial={shouldReduceMotion ? {} : { opacity: 0, x: 20 }}
             animate={isInView && !shouldReduceMotion ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.15 }}
             className="relative"
           >
+            {/* Main Image Container - Using fleet images */}
             <div 
-              className="aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center overflow-hidden"
+              className="relative aspect-[4/2] rounded-2xl overflow-hidden shadow-xl"
               style={{ 
-                minHeight: '250px', // Prevent collapse on mobile
+                minHeight: '150px',
                 willChange: isInView ? 'auto' : 'transform' 
               }}
             >
-              <div className="text-center p-6 sm:p-8">
-                <CarIcon className="w-16 h-16 sm:w-20 sm:h-20 text-gray-400 mx-auto mb-3 sm:mb-4" />
-                <p className="text-gray-500 text-xs sm:text-sm font-medium">Premium Transfer Service</p>
+              {/* Option 1: Single fleet image */}
+              <Image
+                src="/images/fleet/luxury-chauffeur.png" // or use luxury-sedan.png, standard-van.png, etc.
+                alt={t('story.imageAlt') || "Our premium chauffeur service vehicle"}
+                fill
+                sizes="(max-width: 1000px) 80vw, 50vw"
+                className="object-cover"
+                priority={false}
+                quality={85}
+                onError={(e) => {
+                  // Fallback if image doesn't exist
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+              
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+              
+              {/* Text overlay */}
+              <div className="absolute bottom-4 left-4 right-4 text-white z-10">
+                <p className="text-sm sm:text-base font-semibold opacity-95">Premium Chauffeur Service</p>
+                <p className="text-xs sm:text-sm opacity-80 mt-1">Mercedes V-Class Luxury Van</p>
               </div>
             </div>
-            {/* Decorative element - hidden on mobile to reduce clutter */}
+            
+            {/* Decorative element with smaller car image */}
             <div 
-              className="hidden sm:block absolute -bottom-4 -right-4 w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-amber-400 to-amber-500 rounded-2xl -z-10"
-              aria-hidden="true"
-            />
+              className="hidden sm:block absolute -bottom-4 -right-4 w-20 h-20 lg:w-24 lg:h-24 rounded-2xl overflow-hidden border-4 border-white shadow-lg -z-10"
+            >
+              <Image
+                src="/images/fleet/standard-sedan.png"
+                alt="Standard sedan"
+                fill
+                sizes="96px"
+                className="object-cover"
+              />
+            </div>
           </motion.div>
         </div>
       </div>
     </section>
   );
 });
+
+
 
 // ============================================================================
 // OFFER SECTION - Optimized with staggered animations

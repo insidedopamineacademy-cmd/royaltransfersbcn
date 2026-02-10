@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/lib/navigation';
 import BookingWizard from '@/components/booking/BookingWizard';
 import { BookingProvider } from '@/lib/booking/context';
+import Image from 'next/image';
 
 export default function HomePage() {
   const t = useTranslations('home');
@@ -309,15 +310,46 @@ function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'home'>
 // ============================================================================
 // FLEET SECTION - Optimized
 // ============================================================================
+
+// ... other imports
+
 function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   const vehicles = [
-    { key: 'standard', href: '/fleet/standard', passengers: 3, luggage: 2, price: '€35' },
-    { key: 'luxurySedan', href: '/fleet/luxury-sedan', passengers: 3, luggage: 2, price: '€55' },
-    { key: 'eightSeaterVan', href: '/fleet/8-seater-van', passengers: 8, luggage: 8, price: '€75' },
-    { key: 'luxuryChaufferVan', href: '/fleet/luxury-chauffer-van', passengers: 7, luggage: 7, price: '€95' },
+    { 
+      key: 'standard', 
+      href: '/fleet/standard', 
+      passengers: 3, 
+      luggage: 2, 
+      price: '€35',
+      image: '/images/fleet/standard-sedan.png'
+    },
+    { 
+      key: 'luxurySedan', 
+      href: '/fleet/luxury-sedan', 
+      passengers: 3, 
+      luggage: 2, 
+      price: '€55',
+      image: '/images/fleet/luxury-sedan.png'
+    },
+    { 
+      key: 'eightSeaterVan', 
+      href: '/fleet/8-seater-van', 
+      passengers: 8, 
+      luggage: 8, 
+      price: '€75',
+      image: '/images/fleet/standard-van.png'
+    },
+    { 
+      key: 'luxuryChaufferVan', 
+      href: '/fleet/luxury-chauffer-van', 
+      passengers: 7, 
+      luggage: 7, 
+      price: '€95',
+      image: '/images/fleet/luxury-chauffeur.png'
+    },
   ];
 
   return (
@@ -349,15 +381,26 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) 
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="group"
             >
               <Link
                 href={vehicle.href}
                 className="block h-full bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-300 hover:shadow-xl transition-all"
               >
-                {/* Image placeholder */}
-                <div className="aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                  <CarIcon className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400" />
+                {/* REPLACE THIS: Image placeholder with actual Image component */}
+                <div className="aspect-[4/2.8] relative overflow-hidden bg-gray-100">
+                  <Image
+                    src={vehicle.image}
+                    alt={t(`fleet.${vehicle.key}.title`)}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1245px) 80vw, 85vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    priority={index < 2} // Only first 2 images load with priority
+                  />
+                  {/* Optional overlay for better text contrast */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
                 </div>
+                {/* END REPLACEMENT */}
 
                 <div className="p-4 md:p-6">
                   <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
