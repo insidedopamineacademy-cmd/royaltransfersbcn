@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl';
 import { useBooking } from '@/lib/booking/context';
 import { formatPrice, calculatePrice } from '@/lib/booking/utils';
 import type { VehicleCategory } from '@/lib/booking/types';
+import Image from 'next/image';
 
 // Memoized vehicle categories
 const VEHICLE_CATEGORIES = [
@@ -24,7 +25,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 2,
     basePrice: 35,
-    image: '/images/fleet/toyota-prius.png', // or tesla-model-3.jpg
+    image: '/images/fleet/toyota-prius.png',
     features: ['Air-conditioned', 'Hybrid efficiency', 'Professional driver'],
   },
   {
@@ -34,7 +35,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 3,
     basePrice: 55,
-    image: '/images/fleet/eclass.png', // or bmw-5-series.jpg
+    image: '/images/fleet/eclass.png',
     features: ['Executive seating', 'Premium interior', 'Climate control'],
   },
   {
@@ -66,7 +67,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 8,
     luggage: 8,
     basePrice: 85,
-    image: '/images/fleet/vito.png', // or ford-tourneo-custom.jpg
+    image: '/images/fleet/vito.png',
     features: ['8 full-size seats', 'Ample legroom', 'Large luggage capacity'],
   },
   {
@@ -81,6 +82,7 @@ const VEHICLE_CATEGORIES = [
     features: ['Premium leather seats', 'Conference seating', 'Executive comfort'],
   },
 ] as const;
+
 export default function VehicleSelectionStep() {
   const t = useTranslations('step2');
   const { bookingData, updateBookingData, updatePricing } = useBooking();
@@ -107,10 +109,10 @@ export default function VehicleSelectionStep() {
           id: vehicle.id,
           category: vehicle.id,
           name: vehicle.name,
-          description: '',
+          description: vehicle.description || '',
           image: vehicle.image,
           capacity: { passengers: vehicle.capacity, luggage: vehicle.luggage },
-          features: [],
+          features: [...vehicle.features], // Spread to convert readonly to mutable
           basePrice: vehicle.basePrice,
           pricePerKm: 1.2,
           pricePerHour: 45,
@@ -331,10 +333,12 @@ interface Vehicle {
   id: string;
   name: string;
   subtitle?: string;
+  description?: string;
   capacity: number;
   luggage: number;
   basePrice: number;
   image: string;
+  features?: readonly string[]; // Changed to readonly to match VEHICLE_CATEGORIES
 }
 
 const VehicleCard = React.memo(({
@@ -373,16 +377,29 @@ const VehicleCard = React.memo(({
         </div>
       )}
 
-      {/* Vehicle Image Placeholder */}
-      <div className={`aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center ${isSelected ? 'from-blue-50 to-cyan-50' : ''}`}>
-        <CarIcon className="w-16 h-16 sm:w-20 sm:h-20 text-gray-400" />
+      {/* Vehicle Image */}
+      <div className={`relative aspect-[4/3] overflow-hidden ${
+        isSelected ? 'bg-gradient-to-br from-blue-50 to-cyan-50' : 'bg-gradient-to-br from-gray-50 to-gray-100'
+      }`}>
+        <Image
+          src={vehicle.image}
+          alt={`${vehicle.name} - ${vehicle.description || ''}`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-contain p-4 sm:p-6"
+          priority={index < 3}
+          quality={90}
+        />
       </div>
 
       {/* Vehicle Info */}
       <div className="p-4 sm:p-5">
         <h3 className="text-base sm:text-lg font-bold text-gray-900">{vehicle.name}</h3>
         {vehicle.subtitle && (
-          <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">{vehicle.subtitle}</p>
+          <p className="text-xs sm:text-sm text-gray-600 mb-1">{vehicle.subtitle}</p>
+        )}
+        {vehicle.description && (
+          <p className="text-xs text-gray-500 mb-2 sm:mb-3">{vehicle.description}</p>
         )}
 
         {/* Capacity */}
@@ -423,13 +440,6 @@ SummaryItem.displayName = 'SummaryItem';
 // ============================================================================
 // ICON COMPONENTS (Memoized)
 // ============================================================================
-
-const CarIcon = React.memo(({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M8 17h8M8 17a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 11l2-6h12l2 6M4 11h16M4 11v6h16v-6" />
-  </svg>
-));
-CarIcon.displayName = 'CarIcon';
 
 const UserIcon = React.memo(({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
