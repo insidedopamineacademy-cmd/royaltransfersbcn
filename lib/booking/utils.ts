@@ -44,7 +44,7 @@ export function calculatePrice(
   }
 
   // Airport fee (if pickup or dropoff is airport)
-  if (isAirportLocation(bookingData.pickup) || isAirportLocation(bookingData.dropoff)) {
+ if (isAirportLocation(bookingData.pickup) || isAirportLocation(bookingData.dropoff)) {
     airportFee = PRICING_RULES.airportFee;
   }
 
@@ -155,23 +155,31 @@ export function getRecommendedVehicle(
 /**
  * Check if location is an airport
  */
-export function isAirportLocation(location: Location): boolean {
+export function isAirportLocation(location?: Location): boolean {
+  if (!location?.address) return false;
+
+  const addr = location.address.toLowerCase();
+
   return (
     location.type === 'airport' ||
-    location.address.toLowerCase().includes('airport') ||
-    location.address.toLowerCase().includes('bcn') ||
-    location.address.toLowerCase().includes('el prat')
+    addr.includes('airport') ||
+    addr.includes('bcn') ||
+    addr.includes('el prat')
   );
 }
 
 /**
  * Check if location is a cruise port
  */
-export function isCruisePort(location: Location): boolean {
+export function isCruisePort(location?: Location): boolean {
+  if (!location?.address) return false;
+
+  const addr = location.address.toLowerCase();
+
   return (
     location.type === 'cruise' ||
-    location.address.toLowerCase().includes('cruise') ||
-    location.address.toLowerCase().includes('port')
+    addr.includes('cruise') ||
+    addr.includes('port')
   );
 }
 
