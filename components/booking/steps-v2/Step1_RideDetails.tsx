@@ -1,40 +1,135 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
-import { motion, AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion';
+import React, { useState, useEffect, useMemo, useCallback, memo, useRef } from 'react';
+import { m, AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useBooking } from '@/lib/booking/context';
 import LocationAutocomplete from '../ui/LocationAutocomplete';
 import { calculateDistanceByPlaceId } from '@/app/[locale]/services/googleMaps';
 import { getMinBookableDate } from '@/lib/booking/utils';
+import type { ServiceType, TransferType } from '@/lib/booking/types';
 
 type ServiceCategory = 'distance' | 'hourly';
-type TransferType = 'oneWay' | 'return';
 
 const RideDetailsStep = memo(function RideDetailsStep() {
   const t = useTranslations('step1');
   const { bookingData, updateBookingData } = useBooking();
   const prefersReducedMotion = useReducedMotion();
-  
-  // Initialize state from bookingData (preserves homepage selections)
-  const [serviceCategory, setServiceCategory] = useState<ServiceCategory>(() => {
-    // Check if coming from homepage with serviceType set
-    if (bookingData.serviceType === 'airport' || bookingData.serviceType === 'cityToCity') {
-      return 'distance';
-    } else if (bookingData.serviceType === 'hourly') {
-      return 'hourly';
+
+  // ----------------------------
+  // Helpers
+  // ----------------------------
+  const minDateTime = useMemo(() => {
+    const d = getMinBookableDate();
+    d.setSeconds(0, 0);
+    return d;
+  }, []);
+
+  const toDateString = (d: Date) => d.toISOString().slice(0, 10);
+
+  const toTimeString = (d: Date) => {
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    return `${hh}:${mm}`;
+  };
+
+  const minDateString = useMemo(() => toDateString(minDateTime), [minDateTime]);
+
+  // ----------------------------
+  // ✅ Single source of truth: derive UI state from bookingData
+  // (No local mirror state = no infinite loops)
+  // ----------------------------
+  const serviceCategory: ServiceCategory =
+    bookingData.serviceType === 'hourly' ? 'hourly' : 'distance';
+
+  const transferType: TransferType =
+    bookingData.transferType === 'return' ? 'return' : 'oneWay';
+
+  const hourlyDuration = bookingData.hourlyDuration ?? 2;
+
+  // prevent strict-mode double init loops
+  const didInitRef = useRef(false);
+
+  // ----------------------------
+  // ✅ Ensure bookingData has a valid default date/time (run once)
+  // ----------------------------
+  useEffect(() => {
+    if (didInitRef.current) return;
+    didInitRef.current = true;
+
+    const currentDate = bookingData.dateTime.date;
+    const currentTime = bookingData.dateTime.time;
+
+    if (!currentDate || !currentTime) {
+      updateBookingData({
+        dateTime: {
+          ...bookingData.dateTime,
+          date: toDateString(minDateTime),
+          time: toTimeString(minDateTime),
+        },
+      });
+      return;
     }
-    // Default
-    return 'distance';
-  });
-  
-  const [transferType, setTransferType] = useState<TransferType>(() => {
-    // Preserve transfer type from homepage
-    const bookingDataWithTransfer = bookingData as { transferType?: string };
-    return bookingDataWithTransfer.transferType === 'return' ? 'return' : 'oneWay';
-  });
-  
-  const [duration, setDuration] = useState<number>(3);
+
+    const selected = new Date(`${currentDate}T${currentTime}:00`);
+    if (!Number.isFinite(selected.getTime())) return;
+
+    selected.setSeconds(0, 0);
+
+    if (selected.getTime() < minDateTime.getTime()) {
+      updateBookingData({
+        dateTime: {
+          ...bookingData.dateTime,
+          date: toDateString(minDateTime),
+          time: toTimeString(minDateTime),
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ----------------------------
+  // Return date/time rules
+  // ----------------------------
+  const minReturnDate = useMemo(() => {
+    if (!bookingData.dateTime.date) return '';
+    const d = new Date(`${bookingData.dateTime.date}T00:00:00`);
+    d.setDate(d.getDate() + 1);
+    return toDateString(d);
+  }, [bookingData.dateTime.date]);
+
+  const ensureReturnIsValid = useCallback(
+    (returnDate?: string, returnTime?: string) => {
+      if (bookingData.serviceType !== 'distance') return;
+      if (bookingData.transferType !== 'return') return;
+
+      const pd = bookingData.dateTime.date;
+      const pt = bookingData.dateTime.time;
+      if (!pd || !pt || !returnDate || !returnTime) return;
+
+      const pickupTS = new Date(`${pd}T${pt}:00`).getTime();
+      const returnTS = new Date(`${returnDate}T${returnTime}:00`).getTime();
+
+      if (!Number.isFinite(pickupTS) || !Number.isFinite(returnTS)) return;
+
+      if (returnTS <= pickupTS) {
+        const nextDay = new Date(`${pd}T${pt}:00`);
+        nextDay.setDate(nextDay.getDate() + 1);
+        updateBookingData({
+          dateTime: {
+            ...bookingData.dateTime,
+            returnDate: toDateString(nextDay),
+            returnTime: toTimeString(nextDay),
+          },
+        });
+      }
+    },
+    [bookingData, updateBookingData]
+  );
+
+  // ----------------------------
+  // ✅ Distance calculation (distance bookings only)
+  // ----------------------------
   const [isCalculating, setIsCalculating] = useState(false);
   const [distanceInfo, setDistanceInfo] = useState<{
     distance: string;
@@ -42,140 +137,130 @@ const RideDetailsStep = memo(function RideDetailsStep() {
     distanceKm: number;
   } | null>(null);
 
-  const minDate = getMinBookableDate();
-  const minDateString = minDate.toISOString().split('T')[0];
-
-  // Initialize default date and time if empty (for mobile display)
-  useEffect(() => {
-    // Set default date to tomorrow if empty
-    if (!bookingData.dateTime.date) {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const dateString = tomorrow.toISOString().split('T')[0];
-      
-      updateBookingData({
-        dateTime: {
-          date: dateString,
-          time: bookingData.dateTime.time || '10:00',
-        },
-      });
-    }
-    
-    // Set default time to 10:00 AM if empty
-    if (!bookingData.dateTime.time) {
-      updateBookingData({
-        dateTime: {
-          date: bookingData.dateTime.date,
-          time: '10:00',
-        },
-      });
-    }
-  }, []); // Run only once on mount
-
-  // Memoized time options in 12-hour AM/PM format
-  const timeOptions = useMemo(() => 
-    Array.from({ length: 48 }, (_, i) => {
-      const hour24 = Math.floor(i / 2);
-      const minute = i % 2 === 0 ? '00' : '30';
-      
-      // Convert to 12-hour format with AM/PM
-      let hour12 = hour24 % 12;
-      if (hour12 === 0) hour12 = 12;
-      const ampm = hour24 < 12 ? 'AM' : 'PM';
-      const display = `${hour12}:${minute} ${ampm}`;
-      const value24 = `${hour24.toString().padStart(2, '0')}:${minute}`;
-      
-      return { display, value: value24 };
-    }), []
-  );
-
-  // Memoized duration options
-  const durationOptions = useMemo(() => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], []);
-
-  // Memoized passenger options
-  const passengerOptions = useMemo(() => Array.from({ length: 8 }, (_, i) => i + 1), []);
-
-  // Debounced distance calculation
   const calculateDistance = useCallback(async () => {
-    if (
-      bookingData.pickup.placeId &&
-      bookingData.dropoff.placeId &&
-      bookingData.pickup.placeId !== bookingData.dropoff.placeId
-    ) {
-      setIsCalculating(true);
-      try {
-        const result = await calculateDistanceByPlaceId(
-          bookingData.pickup.placeId,
-          bookingData.dropoff.placeId
-        );
-        
-        const distanceKm = result.distance.value / 1000;
-        
-        setDistanceInfo({
-          distance: result.distance.text,
-          duration: result.duration.text,
-          distanceKm: distanceKm,
-        });
+    if (bookingData.serviceType !== 'distance') return;
 
-        updateBookingData({
-          distance: distanceKm,
-          duration: result.duration.value / 60,
-        });
-      } catch (error) {
-        console.error('Error calculating distance:', error);
-      } finally {
-        setIsCalculating(false);
-      }
+    const p1 = bookingData.pickup.placeId;
+    const p2 = bookingData.dropoff?.placeId;
+
+    if (!p1 || !p2 || p1 === p2) return;
+
+    setIsCalculating(true);
+    try {
+      const result = await calculateDistanceByPlaceId(p1, p2);
+      const distanceKm = result.distance.value / 1000;
+
+      setDistanceInfo({
+        distance: result.distance.text,
+        duration: result.duration.text,
+        distanceKm,
+      });
+
+      updateBookingData({
+        distance: distanceKm,
+        duration: result.duration.value / 60,
+      });
+    } catch (error) {
+      console.error('Error calculating distance:', error);
+    } finally {
+      setIsCalculating(false);
     }
-  }, [bookingData.pickup.placeId, bookingData.dropoff.placeId, updateBookingData]);
+  }, [bookingData.serviceType, bookingData.pickup.placeId, bookingData.dropoff?.placeId, updateBookingData]);
 
   useEffect(() => {
     calculateDistance();
   }, [calculateDistance]);
 
-  // Update service type when category changes
-  useEffect(() => {
-    const mappedServiceType = serviceCategory === 'distance' ? 'airport' : 'hourly';
-    console.log('🔄 Service category changed:', serviceCategory, '→', mappedServiceType);
-    updateBookingData({
-      serviceType: mappedServiceType,
-    });
-  }, [serviceCategory, updateBookingData]);
+  // ----------------------------
+  // Handlers (write directly to context)
+  // ----------------------------
+  const handleServiceCategoryChange = useCallback(
+    (category: ServiceCategory) => {
+      const mappedServiceType: ServiceType = category === 'hourly' ? 'hourly' : 'distance';
 
-  // Update transfer type in booking data
-  useEffect(() => {
-    console.log('🔄 Transfer type changed:', transferType);
-    updateBookingData({
-      transferType: transferType,
-    } as Partial<typeof bookingData & { transferType: string }>);
-  }, [transferType, updateBookingData]);
+      // 1) Set serviceType
+      updateBookingData({ serviceType: mappedServiceType });
 
-  const handleServiceCategoryChange = useCallback((category: ServiceCategory) => {
-    console.log('👆 User clicked service tab:', category);
-    setServiceCategory(category);
-  }, []);
+      // 2) Cleanup/normalize depending on service
+      if (mappedServiceType === 'hourly') {
+        updateBookingData({
+          // hourly should never carry distance-only values
+          dropoff: { address: '' },
+          distance: undefined,
+          duration: undefined,
+          transferType: 'oneWay',
+          dateTime: {
+            ...bookingData.dateTime,
+            returnDate: undefined,
+            returnTime: undefined,
+          },
+          hourlyDuration: bookingData.hourlyDuration ?? 2,
+        });
+      } else {
+        // distance: remove hourly-only duration
+        updateBookingData({
+          hourlyDuration: undefined,
+          transferType: bookingData.transferType ?? 'oneWay',
+        });
+      }
+    },
+    [updateBookingData, bookingData.dateTime, bookingData.hourlyDuration, bookingData.transferType]
+  );
 
-  const handleTransferTypeChange = useCallback((type: TransferType) => {
-    console.log('👆 User clicked transfer type:', type);
-    setTransferType(type);
-  }, []);
+  const handleTransferTypeChange = useCallback(
+    (type: TransferType) => {
+      // distance only
+      if (bookingData.serviceType !== 'distance') return;
+
+      updateBookingData({ transferType: type });
+
+      if (type === 'oneWay') {
+        if (bookingData.dateTime.returnDate || bookingData.dateTime.returnTime) {
+          updateBookingData({
+            dateTime: { ...bookingData.dateTime, returnDate: undefined, returnTime: undefined },
+          });
+        }
+        return;
+      }
+
+      // initialize return fields if missing
+      if (!bookingData.dateTime.returnDate || !bookingData.dateTime.returnTime) {
+        const base = new Date(
+          `${bookingData.dateTime.date || minDateString}T${bookingData.dateTime.time || '10:00'}:00`
+        );
+        base.setDate(base.getDate() + 1);
+        updateBookingData({
+          dateTime: {
+            ...bookingData.dateTime,
+            returnDate: toDateString(base),
+            returnTime: toTimeString(base),
+          },
+        });
+      }
+    },
+    [bookingData.serviceType, bookingData.dateTime, minDateString, updateBookingData]
+  );
+
+  const handleHourlyDurationChange = useCallback(
+    (hours: number) => {
+      if (bookingData.serviceType !== 'hourly') return;
+      updateBookingData({ hourlyDuration: hours });
+    },
+    [bookingData.serviceType, updateBookingData]
+  );
 
   return (
     <LazyMotion features={domAnimation} strict>
       <div className="space-y-6 sm:space-y-8">
         {/* Title */}
         <header className="text-center">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
-            {t('title')}
-          </h1>
-          <p className="text-sm sm:text-lg text-gray-600">
-            {t('subtitle')}
-          </p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">{t('title')}</h1>
+          <p className="text-sm sm:text-lg text-gray-600">{t('subtitle')}</p>
         </header>
 
         {/* Service Category Tabs */}
         <div className="max-w-md mx-auto">
-          <div 
+          <div
             className="bg-gray-100 rounded-xl p-1.5 sm:p-2 flex gap-1.5 sm:gap-2"
             role="tablist"
             aria-label={t('serviceType.aria')}
@@ -201,7 +286,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
 
         {/* Form Content */}
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={serviceCategory}
             initial={!prefersReducedMotion ? { opacity: 0, x: 20 } : { opacity: 1 }}
             animate={{ opacity: 1, x: 0 }}
@@ -210,14 +295,10 @@ const RideDetailsStep = memo(function RideDetailsStep() {
             className="max-w-3xl mx-auto space-y-4 sm:space-y-6"
             style={{ willChange: prefersReducedMotion ? 'auto' : 'opacity, transform' }}
           >
-            {/* Date & Time Row */}
+            {/* Date & Time */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {/* Pickup Date */}
               <div>
-                <label 
-                  htmlFor="pickup-date"
-                  className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                >
+                <label htmlFor="pickup-date" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('fields.date.label')}
                 </label>
                 <div className="relative">
@@ -228,62 +309,38 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                     id="pickup-date"
                     type="date"
                     value={bookingData.dateTime.date}
-                    onChange={(e) =>
-                      updateBookingData({
-                        dateTime: { ...bookingData.dateTime, date: e.target.value },
-                      })
-                    }
+                    onChange={(e) => {
+                      updateBookingData({ dateTime: { ...bookingData.dateTime, date: e.target.value } });
+                      ensureReturnIsValid(bookingData.dateTime.returnDate, bookingData.dateTime.returnTime);
+                    }}
                     min={minDateString}
                     aria-label={t('fields.date.label')}
                     className="w-full pl-11 pr-4 py-3 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-                    style={{
-                      colorScheme: 'light',
-                      WebkitAppearance: 'none',
-                      MozAppearance: 'textfield',
-                      fontSize: '16px', // Prevents iOS zoom on focus
-                      minHeight: '44px', // iOS tap target minimum
-                    }}
+                    style={{ colorScheme: 'light', fontSize: '16px', minHeight: '44px' }}
                   />
                 </div>
               </div>
 
-              {/* Pickup Time - 12-hour AM/PM format */}
               <div>
-                <label 
-                  htmlFor="pickup-time"
-                  className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                >
+                <label htmlFor="pickup-time" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('fields.time.label')}
                 </label>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10">
                     <ClockIconSmall className="w-5 h-5 text-gray-400" />
                   </div>
-                  <select
+                  <input
                     id="pickup-time"
+                    type="time"
                     value={bookingData.dateTime.time}
-                    onChange={(e) =>
-                      updateBookingData({
-                        dateTime: { ...bookingData.dateTime, time: e.target.value },
-                      })
-                    }
-                    aria-label={t('fields.time.label')}
-                    className="w-full pl-11 pr-10 py-3 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
-                    style={{
-                      fontSize: '16px', // Prevents iOS zoom on focus
-                      minHeight: '44px', // iOS tap target minimum
+                    onChange={(e) => {
+                      updateBookingData({ dateTime: { ...bookingData.dateTime, time: e.target.value } });
+                      ensureReturnIsValid(bookingData.dateTime.returnDate, bookingData.dateTime.returnTime);
                     }}
-                  >
-                    <option value="">{t('fields.time.placeholder')}</option>
-                    {timeOptions.map((time) => (
-                      <option key={time.value} value={time.value}>
-                        {time.display}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <ChevronDownIcon className="w-5 h-5 text-gray-400" />
-                  </div>
+                    aria-label={t('fields.time.label')}
+                    className="w-full pl-11 pr-4 py-3 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                    style={{ fontSize: '16px', minHeight: '44px' }}
+                  />
                 </div>
               </div>
             </div>
@@ -298,27 +355,25 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                 type="pickup"
               />
 
-              <LocationAutocomplete
-                value={bookingData.dropoff.address}
-                onChange={(location) => updateBookingData({ dropoff: location })}
-                placeholder={t('fields.dropoff.placeholder')}
-                label={t('fields.dropoff.label')}
-                type="dropoff"
-                pickupLocation={bookingData.pickup}
-              />
+              {serviceCategory === 'distance' && (
+                <LocationAutocomplete
+                  value={bookingData.dropoff?.address ?? ''}
+                  onChange={(location) => updateBookingData({ dropoff: location })}
+                  placeholder={t('fields.dropoff.placeholder')}
+                  label={t('fields.dropoff.label')}
+                  type="dropoff"
+                  pickupLocation={bookingData.pickup}
+                />
+              )}
             </div>
 
-            {/* Distance-Based: Transfer Type */}
+            {/* Transfer Type (distance only) */}
             {serviceCategory === 'distance' && (
               <div>
                 <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">
                   {t('fields.transferType.label')}
                 </label>
-                <div 
-                  className="grid grid-cols-2 gap-3 sm:gap-4"
-                  role="radiogroup"
-                  aria-label={t('fields.transferType.label')}
-                >
+                <div className="grid grid-cols-2 gap-3 sm:gap-4" role="radiogroup" aria-label={t('fields.transferType.label')}>
                   <TransferTypeButton
                     active={transferType === 'oneWay'}
                     onClick={() => handleTransferTypeChange('oneWay')}
@@ -335,29 +390,67 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                     note={t('fields.transferType.returnNote')}
                   />
                 </div>
+
+                {transferType === 'return' && (
+                  <div className="mt-4 rounded-xl border-2 border-blue-100 bg-blue-50/60 p-4 space-y-3">
+                    <p className="text-xs font-semibold text-blue-700 flex items-center gap-2">
+                      <ArrowsIcon className="w-4 h-4" />
+                      {t('fields.returnDetailsTitle')}
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-700 mb-2">{t('fields.returnDate.label')}</label>
+                        <input
+                          type="date"
+                          value={bookingData.dateTime.returnDate || ''}
+                          min={minReturnDate}
+                          onChange={(e) => {
+                            updateBookingData({ dateTime: { ...bookingData.dateTime, returnDate: e.target.value } });
+                            ensureReturnIsValid(e.target.value, bookingData.dateTime.returnTime);
+                          }}
+                          className="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                          style={{ fontSize: '16px', minHeight: '44px' }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-700 mb-2">{t('fields.returnTime.label')}</label>
+                        <input
+                          type="time"
+                          value={bookingData.dateTime.returnTime || ''}
+                          onChange={(e) => {
+                            updateBookingData({ dateTime: { ...bookingData.dateTime, returnTime: e.target.value } });
+                            ensureReturnIsValid(bookingData.dateTime.returnDate, e.target.value);
+                          }}
+                          className="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                          style={{ fontSize: '16px', minHeight: '44px' }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Hourly-Based: Duration */}
+            {/* Hourly Duration */}
             {serviceCategory === 'hourly' && (
               <div>
-                <label 
-                  htmlFor="duration"
-                  className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                >
+                <label htmlFor="hourlyDuration" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('fields.duration.label')}
                 </label>
                 <div className="relative">
                   <select
-                    id="duration"
-                    value={duration}
-                    onChange={(e) => setDuration(Number(e.target.value))}
+                    id="hourlyDuration"
+                    value={hourlyDuration}
+                    onChange={(e) => handleHourlyDurationChange(Number(e.target.value))}
                     aria-label={t('fields.duration.label')}
                     className="w-full pl-4 pr-10 py-3 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                    style={{ fontSize: '16px', minHeight: '44px' }}
                   >
-                    {durationOptions.map((hours) => (
-                      <option key={hours} value={hours}>
-                        {t('fields.duration.hours', { count: hours })}
+                    {Array.from({ length: 23 }, (_, i) => i + 2).map((h) => (
+                      <option key={h} value={h}>
+                        {t('fields.duration.hours', { count: h })}
                       </option>
                     ))}
                   </select>
@@ -365,18 +458,13 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                     <ChevronDownIcon className="w-5 h-5 text-gray-400" />
                   </div>
                 </div>
-                <p className="mt-2 text-[10px] sm:text-xs text-gray-500">
-                  {t('fields.duration.note')}
-                </p>
+                <p className="mt-2 text-[10px] sm:text-xs text-gray-500">{t('fields.duration.note')}</p>
               </div>
             )}
 
             {/* Passengers */}
             <div>
-              <label 
-                htmlFor="passengers"
-                className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-              >
+              <label htmlFor="passengers" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                 {t('fields.passengers.label')}
               </label>
               <div className="relative">
@@ -387,17 +475,13 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                   id="passengers"
                   value={bookingData.passengers.count}
                   onChange={(e) =>
-                    updateBookingData({
-                      passengers: {
-                        ...bookingData.passengers,
-                        count: Number(e.target.value),
-                      },
-                    })
+                    updateBookingData({ passengers: { ...bookingData.passengers, count: Number(e.target.value) } })
                   }
                   aria-label={t('fields.passengers.label')}
                   className="w-full pl-11 pr-10 py-3 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                  style={{ fontSize: '16px', minHeight: '44px' }}
                 >
-                  {passengerOptions.map((num) => (
+                  {Array.from({ length: 8 }, (_, i) => i + 1).map((num) => (
                     <option key={num} value={num}>
                       {t('fields.passengers.count', { count: num })}
                     </option>
@@ -410,8 +494,8 @@ const RideDetailsStep = memo(function RideDetailsStep() {
             </div>
 
             {/* Distance Info */}
-            {distanceInfo && !isCalculating && serviceCategory === 'distance' && (
-              <motion.div
+            {serviceCategory === 'distance' && distanceInfo && !isCalculating && (
+              <m.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
@@ -425,17 +509,15 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                     <p className="text-lg sm:text-xl font-bold text-gray-900">{distanceInfo.distance}</p>
                   </div>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-600 mb-1">{t('summary.time')}</p>
-                    <p className="text-lg sm:text-xl font-bold text-gray-900">{distanceInfo.duration}</p>
-                  </div>
-                  <div className="col-span-2 md:col-span-1">
                     <p className="text-xs sm:text-sm text-gray-600 mb-1">{t('summary.transferType')}</p>
-                    <p className="text-lg sm:text-xl font-bold text-gray-900">
+                     <p className="text-lg sm:text-xl font-bold text-gray-900">
                       {transferType === 'oneWay' ? t('fields.transferType.oneWay') : t('fields.transferType.return')}
                     </p>
+                    
                   </div>
+                  
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* Calculating Indicator */}
@@ -447,7 +529,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                 </div>
               </div>
             )}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
     </LazyMotion>
@@ -457,7 +539,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
 RideDetailsStep.displayName = 'RideDetailsStep';
 
 // ============================================================================
-// SERVICE TYPE BUTTON - Memoized
+// BUTTONS + ICONS (unchanged from your file)
 // ============================================================================
 
 const ServiceTypeButton = memo(function ServiceTypeButton({
@@ -482,9 +564,7 @@ const ServiceTypeButton = memo(function ServiceTypeButton({
       aria-selected={active}
       aria-label={ariaLabel}
       className={`flex-1 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 active:scale-95 ${
-        active
-          ? 'bg-white text-blue-600 shadow-md'
-          : 'text-gray-600 hover:text-gray-900'
+        active ? 'bg-white text-blue-600 shadow-md' : 'text-gray-600 hover:text-gray-900'
       }`}
     >
       <div className="flex items-center justify-center gap-1.5 sm:gap-2">
@@ -495,10 +575,6 @@ const ServiceTypeButton = memo(function ServiceTypeButton({
     </button>
   );
 });
-
-// ============================================================================
-// TRANSFER TYPE BUTTON - Memoized
-// ============================================================================
 
 const TransferTypeButton = memo(function TransferTypeButton({
   active,
@@ -522,32 +598,26 @@ const TransferTypeButton = memo(function TransferTypeButton({
       aria-checked={active}
       aria-label={ariaLabel}
       className={`px-4 sm:px-6 py-3 sm:py-4 rounded-xl border-2 font-semibold text-sm sm:text-base transition-all duration-200 active:scale-95 ${
-        active
-          ? 'border-blue-500 bg-blue-50 text-blue-700'
-          : 'border-gray-200 text-gray-700 hover:border-gray-300'
+        active ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-700 hover:border-gray-300'
       }`}
     >
       <div className="flex items-center justify-center gap-1.5 sm:gap-2">
         <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
         <span>{label}</span>
       </div>
-      {note && (
-        <p className="text-[10px] sm:text-xs text-gray-500 mt-1">
-          {note}
-        </p>
-      )}
+      {note && <p className="text-[10px] sm:text-xs text-gray-500 mt-1">{note}</p>}
     </button>
   );
 });
 
-// ============================================================================
-// ICON COMPONENTS - Memoized
-// ============================================================================
-
 const RouteIcon = memo(function RouteIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+      />
     </svg>
   );
 });

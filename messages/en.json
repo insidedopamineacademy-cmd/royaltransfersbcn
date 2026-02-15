@@ -88,14 +88,11 @@
   },
   "home": {
     "hero": {
-      "title": "Premium Airport Transfers",
+      "title": "Reliable Airport Transfers",
       "titleHighlight": "in Barcelona",
       "subtitle": "Experience luxury, comfort, and reliability with every journey. Professional drivers, premium vehicles, and seamless service from landing to destination.",
       "bookNow": "Book Your Transfer",
       "viewFleet": "View Our Fleet",
-      "trustBadge1": "4.9★ Rating",
-      "trustBadge2": "10K+ Rides",
-      "trustBadge3": "24/7 Service",
       "bookingSteps": {
         "title": "Book Your Transfer",
         "subtitle": "Start Your Journey",
@@ -268,7 +265,6 @@
     "termsConditions": "Terms & Conditions",
     "cookiePolicy": "Cookie Policy"
   },
-  
   "services": {
     "hourlyBooking": {
       "hero": {
@@ -395,11 +391,7 @@
         "whatsapp": "Chat & Book",
         "call": "Call Us 📞"
       }
-
-  },
-
-  
-  
+    },
     "cruisePortTaxi": {
       "structuredData": {
         "name": "Cruise Port Taxi Transfers Barcelona",
@@ -547,8 +539,6 @@
         }
       }
     },
-
-  
     "airportTaxi": {
       "structuredData": {
         "name": "Airport Taxi Transfers Barcelona",
@@ -737,7 +727,6 @@
       }
     }
   },
-  
   "fleet": {
     "standard": {
       "hero": {
@@ -801,8 +790,6 @@
         "call": "Call Us 📞"
       }
     },
-
-   
     "luxurySedan": {
       "hero": {
         "badge": "VIP Experience",
@@ -894,8 +881,6 @@
         "call": "Call Us 📞"
       }
     },
-
-   
     "eightSeaterVan": {
       "hero": {
         "badge": "8 Passengers",
@@ -962,8 +947,6 @@
         "call": "Call Us 📞"
       }
     },
-
-
     "luxuryVan": {
       "hero": {
         "badge": "Exclusive Service",
@@ -1031,7 +1014,6 @@
       }
     }
   },
-  
   "heroBooking": {
     "aria": {
       "bookingForm": "Transfer booking form",
@@ -1044,7 +1026,9 @@
     "transferType": {
       "label": "Transfer Type",
       "oneWay": "One Way",
-      "return": "Return"
+      "return": "Return",
+      "addReturn": "Add return trip",
+      "returnDetails": "Return trip details"
     },
     "fields": {
       "pickup": {
@@ -1061,6 +1045,16 @@
       "time": {
         "label": "Pickup time"
       },
+      "returnDate": {
+        "label": "Return date"
+      },
+      "returnTime": {
+        "label": "Return time"
+      },
+      "duration": {
+        "label": "Duration",
+        "hours": "{count, plural, =1 {Hour} other {Hours}}"
+      },
       "passengers": {
         "label": "Number of passengers",
         "count": "{count, plural, =1 {Passenger} other {Passengers}}"
@@ -1070,10 +1064,9 @@
       "search": "Search Transfers"
     },
     "validation": {
-      "fillAllFields": "Please fill in all fields"
+      "fillAllFields": "Please fill in all required fields"
     }
   },
-  
   "bookingWizard": {
     "steps": {
       "rideDetails": {
@@ -1107,8 +1100,6 @@
       "percentage": "{percentage}% Complete"
     }
   },
-
-  
   "step1": {
     "title": "Ride Details",
     "subtitle": "Choose your service type and enter ride information",
@@ -1147,6 +1138,14 @@
         "return": "Return",
         "returnNote": "Creates a new ride"
       },
+      "returnDetailsTitle": "Return Trip Details",
+      "returnDate": {
+        "label": "Return Date"
+      },
+      "returnTime": {
+        "label": "Return Time",
+        "placeholder": "Select time"
+      },
       "duration": {
         "label": "Duration (Hours)",
         "hours": "{count, plural, =1 {1 hour} other {{count} hours}}",
@@ -1164,22 +1163,24 @@
     },
     "calculating": "Calculating distance..."
   },
-  
   "step2": {
     "title": "Choose a Vehicle",
     "subtitle": "Select your preferred vehicle category",
     "summary": {
       "heading": "RIDE SUMMARY",
       "serviceType": "Service Type",
-      "distance": "Distance",
       "hourly": "Hourly",
       "transferType": "Transfer Type",
       "oneWay": "One Way",
+      "return": "Return",
+      "returnDateTime": "Return",
       "pickup": "Pickup",
       "dropoff": "Dropoff",
       "dateTime": "Date & Time",
       "distance": "Distance",
       "time": "Time",
+      "duration": "Duration",           
+      "hours": "hours",                
       "passengers": "Passengers",
       "notSet": "Not set"
     },
@@ -1210,7 +1211,6 @@
       "tax": "Tax (21% VAT)"
     }
   },
-  
   "step3": {
     "title": "Enter Contact Details",
     "subtitle": "We'll use this information to confirm your booking",
@@ -1264,27 +1264,28 @@
     "summary": {
       "heading": "BOOKING SUMMARY",
       "service": "Service",
-      "distance": "Distance-Based",
+      "distance": "Distance-Based",    
       "hourly": "Hourly-Based",
       "from": "From",
       "to": "To",
       "dateTime": "Date & Time",
       "at": "at",
-      "distance": "Distance",
       "passengers": "Passengers",
       "vehicle": "Vehicle",
       "childSeats": "Child Seats",
+      "paymentMethod": "Payment Method",
       "subtotal": "Subtotal",
       "tax": "Tax (21%)",
       "total": "Total",
       "notSet": "Not set"
     }
   },
-  
   "step4": {
     "title": "Booking Summary",
     "subtitle": "Review your booking details before confirming",
     "at": "at",
+    "returnAt": "Return",
+    "hours": "hours",                   
     "error": "Booking failed. Please try again.",
     "processing": "Processing...",
     "confirmButton": "Confirm Booking",
@@ -1308,6 +1309,7 @@
       "dateTime": "Date & Time",
       "distance": "Distance",
       "duration": "Duration",
+      "hourlyDuration": "Duration",      
       "vehicle": "Vehicle",
       "capacity": "Capacity",
       "childSeats": "Child Seats"
@@ -1327,9 +1329,11 @@
     },
     "priceSummary": {
       "heading": "Price Summary",
+      "selectedVehicle": "Selected vehicle price",
       "basePrice": "Base Price",
       "distanceCharge": "Distance Charge",
       "airportFee": "Airport Fee",
+      "timeCharge": "Time Charge",
       "childSeats": "Child Seats ({count})",
       "subtotal": "Subtotal",
       "tax": "Tax (21%)",
@@ -1346,39 +1350,32 @@
       }
     }
   },
-  
   "success": {
     "title": "Booking Confirmed!",
     "subtitleCash": "Your transfer has been reserved. Pay the driver in cash.",
     "subtitleCard": "Your payment was successful. Your transfer is confirmed.",
     "bookingId": "Booking ID",
-    
     "transferDetails": "Transfer Details",
     "customerDetails": "Customer Details",
     "paymentDetails": "Payment Details",
-    
     "pickup": "Pickup",
     "dropoff": "Dropoff",
     "dateTime": "Date & Time",
     "vehicle": "Vehicle",
     "passengers": "Passengers & Luggage",
     "flightNumber": "Flight Number",
-    
     "name": "Name",
     "email": "Email",
     "phone": "Phone",
-    
     "paymentMethod": "Payment Method",
     "paymentStatus": "Status",
     "totalPaid": "Total Paid",
-    
     "cash": "Cash",
     "card": "Credit Card",
     "paymentStatusPaid": "Paid",
     "paymentStatusCash": "Pay Driver",
     "paymentStatusProcessing": "Processing",
     "paymentStatusUnpaid": "Unpaid",
-    
     "quickActions": "Quick Actions",
     "emailSent": "Confirmation Email Sent",
     "downloadReceipt": "Download Receipt",
@@ -1386,7 +1383,6 @@
     "print": "Print Confirmation",
     "needHelp": "Need help with your booking?",
     "contactSupport": "Contact Support",
-    
     "whatsNext": {
       "title": "What's Next?",
       "step1": {
@@ -1402,9 +1398,7 @@
         "description": "Your driver will meet you at the pickup location"
       }
     },
-    
     "backToHome": "Back to Home",
-    
     "error": {
       "title": "Payment Verification Failed",
       "tryAgain": "Try Booking Again",
@@ -1412,43 +1406,19 @@
     }
   },
   "booking": {
-  "location": {
-    "pickupPlaceholder": "Enter pickup location...",
-    "dropoffPlaceholder": "Enter destination...",
-    "useMyLocation": "Use my current location",
-    "fallbackMode": "Autocomplete unavailable. You can still type addresses manually.",
-    "noResults": "No locations found. Try a different search.",
-    "errors": {
-      "geolocationUnsupported": "Geolocation is not supported by your browser",
-      "geolocationDenied": "Location permission denied",
-      "geolocationUnavailable": "Location information unavailable",
-      "geolocationTimeout": "Location request timed out",
-      "geocodingFailed": "Could not determine address"
+    "location": {
+      "pickupPlaceholder": "Enter pickup location...",
+      "dropoffPlaceholder": "Enter destination...",
+      "useMyLocation": "Use my current location",
+      "fallbackMode": "Autocomplete unavailable. You can still type addresses manually.",
+      "noResults": "No locations found. Try a different search.",
+      "errors": {
+        "geolocationUnsupported": "Geolocation is not supported by your browser",
+        "geolocationDenied": "Location permission denied",
+        "geolocationUnavailable": "Location information unavailable",
+        "geolocationTimeout": "Location request timed out",
+        "geocodingFailed": "Could not determine address"
+      }
     }
   }
- }
 }
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-  
-
-
-     
-    
-  
-
-
-
-

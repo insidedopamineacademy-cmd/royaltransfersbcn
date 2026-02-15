@@ -34,10 +34,10 @@ function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'h
 
   return (
     <section
-      id="booking"
-      ref={ref}
-      className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
-    >
+  id="booking"
+  ref={ref}
+  className="relative min-h-screen flex items-start sm:items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+>
       {/* Background decorative elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 -left-20 w-64 sm:w-96 lg:w-[500px] h-64 sm:h-96 lg:h-[500px] bg-blue-500/10 rounded-full blur-3xl" />
@@ -62,17 +62,10 @@ function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'h
           transition={{ duration: 0.5 }}
           className="text-center mb-8 sm:mb-12 lg:mb-16"
         >
-          {/* Trust badges */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
-            {['trustBadge1', 'trustBadge2', 'trustBadge3'].map((badge) => (
-              <span
-                key={badge}
-                className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-medium bg-white/10 backdrop-blur-sm text-gray-300 rounded-full border border-white/10"
-              >
-                {t(`hero.${badge}`)}
-              </span>
-            ))}
-          </div>
+          
+                
+              
+          
 
           {/* Main headline */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight px-4">
@@ -87,13 +80,8 @@ function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'h
             {t('hero.subtitle')}
           </p>
 
-          {/* Booking section title */}
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full mb-6 sm:mb-8">
-            <span className="w-2 h-2 bg-blue-500 rounded-full" />
-            <span className="text-xs sm:text-sm font-semibold text-blue-400">
-              {t('hero.bookingSteps.title')}
-            </span>
-          </div>
+        
+          
         </motion.div>
 
         {/* Booking Form */}

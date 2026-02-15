@@ -1,14 +1,13 @@
 'use client';
 
 /**
- * Step 3: Enter Contact Details - IMPROVED
- * - Mobile optimized
- * - SEO friendly
- * - Performance optimized
- * - i18n ready
+ * Step 3: Enter Contact Details - FIXED
+ * - Single source of truth: bookingData (no local mirror state)
+ * - Payment toggle persists across steps (stored in bookingData.paymentMethod)
+ * - Scroll to top on mobile when step mounts
  */
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { m } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useBooking } from '@/lib/booking/context';
@@ -19,31 +18,39 @@ import type { PaymentMethod } from '@/lib/booking/types';
 export default function ContactDetailsStep() {
   const t = useTranslations('step3');
   const { bookingData, updateBookingData } = useBooking();
-  
-  // Initialize payment method from booking data or default to 'cash'
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(() => {
-    return bookingData.paymentMethod || 'cash';
-  });
 
-  // Save payment method to booking context whenever it changes
+  // ✅ derive from context (never resets)
+  const paymentMethod: PaymentMethod = bookingData.paymentMethod ?? 'cash';
+
+  // ✅ scroll to top on mobile when Step3 mounts
   useEffect(() => {
-    updateBookingData({
-      paymentMethod,
-    });
-  }, [paymentMethod, updateBookingData]);
-
-  const handleInputChange = useCallback((field: string, value: string) => {
-    updateBookingData({
-      passengerDetails: {
-        ...bookingData.passengerDetails,
-        [field]: value,
-      },
-    });
-  }, [bookingData.passengerDetails, updateBookingData]);
-
-  const handlePaymentMethodChange = useCallback((method: PaymentMethod) => {
-    setPaymentMethod(method);
+    if (typeof window === 'undefined') return;
+    if (window.innerWidth <= 768) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, []);
+
+  // ✅ update specific passengerDetails field (stable + no bookingData object dep)
+  const handleInputChange = useCallback(
+    (field: keyof typeof bookingData.passengerDetails, value: string) => {
+      updateBookingData({
+        passengerDetails: {
+          ...bookingData.passengerDetails,
+          [field]: value,
+        },
+      });
+    },
+    [bookingData.passengerDetails, updateBookingData]
+  );
+
+  // ✅ write directly to context (no local state + no useEffect syncing)
+  const handlePaymentMethodChange = useCallback(
+    (method: PaymentMethod) => {
+      if (bookingData.paymentMethod === method) return;
+      updateBookingData({ paymentMethod: method });
+    },
+    [bookingData.paymentMethod, updateBookingData]
+  );
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -58,24 +65,21 @@ export default function ContactDetailsStep() {
       </header>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        {/* Left Column: Contact Form (2/3 width) */}
+        {/* Left Column: Contact Form */}
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* Contact Information */}
-          <section 
+          <section
             className="bg-white rounded-xl sm:rounded-2xl border-2 border-gray-200 p-4 sm:p-6"
             aria-labelledby="contact-info-heading"
           >
             <h2 id="contact-info-heading" className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
               {t('contactInfo.heading')}
             </h2>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {/* First Name */}
               <div>
-                <label 
-                  htmlFor="firstName"
-                  className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                >
+                <label htmlFor="firstName" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('contactInfo.firstName.label')} *
                 </label>
                 <input
@@ -91,10 +95,7 @@ export default function ContactDetailsStep() {
 
               {/* Last Name */}
               <div>
-                <label 
-                  htmlFor="lastName"
-                  className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                >
+                <label htmlFor="lastName" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('contactInfo.lastName.label')} *
                 </label>
                 <input
@@ -108,12 +109,9 @@ export default function ContactDetailsStep() {
                 />
               </div>
 
-              {/* Email Address */}
+              {/* Email */}
               <div>
-                <label 
-                  htmlFor="email"
-                  className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                >
+                <label htmlFor="email" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('contactInfo.email.label')} *
                 </label>
                 <input
@@ -127,12 +125,9 @@ export default function ContactDetailsStep() {
                 />
               </div>
 
-              {/* Phone Number */}
+              {/* Phone */}
               <div>
-                <label 
-                  htmlFor="phone"
-                  className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                >
+                <label htmlFor="phone" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('contactInfo.phone.label')} *
                 </label>
                 <div className="flex gap-2">
@@ -149,6 +144,7 @@ export default function ContactDetailsStep() {
                       </option>
                     ))}
                   </select>
+
                   <input
                     id="phone"
                     type="tel"
@@ -162,13 +158,11 @@ export default function ContactDetailsStep() {
               </div>
             </div>
 
-            {/* Flight Number (Optional) */}
+            {/* Flight Number */}
             <div className="mt-4 sm:mt-6">
-              <label 
-                htmlFor="flightNumber"
-                className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-              >
-                {t('contactInfo.flightNumber.label')} <span className="text-gray-400 font-normal">({t('optional')})</span>
+              <label htmlFor="flightNumber" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
+                {t('contactInfo.flightNumber.label')}{' '}
+                <span className="text-gray-400 font-normal">({t('optional')})</span>
               </label>
               <input
                 id="flightNumber"
@@ -180,13 +174,11 @@ export default function ContactDetailsStep() {
               />
             </div>
 
-            {/* Comments (Optional) */}
+            {/* Comments */}
             <div className="mt-4 sm:mt-6">
-              <label 
-                htmlFor="comments"
-                className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-              >
-                {t('contactInfo.comments.label')} <span className="text-gray-400 font-normal">({t('optional')})</span>
+              <label htmlFor="comments" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
+                {t('contactInfo.comments.label')}{' '}
+                <span className="text-gray-400 font-normal">({t('optional')})</span>
               </label>
               <textarea
                 id="comments"
@@ -200,43 +192,37 @@ export default function ContactDetailsStep() {
           </section>
 
           {/* Payment Method */}
-          <section 
+          <section
             className="bg-white rounded-xl sm:rounded-2xl border-2 border-gray-200 p-4 sm:p-6"
             aria-labelledby="payment-heading"
           >
             <h2 id="payment-heading" className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
               {t('payment.heading')}
             </h2>
-            
-            <div 
-              className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4"
-              role="radiogroup"
-              aria-label={t('payment.aria')}
-            >
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4" role="radiogroup" aria-label={t('payment.aria')}>
               {/* Cash */}
               <button
+                type="button"
                 onClick={() => handlePaymentMethodChange('cash')}
                 role="radio"
                 aria-checked={paymentMethod === 'cash'}
                 aria-label={t('payment.cash.aria')}
                 className={`p-4 sm:p-6 rounded-xl border-2 transition-all touch-manipulation ${
-                  paymentMethod === 'cash'
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                  paymentMethod === 'cash' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
                 <div className="flex items-center gap-3 sm:gap-4">
-                  <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                    paymentMethod === 'cash' ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
-                  }`}>
+                  <div
+                    className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
+                      paymentMethod === 'cash' ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
+                    }`}
+                  >
                     {paymentMethod === 'cash' && (
-                      <m.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full"
-                      />
+                      <m.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full" />
                     )}
                   </div>
+
                   <div className="flex items-center gap-2 sm:gap-3">
                     <CashIcon className="w-6 h-6 sm:w-8 sm:h-8 text-gray-700" />
                     <div className="text-left">
@@ -249,28 +235,26 @@ export default function ContactDetailsStep() {
 
               {/* Card */}
               <button
+                type="button"
                 onClick={() => handlePaymentMethodChange('card')}
                 role="radio"
                 aria-checked={paymentMethod === 'card'}
                 aria-label={t('payment.card.aria')}
                 className={`p-4 sm:p-6 rounded-xl border-2 transition-all touch-manipulation ${
-                  paymentMethod === 'card'
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                  paymentMethod === 'card' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
                 <div className="flex items-center gap-3 sm:gap-4">
-                  <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                    paymentMethod === 'card' ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
-                  }`}>
+                  <div
+                    className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
+                      paymentMethod === 'card' ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
+                    }`}
+                  >
                     {paymentMethod === 'card' && (
-                      <m.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full"
-                      />
+                      <m.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full" />
                     )}
                   </div>
+
                   <div className="flex items-center gap-2 sm:gap-3">
                     <CardIcon className="w-6 h-6 sm:w-8 sm:h-8 text-gray-700" />
                     <div className="text-left">
@@ -297,72 +281,48 @@ export default function ContactDetailsStep() {
           </section>
         </div>
 
-        {/* Right Column: Persistent Summary (1/3 width) */}
+        {/* Right Column: Summary */}
         <aside className="lg:col-span-1">
-          <div 
-            className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 lg:sticky lg:top-4"
-            aria-labelledby="summary-heading"
-          >
-            <h2 id="summary-heading" className="text-xs sm:text-sm font-semibold text-gray-600 mb-3 sm:mb-4">
-              {t('summary.heading')}
-            </h2>
-            
+          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 lg:sticky lg:top-4">
+            <h2 className="text-xs sm:text-sm font-semibold text-gray-600 mb-3 sm:mb-4">{t('summary.heading')}</h2>
+
             <div className="space-y-3 sm:space-y-4">
-              <SummaryItem label={t('summary.service')} value={bookingData.serviceType === 'hourly' ? t('summary.hourly') : t('summary.distance')} />
-              <SummaryItem label={t('summary.from')} value={bookingData.pickup.address || t('summary.notSet')} />
-              
-              {/* Only show dropoff for distance-based bookings */}
-              {bookingData.serviceType !== 'hourly' && (
-                <SummaryItem label={t('summary.to')} value={bookingData.dropoff.address || t('summary.notSet')} />
-              )}
-              
-              <SummaryItem 
-                label={t('summary.dateTime')} 
-                value={`${bookingData.dateTime.date} ${t('summary.at')} ${bookingData.dateTime.time}`} 
+              <SummaryItem
+                label={t('summary.service')}
+                value={bookingData.serviceType === 'hourly' ? t('summary.hourly') : t('summary.distance')}
               />
-              
-              {bookingData.distance && bookingData.serviceType !== 'hourly' && (
+              <SummaryItem label={t('summary.from')} value={bookingData.pickup.address || t('summary.notSet')} />
+
+              {bookingData.serviceType !== 'hourly' && (
+                <SummaryItem label={t('summary.to')} value={bookingData.dropoff?.address || t('summary.notSet')} />
+              )}
+
+              <SummaryItem
+                label={t('summary.dateTime')}
+                value={`${bookingData.dateTime.date} ${t('summary.at')} ${bookingData.dateTime.time}`}
+              />
+
+              {bookingData.serviceType !== 'hourly' && bookingData.distance != null && (
                 <SummaryItem label={t('summary.distance')} value={`${bookingData.distance.toFixed(1)} km`} />
               )}
-              
+
               <SummaryItem label={t('summary.passengers')} value={`${bookingData.passengers.count}`} />
 
-              {/* Selected Vehicle */}
-              {bookingData.selectedVehicle && (
-                <>
-                  <div className="border-t border-blue-200 pt-3 sm:pt-4">
-                    <SummaryItem label={t('summary.vehicle')} value={bookingData.selectedVehicle.name} />
-                  </div>
+              {/* Payment */}
+              <div className="border-t border-blue-200 pt-3 sm:pt-4">
+                <SummaryItem
+                  label={t('summary.paymentMethod') ?? 'Payment'}
+                  value={paymentMethod === 'card' ? (t('payment.card.title') ?? 'Card') : (t('payment.cash.title') ?? 'Cash')}
+                />
+              </div>
 
-                  {bookingData.passengers.childSeats > 0 && (
-                    <SummaryItem 
-                      label={t('summary.childSeats')} 
-                      value={`${bookingData.passengers.childSeats} × €5`} 
-                    />
-                  )}
-                </>
-              )}
-
-              {/* Total Cost */}
+              {/* Total */}
               {bookingData.pricing && (
                 <div className="border-t border-blue-200 pt-3 sm:pt-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <p className="text-[10px] sm:text-xs text-gray-600">{t('summary.subtotal')}</p>
-                    <p className="text-xs sm:text-sm font-semibold text-gray-900">
-                      {formatPrice(bookingData.pricing.subtotal)}
-                    </p>
-                  </div>
-                  <div className="flex justify-between items-center mb-2 sm:mb-3">
-                    <p className="text-[10px] sm:text-xs text-gray-600">{t('summary.tax')}</p>
-                    <p className="text-xs sm:text-sm font-semibold text-gray-900">
-                      {formatPrice(bookingData.pricing.tax)}
-                    </p>
-                  </div>
+                 
                   <div className="flex justify-between items-center pt-2 sm:pt-3 border-t border-blue-200">
                     <p className="text-xs sm:text-sm font-bold text-gray-900">{t('summary.total')}</p>
-                    <p className="text-xl sm:text-2xl font-bold text-blue-600">
-                      {formatPrice(bookingData.pricing.total)}
-                    </p>
+                    <p className="text-xl sm:text-2xl font-bold text-blue-600">{formatPrice(bookingData.pricing.total)}</p>
                   </div>
                 </div>
               )}
@@ -375,7 +335,7 @@ export default function ContactDetailsStep() {
 }
 
 // ============================================================================
-// SUMMARY ITEM COMPONENT (Memoized)
+// SUMMARY ITEM
 // ============================================================================
 
 const SummaryItem = React.memo(({ label, value }: { label: string; value: string }) => (
@@ -387,12 +347,16 @@ const SummaryItem = React.memo(({ label, value }: { label: string; value: string
 SummaryItem.displayName = 'SummaryItem';
 
 // ============================================================================
-// ICON COMPONENTS (Memoized)
+// ICONS
 // ============================================================================
 
 const CashIcon = React.memo(({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+    />
   </svg>
 ));
 CashIcon.displayName = 'CashIcon';

@@ -3,25 +3,25 @@
     "hero": {
       "title": "Ponte en Contacto con",
       "titleHighlight": "Royal Transfers BCN",
-      "subtitle": "¿Planificando tu próximo traslado en Barcelona? Ya sea que vayas al aeropuerto, terminal de cruceros o un hotel, nuestro equipo está listo para asistirte con soporte personalizado, respuestas rápidas y total flexibilidad."
+      "subtitle": "¿Planeando tu próximo traslado en Barcelona? Ya sea que vayas al aeropuerto, terminal de cruceros u hotel, nuestro equipo está listo para ayudarte con soporte personalizado, respuestas rápidas y total flexibilidad."
     },
     "intro": {
       "title": "Estamos Aquí para",
-      "titleHighlight": "Ayudar",
-      "paragraph1": "Creemos que cada viaje debe comenzar con tranquilidad. Nuestro objetivo es hacer que el proceso de reserva sea simple y fluido, para que puedas concentrarte en disfrutar tu viaje.",
-      "paragraph2": "¿Tienes preguntas sobre traslados en Barcelona? Nuestro equipo en Royal Transfers BCN está aquí para ayudar, ya sea que necesites un presupuesto, planear una ruta personalizada o confirmar una reserva. Estamos comprometidos con respuestas rápidas y soporte sin complicaciones."
+      "titleHighlight": "Ayudarte",
+      "paragraph1": "Creemos que cada viaje debe comenzar con tranquilidad. Nuestro objetivo es hacer que el proceso de reserva sea simple y fluido, para que puedas concentrarte en disfrutar de tu viaje.",
+      "paragraph2": "¿Tienes preguntas sobre los traslados en Barcelona? Nuestro equipo en Royal Transfers BCN está aquí para ayudarte, ya sea que necesites un presupuesto, quieras planificar una ruta personalizada o confirmar una reserva. Nos comprometemos a ofrecer respuestas rápidas y asistencia sin complicaciones."
     },
     "methods": {
       "title": "Cómo",
       "titleHighlight": "Contactarnos",
       "whatsapp": {
-        "title": "Mensaje vía WhatsApp",
+        "title": "Envía un Mensaje por WhatsApp",
         "description": "Respuestas rápidas, comunicación fácil",
         "value": "+34 617 629 115"
       },
       "email": {
-        "title": "Envíanos un Email",
-        "description": "Responderemos en 24 horas",
+        "title": "Envíanos un Correo Electrónico",
+        "description": "Responderemos dentro de las 24 horas",
         "value": "email@royaltransfersbcn.com"
       },
       "phone": {
@@ -32,16 +32,16 @@
     },
     "cta": {
       "title": "¿Listo para Reservar tu Traslado?",
-      "subtitle": "Ponte en contacto ahora y déjanos cuidar de tu viaje en Barcelona.",
-      "whatsapp": "Chat en WhatsApp",
-      "email": "Enviar Email"
+      "subtitle": "Ponte en contacto ahora y permítenos cuidar de tu viaje por Barcelona.",
+      "whatsapp": "Chatea en WhatsApp",
+      "email": "Enviar Correo Electrónico"
     }
   },
   "about": {
     "hero": {
-      "title": "Sobre",
+      "title": "Acerca de",
       "titleHighlight": "Royal Transfers BCN",
-      "subtitle": "Nos especializamos en proporcionar servicios premium de chófer y taxi para turistas y viajeros de negocios. Nuestra misión es ofrecer comodidad, fiabilidad y una experiencia de viaje sin problemas en la vibrante ciudad de Barcelona y más allá."
+      "subtitle": "Nos especializamos en proporcionar servicios premium de chófer y taxi tanto para turistas como para viajeros de negocios. Nuestra misión es ofrecer comodidad, fiabilidad y una experiencia de viaje fluida por la vibrante ciudad de Barcelona y más allá."
     },
     "story": {
       "title": "Nuestra",
@@ -54,52 +54,49 @@
       "titleHighlight": "Ofrecemos",
       "fleet": {
         "title": "Flota Moderna",
-        "description": "Ofrecemos una flota moderna de sedanes, furgonetas espaciosas y vehículos de lujo, todos mantenidos con gran cuidado. Cada automóvil incluye comodidades modernas para garantizar un viaje agradable."
+        "description": "Ofrecemos una flota moderna de sedanes, furgonetas espaciosas y vehículos de lujo, todos mantenidos con gran cuidado. Cada coche incluye comodidades modernas para garantizar un viaje agradable."
       },
       "drivers": {
         "title": "Conductores Multilingües",
-        "description": "Nuestros conductores multilingües te ayudan a sentirte bienvenido y seguro mientras te mueves por la ciudad. Su conocimiento local y puntualidad significan que siempre puedes viajar con tranquilidad."
+        "description": "Nuestros conductores multilingües te ayudan a sentirte bienvenido y seguro mientras te desplazas por la ciudad. Su conocimiento local y puntualidad significan que siempre puedes viajar con tranquilidad."
       },
       "service": {
         "title": "Servicio Personalizado",
-        "description": "Ya sea para traslados individuales o grupales, adaptamos cada servicio a tus necesidades. Cada viaje se maneja con atención al detalle."
+        "description": "Ya sea para traslados individuales o en grupo, adaptamos cada servicio a tus necesidades. Cada viaje se maneja con atención al detalle."
       }
     },
     "trust": {
       "title": "Excelencia",
       "titleHighlight": "Confiable",
-      "description": "Con el tiempo, hemos ganado la confianza de nuestros clientes a través de un servicio constante y atención al detalle. Royal Transfers BCN se enorgullece de tener una reputación de excelencia y comentarios de 5 estrellas.",
-      "promise": "No importa si visitas Barcelona por primera vez o regresas, tu viaje siempre será manejado con cuidado. Elige Royal Transfers BCN, donde el transporte privado se convierte en una parte fluida y memorable de tu viaje."
+      "description": "Con el tiempo, nos hemos ganado la confianza de nuestros clientes a través de un servicio consistente y atención al detalle. Royal Transfers BCN se enorgullece de tener una reputación de excelencia y comentarios de 5 estrellas.",
+      "promise": "No importa si visitas Barcelona por primera vez o si regresas, tu viaje siempre será manejado con cuidado. Elige Royal Transfers BCN, donde el transporte privado se convierte en una parte fluida y memorable de tu viaje."
     },
     "rating": {
-      "title": "Calificado 5.0 ★ en Google",
-      "subtitle": "Confiado por viajeros, profesionales y locales por igual: nuestros clientes constantemente nos califican con 5 estrellas por puntualidad, limpieza y calidad de servicio."
+      "title": "Calificado con 5.0 ★ en Google",
+      "subtitle": "Confiado por viajeros, profesionales y locales por igual: nuestros clientes nos califican constantemente con 5 estrellas por puntualidad, limpieza y calidad de servicio."
     },
     "testimonial": {
-      "quote": "Reservé un traslado de última hora desde el aeropuerto y todo fue perfecto. El conductor llegó temprano, fue educado y la furgoneta estaba impecable. ¡Definitivamente usaré Royal Transfers BCN de nuevo!",
-      "source": "Reseña Verificada de Google"
+      "quote": "Reservé un traslado de última hora desde el aeropuerto y todo fue perfecto. El conductor llegó temprano, fue educado y la furgoneta estaba impecable. ¡Sin duda volveré a usar Royal Transfers BCN!",
+      "source": "Reseña verificada de Google"
     },
     "cta": {
       "title": "¿Listo para Experimentar la Diferencia?",
-      "bookWhatsApp": "Reservar vía WhatsApp",
+      "bookWhatsApp": "Reserva vía WhatsApp",
       "or": "o",
       "contactUs": "Contáctanos"
     }
   },
   "home": {
     "hero": {
-      "title": "Traslados Premium al Aeropuerto",
+      "title": "Traslados de Aeropuerto Confiables",
       "titleHighlight": "en Barcelona",
-      "subtitle": "Experimenta lujo, comodidad y fiabilidad en cada viaje. Conductores profesionales, vehículos premium y servicio sin problemas desde el aterrizaje hasta el destino.",
+      "subtitle": "Experimenta lujo, comodidad y fiabilidad en cada viaje. Conductores profesionales, vehículos premium y servicio sin interrupciones desde el aterrizaje hasta tu destino.",
       "bookNow": "Reserva tu Traslado",
       "viewFleet": "Ver Nuestra Flota",
-      "trustBadge1": "Calificación 4.9★",
-      "trustBadge2": "10K+ Viajes",
-      "trustBadge3": "Servicio 24/7",
       "bookingSteps": {
-        "title": "Reserva Tu Traslado",
-        "subtitle": "Comienza Tu Viaje",
-        "description": "Reserva rápida y fácil en solo unos pasos. Obtén confirmación instantánea y el mejor precio garantizado."
+        "title": "Reserva tu Traslado",
+        "subtitle": "Comienza tu Viaje",
+        "description": "Reserva rápida y fácil en solo unos pasos. Obtén confirmación instantánea y los mejores precios garantizados."
       },
       "features": {
         "freeCancellation": "Cancelación Gratuita",
@@ -114,7 +111,7 @@
       "subtitle": "Soluciones de traslado integrales adaptadas a tus necesidades, ya sea que llegues al aeropuerto, salgas de un crucero o explores la región.",
       "airportTaxi": {
         "title": "Taxi Aeropuerto Barcelona",
-        "description": "Traslados sin estrés hacia y desde el Aeropuerto de Barcelona El Prat con seguimiento de vuelos y servicio de recibimiento."
+        "description": "Traslados sin estrés hacia y desde el Aeropuerto de Barcelona-El Prat con seguimiento de vuelo y servicio de encuentro y saludo."
       },
       "cruisePort": {
         "title": "Traslado Puerto de Cruceros",
@@ -126,20 +123,20 @@
       },
       "hourlyBooking": {
         "title": "Reserva de Taxi por Horas",
-        "description": "Reservas flexibles por horas para reuniones de negocios, tours por la ciudad o compras en Barcelona."
+        "description": "Reservas flexibles por horas para reuniones de negocios, tours por la ciudad o viajes de compras por Barcelona."
       },
-      "learnMore": "Saber Más"
+      "learnMore": "Más Información"
     },
     "howItWorks": {
       "title": "Cómo",
       "titleHighlight": "Funciona",
-      "subtitle": "Reservar tu traslado premium al aeropuerto de Barcelona es simple, rápido y completamente sin estrés.",
+      "subtitle": "Reservar tu traslado premium desde el aeropuerto de Barcelona es simple, rápido y completamente sin estrés.",
       "step1": {
         "title": "Reserva tu Traslado",
-        "description": "Elige tu recogida, destino, tipo de vehículo y extras opcionales en solo unos clics."
+        "description": "Elige tu lugar de recogida, destino, tipo de vehículo y extras opcionales con solo unos clics."
       },
       "step2": {
-        "title": "Confirmamos los Detalles",
+        "title": "Confirmamos Detalles",
         "description": "Nuestro equipo verifica tu viaje y vuelo para garantizar puntualidad y comodidad."
       },
       "step3": {
@@ -150,7 +147,7 @@
     "fleet": {
       "title": "Nuestra",
       "titleHighlight": "Flota",
-      "subtitle": "Elige entre nuestra gama de vehículos premium para que coincidan con tu estilo, tamaño de grupo y preferencias de comodidad.",
+      "subtitle": "Elige entre nuestra gama de vehículos premium que se adaptan a tu estilo, tamaño de grupo y preferencias de comodidad.",
       "passengers": "pasajeros",
       "luggage": "equipaje",
       "from": "Desde",
@@ -168,7 +165,7 @@
       },
       "luxuryChaufferVan": {
         "title": "Furgoneta de Lujo con Chófer",
-        "description": "Mercedes Clase V con comodidades premium para la mejor experiencia grupal."
+        "description": "Mercedes V-Class con comodidades premium para la experiencia grupal definitiva."
       }
     },
     "whyChooseUs": {
@@ -177,27 +174,27 @@
       "subtitle": "Hacemos todo lo posible para que tu traslado en Barcelona sea excepcional.",
       "feature1": {
         "title": "Conductores Profesionales",
-        "description": "Conductores con licencia, experimentados y multilingües que conocen Barcelona por dentro y por fuera."
+        "description": "Conductores licenciados, experimentados y multilingües que conocen Barcelona al dedillo."
       },
       "feature2": {
         "title": "Seguimiento de Vuelos",
-        "description": "Monitoreamos tu vuelo en tiempo real y ajustamos automáticamente los horarios de recogida."
+        "description": "Monitoreamos tu vuelo en tiempo real y ajustamos los horarios de recogida automáticamente."
       },
       "feature3": {
         "title": "Precios Fijos",
-        "description": "Sin sorpresas ni tarifas ocultas. El precio que ves es el precio que pagas."
+        "description": "Sin sorpresas ni cargos ocultos. El precio que ves es el precio que pagas."
       },
       "feature4": {
         "title": "Disponibilidad 24/7",
         "description": "Reserva en cualquier momento, viaja en cualquier momento. Estamos aquí para vuelos tempranos y llegadas tardías."
       },
       "feature5": {
-        "title": "Recibimiento",
-        "description": "Tu conductor espera con un cartel con tu nombre en llegadas para una recogida sin problemas."
+        "title": "Encuentro y Saludo",
+        "description": "Tu conductor te espera en llegadas con un cartel con tu nombre para una recogida sin problemas."
       },
       "feature6": {
         "title": "Cancelación Gratuita",
-        "description": "Los planes cambian. Cancela hasta 24 horas antes para un reembolso completo."
+        "description": "Los planes cambian. Cancela hasta 24 horas antes para obtener un reembolso completo."
       }
     },
     "testimonials": {
@@ -207,22 +204,22 @@
       "review1": {
         "name": "Sarah M.",
         "location": "Londres, Reino Unido",
-        "text": "¡Servicio absolutamente fantástico! El conductor estaba esperando en llegadas, ayudó con el equipaje y el Mercedes estaba impecable. Definitivamente lo usaré de nuevo."
+        "text": "¡Servicio absolutamente fantástico! El conductor estaba esperando en llegadas, ayudó con el equipaje y el Mercedes estaba impecable. Sin duda lo usaré de nuevo."
       },
       "review2": {
         "name": "Thomas K.",
         "location": "Berlín, Alemania",
-        "text": "Nuestro vuelo se retrasó 2 horas pero el conductor estaba allí cuando aterrizamos. Eso es servicio real. ¡Muy recomendado!"
+        "text": "Nuestro vuelo se retrasó 2 horas, pero el conductor estaba allí cuando aterrizamos. Eso es un servicio real. Muy recomendable."
       },
       "review3": {
         "name": "Maria L.",
         "location": "Milán, Italia",
-        "text": "Usamos Royal Transfers para nuestro viaje familiar. La furgoneta de 8 plazas fue perfecta y el conductor fue muy amable con los niños."
+        "text": "Usé Royal Transfers para nuestro viaje familiar. La furgoneta de 8 plazas era perfecta y el conductor fue muy amable con los niños."
       }
     },
     "cta": {
       "title": "¿Listo para Experimentar Traslados Premium?",
-      "subtitle": "Únete a miles de viajeros satisfechos que eligen Royal Transfers BCN para sus viajes en Barcelona.",
+      "subtitle": "Únete a miles de viajeros satisfechos que eligen Royal Transfers BCN para sus viajes por Barcelona.",
       "bookNow": "Reserva tu Traslado Ahora",
       "or": "o",
       "contactUs": "Contáctanos"
@@ -231,7 +228,7 @@
   "header": {
     "home": "Inicio",
     "aboutUs": "Sobre Nosotros",
-    "contactUs": "Contáctanos",
+    "contactUs": "Contacto",
     "services": "Servicios",
     "fleet": "Flota",
     "bookNow": "Reservar Ahora",
@@ -273,61 +270,61 @@
       "hero": {
         "title": "Reserva de Taxi por Horas",
         "titleHighlight": "Barcelona",
-        "subtitle": "¿Necesitas un taxi que te espere? Reserva por horas para compras, recados, eventos o turismo. Paquetes flexibles por horas con coches y furgonetas para hasta 8 pasajeros.",
-        "ctaWhatsApp": "Reserva Rápido vía WhatsApp",
+        "subtitle": "¿Necesitas un taxi que te espere? Reserva por horas para compras, recados, eventos o visitas turísticas. Paquetes horarios flexibles con coches y furgonetas para hasta 8 pasajeros.",
+        "ctaWhatsApp": "Reserva Rápida por WhatsApp",
         "ctaCall": "Llámanos 📞",
         "badge1": "Reserva 3–8 horas",
         "badge2": "El taxi te espera",
-        "badge3": "Conductores que hablan inglés",
+        "badge3": "Conductores de habla inglesa",
         "badge4": "Sedanes y furgonetas hasta 8 pax",
         "badge5": "Sillas infantiles bajo petición",
         "badge6": "Disponibilidad 24/7"
       },
       "features": {
-        "flexible": { "title": "Mantente Flexible", "description": "No necesitas pedir un nuevo viaje cada vez, tu taxi te espera." },
+        "flexible": { "title": "Mantén la Flexibilidad", "description": "No necesitas pedir un nuevo viaje cada vez, tu taxi te espera." },
         "fleet": { "title": "Flota Moderna", "description": "Sedanes cómodos, híbridos y furgonetas espaciosas para 7–8 pasajeros." },
-        "rates": { "title": "Tarifas por Hora Claras", "description": "Precio fijo por hora, sin costos ocultos. Tiempo de espera incluido." },
+        "rates": { "title": "Tarifas por Hora Claras", "description": "Precio por hora fijo, sin costes ocultos. Tiempo de espera incluido." },
         "occasion": { "title": "Cualquier Ocasión", "description": "Perfecto para compras, visitas médicas, turismo y eventos." }
       },
       "packages": {
         "title": "Paquetes de Taxi",
         "titleHighlight": "por Horas",
         "popular": "Popular",
-        "threeHours": { "title": "3 Horas", "subtitle": "Recados Rápidos", "price": "desde €85", "note": "€120 (furgoneta)" },
-        "fourHours": { "title": "4 Horas", "subtitle": "Compras / Citas", "price": "desde €110", "note": "Incluye espera y regreso" },
-        "sixHours": { "title": "6 Horas", "subtitle": "Medio Día", "price": "desde €160", "note": "Para eventos y turismo" },
-        "eightHours": { "title": "8 Horas", "subtitle": "Taxi de Día Completo", "price": "desde €210", "note": "Ideal para programas largos" },
-        "note": "Los precios dependen del tamaño del vehículo y el horario. Obtén tu presupuesto exacto al instante.",
+        "threeHours": { "title": "3 Horas", "subtitle": "Recados Rápidos", "price": "desde 85 €", "note": "120 € (furgoneta)" },
+        "fourHours": { "title": "4 Horas", "subtitle": "Compras / Citas", "price": "desde 110 €", "note": "Incluye espera y regreso" },
+        "sixHours": { "title": "6 Horas", "subtitle": "Medio Día", "price": "desde 160 €", "note": "Para eventos y turismo" },
+        "eightHours": { "title": "8 Horas", "subtitle": "Taxi de Día Completo", "price": "desde 210 €", "note": "Ideal para programas largos" },
+        "note": "Los precios dependen del tamaño del vehículo y la franja horaria. Obtén tu presupuesto exacto al instante.",
         "cta": "Obtén tu Precio"
       },
       "howItWorks": {
         "title": "Cómo Funciona la Reserva",
         "titleHighlight": "de Taxi por Horas",
         "step1": { "title": "Elige tus Horas", "description": "Elige tus horas (3–8h) y cuéntanos tu itinerario." },
-        "step2": { "title": "Obtén tu Presupuesto", "description": "Obtén un presupuesto fijo por hora para sedán, sedán de lujo o furgoneta." },
-        "step3": { "title": "Disfruta tu Día", "description": "Disfruta tu día con un taxi que te espera y te lleva a todas partes." }
+        "step2": { "title": "Obtén tu Presupuesto", "description": "Recibe un presupuesto por hora fijo para sedán, sedán de lujo o furgoneta." },
+        "step3": { "title": "Disfruta tu Día", "description": "Disfruta de tu día con un taxi que te espera y te lleva a todas partes." }
       },
       "fleet": {
         "title": "Nuestra",
         "titleHighlight": "Flota",
         "pax": "pax",
-        "tesla": { "name": "Tesla Model 3", "type": "Sedán eco-lujo" },
+        "tesla": { "name": "Tesla Model 3", "type": "Sedán ecológico de lujo" },
         "prius": { "name": "Toyota Prius+", "type": "Híbrido eficiente" },
         "vito": { "name": "Mercedes Vito", "type": "Furgoneta familiar espaciosa" },
-        "vclass": { "name": "Mercedes Clase V", "type": "Opción de furgoneta de lujo" }
+        "vclass": { "name": "Mercedes V-Class", "type": "Opción de furgoneta de lujo" }
       },
       "faq": {
         "title": "Preguntas Frecuentes",
         "titleHighlight": "Taxi por Horas",
-        "faq1": { "question": "¿Qué incluye el precio por hora?", "answer": "El conductor, vehículo, combustible y tiempo de espera dentro de los límites de la ciudad de Barcelona." },
-        "faq2": { "question": "¿Puedo extender mi reserva?", "answer": "Sí, se pueden agregar horas extra el día de la reserva si están disponibles, a la misma tarifa." },
-        "faq3": { "question": "¿Ofrecen furgonetas para grupos?", "answer": "Sí, furgonetas Mercedes Vito y Clase V para hasta 7–8 personas con equipaje." },
-        "faq4": { "question": "¿Puedo usar el taxi por horas para turismo?", "answer": "Por supuesto, ideal para visitar múltiples atracciones en un día sin estrés." }
+        "faq1": { "question": "¿Qué está incluido en el precio por hora?", "answer": "El conductor, el vehículo, el combustible y el tiempo de espera dentro de los límites de la ciudad de Barcelona." },
+        "faq2": { "question": "¿Puedo ampliar mi reserva?", "answer": "Sí, se pueden añadir horas extra el mismo día si están disponibles, a la misma tarifa." },
+        "faq3": { "question": "¿Ofrecen furgonetas para grupos?", "answer": "Sí, furgonetas Mercedes Vito y V-Class para hasta 7–8 personas con equipaje." },
+        "faq4": { "question": "¿Puedo usar el taxi por horas para hacer turismo?", "answer": "Por supuesto, ideal para visitar múltiples atracciones en un día sin estrés." }
       },
       "cta": {
         "title": "¿Listo para Reservar tu Taxi por Horas?",
-        "subtitle": "Ponte en contacto ahora y disfruta de transporte flexible por Barcelona.",
-        "whatsapp": "Chat y Reserva",
+        "subtitle": "Ponte en contacto ahora y disfruta de un transporte flexible por Barcelona.",
+        "whatsapp": "Chatea y Reserva",
         "call": "Llámanos 📞"
       }
     },
@@ -336,85 +333,85 @@
         "title": "Taxi de Larga Distancia y Traslados Privados",
         "titleHighlight": "desde Barcelona",
         "subtitle": "Traslados cómodos de ciudad a ciudad por Cataluña, España y los Pirineos. Precios fijos, servicio puerta a puerta y conductores profesionales. Perfecto para familias, viajes de negocios y grupos pequeños.",
-        "ctaWhatsApp": "Reserva Rápido vía WhatsApp",
+        "ctaWhatsApp": "Reserva Rápida por WhatsApp",
         "ctaCall": "Llámanos 📞",
         "badge1": "Precios fijos por adelantado",
         "badge2": "Servicio puerta a puerta",
-        "badge3": "Conductores que hablan inglés",
+        "badge3": "Conductores de habla inglesa",
         "badge4": "Sillas infantiles bajo petición",
         "badge5": "Sedanes y furgonetas de 7–8 plazas",
         "badge6": "Disponibilidad 24/7"
       },
       "features": {
-        "specialists": { "title": "Especialistas Ciudad a Ciudad", "description": "Traslados directos a Girona, Tarragona, Sitges, Andorra, Costa Brava y más." },
-        "fleet": { "title": "Flota Confortable", "description": "Tesla e híbridos para 1–4 huéspedes, más furgonetas de lujo para familias y grupos." },
-        "pricing": { "title": "Precios Transparentes", "description": "Sin aumentos, sin sorpresas, solo presupuestos fijos antes de viajar." },
-        "stops": { "title": "Paradas Flexibles", "description": "Pausas opcionales para turismo, fotos, comida o visitas rápidas en ruta." }
+        "specialists": { "title": "Especialistas en Ciudad a Ciudad", "description": "Traslados directos a Girona, Tarragona, Sitges, Andorra, Costa Brava y más allá." },
+        "fleet": { "title": "Flota Cómoda", "description": "Tesla e híbridos para 1–4 huéspedes, además de furgonetas de lujo para familias y grupos." },
+        "pricing": { "title": "Precios Transparentes", "description": "Sin aumentos ni sorpresas, solo presupuestos fijos antes de viajar." },
+        "stops": { "title": "Paradas Flexibles", "description": "Paradas opcionales para fotos, comida o visitas rápidas en la ruta." }
       },
       "routes": {
-        "title": "Rutas Populares de Larga Distancia",
-        "titleHighlight": "y Precios",
+        "title": "Rutas de Larga Distancia",
+        "titleHighlight": "Populares y Precios",
         "popular": "Popular",
-        "girona": { "name": "Barcelona ↔ Girona", "description": "Ciudad / Aeropuerto", "price": "desde €160", "note": "€215 (furgoneta 8 plazas)" },
-        "tarragona": { "name": "Barcelona ↔ Tarragona", "description": "PortAventura", "price": "desde €165", "note": "Traslado directo al resort" },
-        "sitges": { "name": "Barcelona ↔ Sitges", "description": "Vilanova", "price": "desde €70", "note": "Ruta costera, ayuda con equipaje" },
-        "lloret": { "name": "Barcelona ↔ Lloret de Mar", "description": "Costa Brava", "price": "desde €130", "note": "Servicio puerta a puerta" },
-        "andorra": { "name": "Barcelona ↔ Andorra", "description": "la Vella / Grandvalira", "price": "desde €290", "note": "Vehículos preparados para invierno disponibles" },
-        "intercity": { "name": "Barcelona ↔ Zaragoza / Valencia / Madrid", "description": "Traslados interurbanos", "price": "Solicita presupuesto", "note": "Traslados interurbanos bajo petición" },
-        "note": "Los precios dependen de la distancia, hora del día y tipo de vehículo. Obtén un presupuesto exacto en segundos.",
-        "cta": "Consulta tu Precio"
+        "girona": { "name": "Barcelona ↔ Gerona", "description": "Ciudad / Aeropuerto", "price": "desde 160 €", "note": "215 € (furgoneta 8 plazas)" },
+        "tarragona": { "name": "Barcelona ↔ Tarragona", "description": "PortAventura", "price": "desde 165 €", "note": "Traslado directo al resort" },
+        "sitges": { "name": "Barcelona ↔ Sitges", "description": "Vilanova", "price": "desde 70 €", "note": "Ruta costera, ayuda con equipaje" },
+        "lloret": { "name": "Barcelona ↔ Lloret de Mar", "description": "Costa Brava", "price": "desde 130 €", "note": "Servicio puerta a puerta" },
+        "andorra": { "name": "Barcelona ↔ Andorra", "description": "la Vella / Grandvalira", "price": "desde 290 €", "note": "Vehículos preparados para el invierno disponibles" },
+        "intercity": { "name": "Barcelona ↔ Zaragoza / Valencia / Madrid", "description": "Traslados interurbanos", "price": "Solicitar presupuesto", "note": "Traslados interurbanos bajo petición" },
+        "note": "Los precios dependen de la distancia, la hora del día y el tipo de vehículo. Obtén un presupuesto exacto en segundos.",
+        "cta": "Comprueba tu Precio"
       },
       "howItWorks": {
         "title": "Cómo Funcionan los Traslados",
         "titleHighlight": "de Larga Distancia",
-        "step1": { "title": "Comparte tu Ruta", "description": "Comparte tu ruta (recogida, destino, pasajeros, equipaje) vía formulario o WhatsApp." },
+        "step1": { "title": "Comparte tu Ruta", "description": "Comparte tu ruta (recogida, destino, pasajeros, equipaje) a través del formulario de reserva o WhatsApp." },
         "step2": { "title": "Recibe tu Presupuesto", "description": "Recibe un presupuesto fijo con el mejor vehículo para tu grupo y maletas." },
-        "step3": { "title": "Disfruta el Viaje", "description": "Disfruta el viaje puerta a puerta con paradas opcionales para comida, fotos o compras." }
+        "step3": { "title": "Disfruta del Viaje", "description": "Disfruta del viaje: puerta a puerta con paradas opcionales para comida, fotos o compras." }
       },
       "fleet": {
         "title": "Nuestra",
         "titleHighlight": "Flota",
         "pax": "pax",
-        "tesla": { "name": "Tesla Model 3", "type": "Sedán eco-lujo" },
+        "tesla": { "name": "Tesla Model 3", "type": "Sedán ecológico de lujo" },
         "prius": { "name": "Toyota Prius+", "type": "Híbrido eficiente" },
         "vito": { "name": "Mercedes Vito", "type": "Furgoneta familiar espaciosa" },
-        "vclass": { "name": "Mercedes Clase V", "type": "Furgoneta de lujo con chófer" }
+        "vclass": { "name": "Mercedes V-Class", "type": "Furgoneta de lujo con chófer" }
       },
       "faq": {
         "title": "Preguntas Frecuentes",
-        "titleHighlight": "Traslados de Larga Distancia",
-        "faq1": { "question": "¿Podemos solicitar paradas en el camino?", "answer": "Sí, pausas rápidas para fotos/café son gratis dentro de lo razonable. Desvíos más largos pueden añadirse a tu presupuesto." },
-        "faq2": { "question": "¿Cómo calculan el precio?", "answer": "Basado en distancia, hora del día y tamaño del vehículo. Enviaremos un presupuesto fijo antes de confirmar." },
-        "faq3": { "question": "¿Proporcionan sillas infantiles?", "answer": "Asientos infantiles y elevadores disponibles bajo petición, por favor indica las edades al reservar." },
-        "faq4": { "question": "¿Hay recargo nocturno?", "answer": "Los traslados entre 22:00–06:00 pueden tener un pequeño suplemento, esto está incluido en tu presupuesto." }
+        "titleHighlight": "Traslados Larga Distancia",
+        "faq1": { "question": "¿Podemos solicitar paradas en el camino?", "answer": "Sí, las pausas rápidas para fotos/café son gratuitas dentro de lo razonable. Desvíos más largos se pueden añadir a tu presupuesto." },
+        "faq2": { "question": "¿Cómo calculan el precio?", "answer": "Basado en la distancia, la hora del día y el tamaño del vehículo. Te enviaremos un presupuesto fijo antes de que confirmes." },
+        "faq3": { "question": "¿Proporcionan sillas infantiles?", "answer": "Sillas para bebés y elevadores disponibles bajo petición; por favor, indique las edades al reservar." },
+        "faq4": { "question": "¿Hay un recargo nocturno?", "answer": "Los traslados entre las 22:00 y las 06:00 pueden tener un pequeño suplemento, que se incluye en tu presupuesto." }
       },
       "cta": {
         "title": "¿Listo para Reservar tu Traslado de Larga Distancia?",
         "subtitle": "Ponte en contacto ahora y viaja cómodamente por Cataluña y más allá.",
-        "whatsapp": "Chat y Reserva",
+        "whatsapp": "Chatea y Reserva",
         "call": "Llámanos 📞"
       }
     },
     "cruisePortTaxi": {
       "structuredData": {
-        "name": "Traslados de Taxi al Puerto de Cruceros Barcelona",
-        "description": "Traslados fiables de taxi al puerto de cruceros en Barcelona. Servicio de recibimiento, precios fijos, asistencia con equipaje y vehículos cómodos para pasajeros de cruceros."
+        "name": "Taxi Traslados Puerto de Cruceros Barcelona",
+        "description": "Traslados en taxi confiables desde/hacia el puerto de cruceros de Barcelona. Servicio de encuentro y saludo, precios fijos, asistencia con equipaje y vehículos cómodos para pasajeros de cruceros."
       },
       "hero": {
-        "title": "Traslados de Taxi al Puerto de Cruceros Barcelona",
-        "subtitle": "Traslados fiables con recibimiento entre terminales de cruceros de Barcelona, aeropuertos, hoteles y centro de la ciudad. Precios fijos, asistencia con equipaje y soporte para embarque prioritario.",
-        "ctaWhatsApp": "Reserva Rápido vía WhatsApp",
+        "title": "Taxi Traslados Puerto de Cruceros Barcelona",
+        "subtitle": "Traslados confiables con servicio de encuentro y saludo entre las terminales de cruceros de Barcelona, aeropuertos, hoteles y el centro de la ciudad. Precios fijos, asistencia con equipaje y soporte prioritario para el embarque.",
+        "ctaWhatsApp": "Reserva Rápida por WhatsApp",
         "ctaCall": "Llámanos 📞",
         "badges": {
           "fixedPrice": "Precios fijos",
-          "meetGreet": "Recibimiento",
+          "meetGreet": "Encuentro y saludo",
           "luggage": "Asistencia con equipaje",
           "availability": "Disponibilidad 24/7",
           "childSeats": "Sillas infantiles disponibles",
-          "vans": "Sedanes y furgonetas de 8 plazas"
+          "vans": "Sedanes y furgonetas 8 plazas"
         },
         "aria": {
-          "whatsapp": "Reservar traslado al puerto de cruceros vía WhatsApp",
+          "whatsapp": "Reservar traslado al puerto de cruceros por WhatsApp",
           "call": "Llámanos para traslado al puerto de cruceros",
           "features": "Características clave de nuestro servicio de traslado al puerto de cruceros"
         }
@@ -425,16 +422,16 @@
           "description": "Conocemos las terminales, horarios y mejores rutas para MSC, Royal Caribbean, Norwegian y todas las líneas de cruceros."
         },
         "fleet": {
-          "title": "Flota Confortable",
-          "description": "Sedanes híbridos para 1–4 huéspedes, más furgonetas espaciosas para familias y grupos con mucho equipaje."
+          "title": "Flota Cómoda",
+          "description": "Sedanes híbridos para 1–4 huéspedes, además de furgonetas espaciosas para familias y grupos con mucho equipaje."
         },
         "pricing": {
           "title": "Precios Transparentes",
-          "description": "Sin tarifas ocultas: el precio incluye acceso al puerto, tiempo de espera, manejo de equipaje y todos los impuestos."
+          "description": "Sin cargos ocultos: el precio incluye acceso al puerto, tiempo de espera, manejo de equipaje y todos los impuestos."
         },
         "support": {
-          "title": "Soporte para Embarque",
-          "description": "Ayudamos con el equipaje en la terminal y garantizamos que llegues al check-in con tiempo de sobra."
+          "title": "Soporte de Embarque",
+          "description": "Ayudamos con el equipaje en la terminal y nos aseguramos de que llegues al check-in con tiempo de sobra."
         }
       },
       "routes": {
@@ -445,47 +442,47 @@
         "airport": {
           "name": "Aeropuerto a Puerto de Cruceros",
           "description": "BCN/T1/T2 a Moll Adossat/Moll de la Costa",
-          "price": "desde €45",
-          "note": "45-60 minutos según el tráfico"
+          "price": "desde 45 €",
+          "note": "45-60 minutos dependiendo del tráfico"
         },
         "city": {
           "name": "Centro Ciudad a Puerto de Cruceros",
           "description": "Sagrada Família/Barrio Gótico a terminales",
-          "price": "desde €35",
-          "note": "Traslado directo, sin cargos extras"
+          "price": "desde 35 €",
+          "note": "Traslado directo, sin cargos extra"
         },
         "sightseeing": {
           "name": "Puerto a Park Güell/Camp Nou",
-          "description": "Turismo pre/post crucero",
-          "price": "desde €55",
+          "description": "Visitas turísticas antes/después del crucero",
+          "price": "desde 55 €",
           "note": "Recogida/entrega flexible"
         },
         "coastal": {
           "name": "Puerto a Sitges/Costa Brava",
           "description": "Traslados costeros extendidos",
-          "price": "desde €85",
+          "price": "desde 85 €",
           "note": "Servicio puerta a puerta"
         },
-        "note": "Todos los precios incluyen tasas portuarias, tiempo de espera y equipaje. Grupos de 5+ y paradas extras disponibles.",
+        "note": "Todos los precios incluyen tasas portuarias, tiempo de espera y equipaje. Grupos de 5+ y paradas extra disponibles.",
         "cta": "Obtén tu Presupuesto",
         "aria": {
-          "quote": "Obtener presupuesto para tu traslado al puerto de cruceros"
+          "quote": "Obtén un presupuesto para tu traslado al puerto de cruceros"
         }
       },
       "howItWorks": {
         "title": "Cómo Funcionan los Traslados al Puerto de Cruceros",
-        "subtitle": "Proceso simple de tres pasos para una experiencia de crucero sin estrés",
+        "subtitle": "Sencillo proceso de tres pasos para una experiencia de crucero sin estrés",
         "step1": {
-          "title": "Comparte tus Detalles",
+          "title": "Comparte tus Datos",
           "description": "Indícanos tu línea de cruceros, terminal, nombre del barco, hora de recogida y número de pasajeros."
         },
         "step2": {
           "title": "Recibe Confirmación",
-          "description": "Enviaremos un presupuesto a precio fijo y detalles del conductor con instrucciones de encuentro."
+          "description": "Te enviaremos un presupuesto a precio fijo y los datos del conductor con instrucciones para el encuentro."
         },
         "step3": {
           "title": "Encuentra a tu Conductor",
-          "description": "Tu conductor te encuentra en el lugar acordado con un cartel con tu nombre y ayuda con el equipaje."
+          "description": "Tu conductor te espera en el punto acordado con un cartel con tu nombre y te ayuda con el equipaje."
         }
       },
       "fleet": {
@@ -496,7 +493,7 @@
         "paxLabel": "capacidad de pasajeros",
         "tesla": {
           "name": "Tesla Model 3",
-          "type": "Sedán eco-lujo"
+          "type": "Sedán ecológico de lujo"
         },
         "prius": {
           "name": "Toyota Prius+",
@@ -507,62 +504,62 @@
           "type": "Furgoneta familiar con espacio para equipaje"
         },
         "vclass": {
-          "name": "Mercedes Clase V",
+          "name": "Mercedes V-Class",
           "type": "Furgoneta premium con chófer"
         }
       },
       "faq": {
         "title": "Preguntas Frecuentes sobre Traslados al Puerto de Cruceros",
-        "subtitle": "Preguntas comunes sobre nuestro servicio de traslado de cruceros en Barcelona",
+        "subtitle": "Preguntas comunes sobre nuestro servicio de traslado a cruceros en Barcelona",
         "q1": {
           "question": "¿Dónde me encontrará el conductor en la terminal de cruceros?",
-          "answer": "Para llegadas, te encontramos justo fuera de aduanas con un cartel con tu nombre. Para salidas, te encontramos en tu hotel o dirección especificada. Enviaremos instrucciones detalladas de encuentro con tu confirmación de reserva."
+          "answer": "Para llegadas, te esperamos justo a la salida de aduanas con un cartel con tu nombre. Para salidas, te recogemos en tu hotel o dirección indicada. Enviaremos instrucciones detalladas para el encuentro con tu confirmación de reserva."
         },
         "q2": {
           "question": "¿Ayudan con el equipaje?",
-          "answer": "¡Sí! Nuestros conductores ayudan con la carga/descarga de equipaje en los puntos de recogida y entrega. Todos nuestros vehículos tienen amplio espacio para equipaje de crucero, incluidas maletas grandes."
+          "answer": "¡Sí! Nuestros conductores ayudan a cargar y descargar el equipaje tanto en la recogida como en el destino. Todos nuestros vehículos tienen amplio espacio para el equipaje de crucero, incluyendo maletas grandes."
         },
         "q3": {
           "question": "¿Qué pasa si mi crucero se retrasa?",
-          "answer": "Monitoreamos las llegadas de cruceros y ajustamos los horarios de recogida en consecuencia. Sin cargos extras por retrasos razonables. Para retrasos significativos, coordinaremos contigo vía WhatsApp/llamada."
+          "answer": "Monitorizamos las llegadas de los cruceros y ajustamos los horarios de recogida en consecuencia. Sin cargos extra por retrasos razonables. Para retrasos significativos, coordinaremos contigo vía WhatsApp/teléfono."
         },
         "q4": {
           "question": "¿Hay sillas infantiles disponibles?",
-          "answer": "Sí, asientos infantiles y elevadores están disponibles sin cargo. Por favor especifica las edades y requisitos al reservar para que podamos preparar los asientos apropiados."
+          "answer": "Sí, hay sillas para bebés y elevadores disponibles sin costo adicional. Por favor, especifica las edades y requisitos al reservar para que podamos preparar las sillas adecuadas."
         }
       },
       "cta": {
         "title": "¿Listo para un Traslado de Crucero sin Estrés?",
-        "subtitle": "Reserva tu traslado al puerto de cruceros de Barcelona hoy y viaja con confianza",
-        "whatsapp": "Chat y Reserva Ahora",
+        "subtitle": "Reserva hoy tu traslado al puerto de cruceros de Barcelona y viaja con confianza",
+        "whatsapp": "Chatea y Reserva Ahora",
         "call": "Llama para Reservar",
         "aria": {
-          "whatsapp": "Chatea y reserva traslado de crucero en WhatsApp",
+          "whatsapp": "Chatea y reserva traslado de crucero por WhatsApp",
           "call": "Llama para reservar traslado de crucero"
         }
       }
     },
     "airportTaxi": {
       "structuredData": {
-        "name": "Traslados de Taxi al Aeropuerto Barcelona",
-        "description": "Traslados fiables de taxi al aeropuerto en Barcelona. Servicio de recibimiento, precios fijos, seguimiento de vuelos y vehículos cómodos para traslados al aeropuerto."
+        "name": "Taxi Traslados Aeropuerto Barcelona",
+        "description": "Traslados en taxi confiables en el aeropuerto de Barcelona. Servicio de encuentro y saludo, precios fijos, seguimiento de vuelo y vehículos cómodos para traslados al aeropuerto."
       },
       "hero": {
-        "badge": "Servicio de Traslado al Aeropuerto Confiable",
-        "title": "Traslados de Taxi al Aeropuerto Barcelona",
-        "subtitle": "Traslados fiables con recibimiento entre el Aeropuerto de Barcelona (BCN/T1/T2), hoteles y centro de la ciudad. Precios fijos, seguimiento de vuelos y 60 minutos de espera gratis.",
-        "ctaWhatsApp": "Reserva Rápido vía WhatsApp",
+        "badge": "Servicio de Traslado al Aeropuerto de Confianza",
+        "title": "Taxi Traslados Aeropuerto Barcelona",
+        "subtitle": "Traslados confiables con servicio de encuentro y saludo entre el Aeropuerto de Barcelona (BCN/T1/T2), hoteles y el centro de la ciudad. Precios fijos, seguimiento de vuelo y 60 minutos de espera gratuitos.",
+        "ctaWhatsApp": "Reserva Rápida por WhatsApp",
         "ctaCall": "Llámanos 📞",
         "badges": {
           "fixedPrice": "Precios fijos",
-          "meetGreet": "Recibimiento",
-          "flightTracking": "Seguimiento de vuelos",
+          "meetGreet": "Encuentro y saludo",
+          "flightTracking": "Seguimiento de vuelo",
           "freeWait": "60 min espera gratis",
           "childSeats": "Sillas infantiles disponibles",
-          "fastLanes": "Carriles rápidos del aeropuerto"
+          "fastLanes": "Carriles rápidos de aeropuerto"
         },
         "aria": {
-          "whatsapp": "Reservar traslado al aeropuerto vía WhatsApp",
+          "whatsapp": "Reservar traslado al aeropuerto por WhatsApp",
           "call": "Llámanos para traslado al aeropuerto",
           "features": "Características clave de nuestro servicio de traslado al aeropuerto"
         }
@@ -570,19 +567,19 @@
       "features": {
         "drivers": {
           "title": "Conductores Profesionales",
-          "description": "Conductores que hablan inglés con permisos de aeropuerto y amplio conocimiento de Barcelona."
+          "description": "Conductores de habla inglesa con permisos de aeropuerto y amplio conocimiento de Barcelona."
         },
         "fleet": {
-          "title": "Flota Confortable",
-          "description": "Sedanes híbridos para 1–4 huéspedes, más furgonetas espaciosas para familias y grupos con equipaje."
+          "title": "Flota Cómoda",
+          "description": "Sedanes híbridos para 1–4 huéspedes, además de furgonetas espaciosas para familias y grupos con equipaje."
         },
         "pricing": {
           "title": "Precios Transparentes",
-          "description": "Sin tarifas ocultas: el precio incluye tasas de aeropuerto, peajes, tiempo de espera y todos los impuestos."
+          "description": "Sin cargos ocultos: el precio incluye tasas aeroportuarias, peajes, tiempo de espera y todos los impuestos."
         },
         "support": {
           "title": "Soporte 24/7",
-          "description": "Monitoreo de retrasos de vuelos y soporte por WhatsApp durante todo tu viaje."
+          "description": "Monitorización de retrasos de vuelos y soporte por WhatsApp durante todo tu viaje."
         }
       },
       "routes": {
@@ -594,76 +591,76 @@
           "name": "Aeropuerto a Centro Ciudad",
           "description": "BCN a Barrio Gótico/Eixample",
           "price": {
-            "sedan": "desde €39",
-            "van": "desde €55"
+            "sedan": "desde 39 €",
+            "van": "desde 55 €"
           },
-          "note": "30-45 minutos según el tráfico"
+          "note": "30-45 minutos dependiendo del tráfico"
         },
         "sagrada": {
           "name": "Aeropuerto a Sagrada Familia",
           "description": "Directo a la obra maestra de Gaudí",
-          "price": "desde €42",
+          "price": "desde 42 €",
           "note": "Servicio puerta a puerta"
         },
         "cruise": {
           "name": "Aeropuerto a Puerto de Cruceros",
           "description": "Terminales Moll Adossat",
-          "price": "desde €45",
-          "note": "Traslado directo, sin cargos extras"
+          "price": "desde 45 €",
+          "note": "Traslado directo, sin cargos extra"
         },
         "sitges": {
           "name": "Aeropuerto a Sitges",
           "description": "Hermosa ciudad costera",
-          "price": "desde €75",
+          "price": "desde 75 €",
           "note": "Viaje de 45-60 minutos"
         },
         "portAventura": {
           "name": "Aeropuerto a PortAventura",
-          "description": "Resort de parque temático",
-          "price": "desde €85",
+          "description": "Complejo turístico de parques temáticos",
+          "price": "desde 85 €",
           "note": "Traslado directo al resort"
         },
         "lloret": {
           "name": "Aeropuerto a Lloret de Mar",
           "description": "Destino Costa Brava",
-          "price": "desde €95",
+          "price": "desde 95 €",
           "note": "Servicio puerta a puerta"
         },
         "reus": {
           "name": "BCN a Aeropuerto de Reus",
-          "description": "Traslado aeropuerto a aeropuerto",
-          "price": "desde €130",
+          "description": "Traslado aeropuerto-a-aeropuerto",
+          "price": "desde 130 €",
           "note": "Servicio de conductor profesional"
         },
         "girona": {
-          "name": "BCN a Aeropuerto de Girona",
+          "name": "BCN a Aeropuerto de Gerona",
           "description": "Traslado Aeropuerto GRO",
-          "price": "desde €150",
-          "note": "Traslado directo confortable"
+          "price": "desde 150 €",
+          "note": "Cómodo traslado directo"
         },
         "sedan": "Sedán (1-4 pax)",
         "van": "Furgoneta (5-8 pax)",
-        "note": "Todos los precios incluyen tasas de aeropuerto, tiempo de espera y equipaje. Grupos de 5+ y paradas extras disponibles.",
+        "note": "Todos los precios incluyen tasas aeroportuarias, tiempo de espera y equipaje. Grupos de 5+ y paradas extra disponibles.",
         "timeNote": "Aprox. 30-45 minutos al centro de la ciudad",
         "cta": "Obtén tu Presupuesto",
         "aria": {
-          "quote": "Obtener presupuesto para tu traslado al aeropuerto"
+          "quote": "Obtén un presupuesto para tu traslado al aeropuerto"
         }
       },
       "howItWorks": {
         "title": "Cómo Funcionan los Traslados al Aeropuerto",
-        "subtitle": "Proceso simple de tres pasos para una experiencia de aeropuerto sin estrés",
+        "subtitle": "Sencillo proceso de tres pasos para una experiencia aeroportuaria sin estrés",
         "step1": {
           "title": "Reserva tu Traslado",
-          "description": "Proporciona detalles de vuelo, hora de recogida, número de pasajeros y requisitos de equipaje."
+          "description": "Proporciona los detalles del vuelo, hora de recogida, número de pasajeros y requisitos de equipaje."
         },
         "step2": {
           "title": "Recibe Confirmación",
-          "description": "Obtén detalles del conductor, instrucciones del punto de encuentro y confirmación de seguimiento de vuelo."
+          "description": "Obtén los datos del conductor, instrucciones del punto de encuentro y confirmación del seguimiento del vuelo."
         },
         "step3": {
           "title": "Encuentra a tu Conductor",
-          "description": "Tu conductor espera en llegadas con un cartel con tu nombre y ayuda con el equipaje."
+          "description": "Tu conductor te espera en llegadas con un cartel con tu nombre y te ayuda con el equipaje."
         }
       },
       "fleet": {
@@ -674,7 +671,7 @@
         "paxLabel": "capacidad de pasajeros",
         "tesla": {
           "name": "Tesla Model 3",
-          "type": "Sedán eco-lujo"
+          "type": "Sedán ecológico de lujo"
         },
         "prius": {
           "name": "Toyota Prius+",
@@ -685,11 +682,11 @@
           "type": "Furgoneta familiar con espacio para equipaje"
         },
         "vclass": {
-          "name": "Mercedes Clase V",
+          "name": "Mercedes V-Class",
           "type": "Furgoneta premium con chófer"
         },
         "features": {
-          "eco": "Eco-amigable",
+          "eco": "Ecológico",
           "luxury": "Lujo",
           "hybrid": "Híbrido",
           "efficient": "Eficiente",
@@ -703,28 +700,28 @@
         "subtitle": "Preguntas comunes sobre nuestro servicio de traslado al aeropuerto de Barcelona",
         "q1": {
           "question": "¿Dónde me encontrará el conductor en el aeropuerto?",
-          "answer": "Para llegadas, te encontramos en la sala de llegadas con un cartel con tu nombre. Para salidas, te recogemos en tu hotel o dirección especificada. Enviaremos instrucciones detalladas de encuentro con tu confirmación de reserva."
+          "answer": "Para llegadas, te esperamos en la sala de llegadas con un cartel con tu nombre. Para salidas, te recogemos en tu hotel o dirección indicada. Enviaremos instrucciones detalladas para el encuentro con tu confirmación de reserva."
         },
         "q2": {
           "question": "¿Qué pasa si mi vuelo se retrasa?",
-          "answer": "Monitoreamos las llegadas de vuelos y ajustamos automáticamente los horarios de recogida. Sin cargos extras por retrasos razonables. Para retrasos significativos, coordinaremos contigo vía WhatsApp."
+          "answer": "Monitorizamos las llegadas de los vuelos y ajustamos los horarios de recogida automáticamente. Sin cargos extra por retrasos razonables. Para retrasos significativos, coordinaremos contigo vía WhatsApp."
         },
         "q3": {
           "question": "¿Hay sillas infantiles disponibles?",
-          "answer": "Sí, asientos infantiles y elevadores están disponibles sin cargo. Por favor especifica las edades y requisitos al reservar para que podamos preparar los asientos apropiados."
+          "answer": "Sí, hay sillas para bebés y elevadores disponibles sin costo adicional. Por favor, especifica las edades y requisitos al reservar para que podamos preparar las sillas adecuadas."
         },
         "q4": {
           "question": "¿Cuánto equipaje puedo llevar?",
-          "answer": "Los sedanes caben 3-4 maletas + equipaje de mano. Las furgonetas caben 6-8 maletas + equipaje de mano. Para artículos de gran tamaño (palos de golf, esquís), por favor menciona al reservar."
+          "answer": "Los sedanes caben 3-4 maletas + equipaje de mano. Las furgonetas caben 6-8 maletas + equipaje de mano. Para artículos de gran tamaño (palos de golf, esquís), por favor indícalo al reservar."
         }
       },
       "cta": {
         "title": "¿Listo para un Traslado al Aeropuerto sin Estrés?",
-        "subtitle": "Reserva tu traslado al aeropuerto de Barcelona hoy y viaja con confianza",
-        "whatsapp": "Chat y Reserva Ahora",
+        "subtitle": "Reserva hoy tu traslado al aeropuerto de Barcelona y viaja con confianza",
+        "whatsapp": "Chatea y Reserva Ahora",
         "call": "Llama para Reservar",
         "aria": {
-          "whatsapp": "Chatea y reserva traslado al aeropuerto en WhatsApp",
+          "whatsapp": "Chatea y reserva traslado al aeropuerto por WhatsApp",
           "call": "Llama para reservar traslado al aeropuerto"
         }
       }
@@ -736,10 +733,10 @@
         "badge": "4 Pasajeros",
         "title": "Sedán Estándar de 4 Plazas",
         "titleHighlight": "Barcelona",
-        "subtitle": "Viaja con estilo y comodidad con nuestro servicio de Sedán Estándar de 4 Plazas Barcelona, perfecto para viajeros solos, parejas y grupos pequeños. Disfruta de un viaje suave al aeropuerto, puerto de cruceros o por la ciudad."
+        "subtitle": "Viaja con estilo y comodidad con nuestro servicio de Sedán Estándar de 4 Plazas en Barcelona, perfecto para viajeros solos, parejas y grupos pequeños. Disfruta de un viaje suave al aeropuerto, puerto de cruceros o por la ciudad."
       },
       "labels": {
-        "keyFeatures": "Características Clave",
+        "keyFeatures": "Características Principales",
         "perfectFor": "Perfecto Para",
         "startingFrom": "Desde",
         "bookWhatsApp": "Reservar vía WhatsApp"
@@ -747,40 +744,40 @@
       "vehicles": {
         "tesla": {
           "name": "Tesla Model 3",
-          "tagline": "Sedán Eco-Lujo – sostenibilidad con sofisticación",
-          "price": "€33",
+          "tagline": "Sedán ecológico de lujo: sostenibilidad y sofisticación se unen",
+          "price": "33 €",
           "priceNote": "Sujeto a ruta y duración del servicio",
           "features": {
             "electric": "100% Eléctrico – cero emisiones",
             "leather": "Asientos de cuero premium para 4 huéspedes",
-            "climate": "Control de clima y ventanas tintadas de privacidad",
-            "navigation": "Navegación a bordo y entretenimiento",
+            "climate": "Control de clima y ventanas polarizadas para privacidad",
+            "navigation": "Navegación y infoentretenimiento a bordo",
             "drivers": "Conductores amables y profesionales"
           },
           "perfectFor": {
-            "eco": "Traslados Ejecutivos Eco-conscientes",
-            "airport": "Recogidas y Entregas al Aeropuerto",
+            "eco": "Traslados Ejecutivos Ecológicos",
+            "airport": "Recogidas y Dejadas en Aeropuerto",
             "business": "Viajes de Negocios Urbanos",
             "hourly": "Servicio de Chófer por Horas",
-            "tours": "Tours Modernos de Barcelona"
+            "tours": "Tours Modernos por la Ciudad de Barcelona"
           }
         },
         "prius": {
           "name": "Toyota Prius+",
-          "tagline": "Sedán Híbrido Eficiente – comodidad confiable para viajes por ciudad y aeropuerto",
-          "price": "€35",
-          "priceNote": "Varía según ubicación de recogida y hora",
+          "tagline": "Sedán Híbrido Eficiente: comodidad fiable para viajes por la ciudad y al aeropuerto",
+          "price": "35 €",
+          "priceNote": "Varía según la ubicación de recogida y la hora",
           "features": {
-            "hybrid": "Motor híbrido – eficiente en combustible y eco-amigable",
+            "hybrid": "Motor híbrido – eficiente en combustible y ecológico",
             "luggage": "Espacio para hasta 4 huéspedes con equipaje estándar",
             "climate": "Interior con aire acondicionado, limpio y mantenido",
-            "infotainment": "Entretenimiento a bordo y puertos de carga",
+            "infotainment": "Infoentretenimiento a bordo y puertos de carga",
             "drivers": "Conductores amables y profesionales"
           },
           "perfectFor": {
             "airport": "Traslados al Aeropuerto",
-            "hotel": "Entregas en Hotel",
-            "cruise": "Salidas de Terminal de Cruceros",
+            "hotel": "Dejadas en Hotel",
+            "cruise": "Salidas desde Terminal de Cruceros",
             "local": "Traslados Locales en Barcelona",
             "hourly": "Reservas por Horas"
           }
@@ -788,7 +785,7 @@
       },
       "cta": {
         "title": "¿Listo para Reservar tu Sedán Estándar?",
-        "subtitle": "Experimenta comodidad y estilo con nuestros sedanes eco-amigables de 4 plazas.",
+        "subtitle": "Experimenta comodidad y estilo con nuestros sedanes ecológicos de 4 plazas.",
         "whatsapp": "Reservar vía WhatsApp",
         "call": "Llámanos 📞"
       }
@@ -798,10 +795,10 @@
         "badge": "Experiencia VIP",
         "title": "Sedán de Lujo",
         "titleHighlight": "Barcelona",
-        "subtitle": "Viaja con estilo con nuestro servicio de Sedán de Lujo Barcelona, perfecto para ejecutivos de negocios, huéspedes VIP y eventos especiales. Disfruta de interiores lujosos, viajes suaves y un chófer profesional para traslados al aeropuerto, reuniones o tours privados."
+        "subtitle": "Viaja con estilo con nuestro servicio de Sedán de Lujo en Barcelona, perfecto para ejecutivos de negocios, huéspedes VIP y eventos especiales. Disfruta de interiores lujosos, viajes suaves y un chófer profesional para traslados al aeropuerto, reuniones o tours privados."
       },
       "labels": {
-        "keyFeatures": "Características Clave",
+        "keyFeatures": "Características Principales",
         "perfectFor": "Perfecto Para",
         "startingFrom": "Desde",
         "bookWhatsApp": "Reservar vía WhatsApp",
@@ -811,16 +808,16 @@
       "vehicles": {
         "sclass": {
           "name": "Mercedes-Benz Clase S",
-          "tagline": "Sedán de Lujo Insignia – donde el prestigio se encuentra con la perfección",
-          "description": "Experimenta la máxima comodidad y estilo con nuestro servicio de Sedán de Lujo Barcelona con el Mercedes-Benz Clase S. Perfecto para traslados VIP, eventos y viajes de negocios.",
-          "price": "€103",
-          "priceNote": "Varía según distancia, duración y tipo de solicitud",
+          "tagline": "Sedán de Lujo Insignia: donde el prestigio se encuentra con la perfección",
+          "description": "Experimenta la máxima comodidad y estilo con nuestro servicio de Sedán de Lujo en Barcelona, con el Mercedes-Benz Clase S. Perfecto para traslados VIP, eventos y viajes de negocios.",
+          "price": "103 €",
+          "priceNote": "Varía según la distancia, duración y tipo de solicitud",
           "features": {
-            "seating": "Asientos traseros de primera clase con opción reclinable",
+            "seating": "Asientos traseros de primera clase con opción de reclinación",
             "cabin": "Cabina ultra silenciosa con ventanas de doble acristalamiento",
-            "massage": "Asientos de masaje climatizados y ventilados",
+            "massage": "Asientos con masaje, calefactables y ventilados",
             "sound": "Sistema de sonido envolvente premium Burmester®",
-            "chauffeur": "Chófer profesional que habla inglés y múltiples idiomas"
+            "chauffeur": "Chófer profesional multilingüe (inglés incluido)"
           },
           "perfectFor": {
             "business": "Traslados de Negocios de Alto Perfil",
@@ -833,9 +830,9 @@
         },
         "eclass": {
           "name": "Mercedes Clase E",
-          "tagline": "Sedán Clase Ejecutiva – sofisticación para cada ocasión",
-          "description": "Viaja con estilo con nuestro servicio de chófer Mercedes Clase E Barcelona, ideal para traslados ejecutivos, eventos y tours por la ciudad. Comodidad, elegancia y eficiencia en un solo viaje.",
-          "price": "€39",
+          "tagline": "Sedán de Clase Ejecutiva: sofisticación para cada ocasión",
+          "description": "Viaja con estilo con nuestro servicio de chófer en Mercedes Clase E en Barcelona, ideal para traslados ejecutivos, eventos y tours por la ciudad. Comodidad, elegancia y eficiencia en un solo viaje.",
+          "price": "39 €",
           "priceNote": "Basado en distancia y duración",
           "features": {
             "luggage": "Capacidad de equipaje adecuada para viajes de negocios",
@@ -850,29 +847,29 @@
             "longDistance": "Viajes de Larga Distancia",
             "meetings": "Reuniones y Eventos de Negocios",
             "hourly": "Servicio de Chófer por Horas",
-            "tours": "Tours Privados de Barcelona"
+            "tours": "Tours Privados por Barcelona"
           }
         },
         "bmw5": {
           "name": "BMW Serie 5",
-          "tagline": "Elegancia Dinámica – diseño refinado y excelencia en conducción",
-          "description": "Descubre la comodidad y el estilo de nuestro servicio de chófer BMW Serie 5 Barcelona, perfecto para viajes de negocios, eventos, traslados al aeropuerto y viajes de lujo.",
-          "price": "€39",
-          "priceNote": "Basado en ruta y hora",
+          "tagline": "Elegancia Dinámica: diseño refinado y excelencia al conducir",
+          "description": "Descubre la comodidad y el estilo de nuestro servicio de chófer con BMW Serie 5 en Barcelona, perfecto para viajes de negocios, eventos, traslados al aeropuerto y viajes de lujo.",
+          "price": "39 €",
+          "priceNote": "Basado en ruta y tiempo",
           "features": {
             "trunk": "Maletero espacioso para equipaje",
             "seating": "Asientos de lujo para hasta 3 pasajeros",
             "sound": "Sistema de sonido premium e iluminación ambiental",
             "comfort": "Viaje suave con tecnología de confort de vanguardia",
-            "chauffeur": "Chófer profesional que habla inglés"
+            "chauffeur": "Chófer profesional de habla inglesa"
           },
           "perfectFor": {
             "airport": "Traslados Ejecutivos al Aeropuerto",
             "cruise": "Traslados al Puerto de Cruceros",
             "longDistance": "Viajes de Larga Distancia",
             "business": "Viajes y Eventos de Negocios",
-            "hourly": "Alquiler de Chófer por Horas",
-            "tours": "Tours Personalizados de Barcelona"
+            "hourly": "Contratación de Chófer por Horas",
+            "tours": "Tours Personalizados por Barcelona"
           }
         }
       },
@@ -889,10 +886,10 @@
         "badge": "8 Pasajeros",
         "title": "Furgoneta de 8 Plazas",
         "titleHighlight": "Barcelona",
-        "subtitle": "Experimenta lo último en viajes grupales con nuestro servicio de Furgoneta de 8 Plazas Barcelona, perfecto para familias, amigos y equipos de negocios. Disfruta de asientos espaciosos, amplio espacio para equipaje y un viaje suave por la ciudad, al aeropuerto o en viajes de larga distancia."
+        "subtitle": "Experimenta la máxima comodidad en viajes en grupo con nuestro servicio de Furgoneta de 8 Plazas en Barcelona, perfecto para familias, amigos y equipos de trabajo. Disfruta de asientos espaciosos, amplio espacio para equipaje y un viaje suave por la ciudad, al aeropuerto o en viajes de larga distancia."
       },
       "labels": {
-        "keyFeatures": "Características Clave",
+        "keyFeatures": "Características Principales",
         "perfectFor": "Perfecto Para",
         "startingFrom": "Desde",
         "bookWhatsApp": "Reservar vía WhatsApp",
@@ -901,11 +898,11 @@
       "vehicles": {
         "vito": {
           "name": "Mercedes Vito",
-          "tagline": "Transporte confiable y espacioso – perfecto para viajes grupales y familiares",
-          "price": "€43",
-          "priceNote": "Según recogida y ruta",
+          "tagline": "Transporte fiable y espacioso – perfecto para viajes en grupo y familiares",
+          "price": "43 €",
+          "priceNote": "Dependiendo de la recogida y la ruta",
           "features": {
-            "passengers": "Acomoda hasta 8 pasajeros",
+            "passengers": "Capacidad para hasta 8 pasajeros",
             "luggage": "Gran capacidad de equipaje",
             "seats": "Asientos cómodos con amplio espacio para las piernas",
             "climate": "Aire acondicionado de doble zona",
@@ -913,9 +910,9 @@
           },
           "perfectFor": {
             "airport": "Traslados al Aeropuerto para Grupos",
-            "cruise": "Recogidas/Entregas en Puerto de Cruceros",
+            "cruise": "Recogidas/Dejadas en Puerto de Cruceros",
             "hotel": "Traslados a Hotel o Airbnb",
-            "sightseeing": "Tours Turísticos por la Ciudad",
+            "sightseeing": "Tours de Turismo por la Ciudad",
             "hourly": "Reserva por Horas",
             "longDistance": "Viajes Interurbanos o de Larga Distancia"
           }
@@ -923,10 +920,10 @@
         "tourneo": {
           "name": "Ford Tourneo Custom",
           "tagline": "Furgoneta espaciosa de 8 plazas – inteligente, moderna y muy cómoda para todos tus traslados",
-          "price": "€47",
-          "priceNote": "El costo final depende de la distancia y tipo de reserva",
+          "price": "47 €",
+          "priceNote": "El coste final depende de la distancia y el tipo de reserva",
           "features": {
-            "luggage": "Generoso espacio de equipaje para familias y grupos",
+            "luggage": "Amplio espacio para equipaje para familias y grupos",
             "passengers": "8 asientos de tamaño completo para pasajeros",
             "connectivity": "Conectividad Apple CarPlay / Android Auto",
             "climate": "Control de clima trasero e iluminación ambiental",
@@ -934,18 +931,18 @@
           },
           "perfectFor": {
             "airport": "Traslados al Aeropuerto para Grupos Pequeños",
-            "cruise": "Entregas y Recogidas en Puerto de Cruceros",
+            "cruise": "Dejadas y Recogidas en Puerto de Cruceros",
             "hotel": "Traslados a Hotel y Airbnb",
-            "tours": "Tours y Excursiones Grupales",
+            "tours": "Tours y Excursiones en Grupo",
             "hourly": "Reservas por Horas para Eventos o Compras",
-            "intercity": "Viajes Interurbanos y Largos Recorridos"
+            "intercity": "Viajes Interurbanos y Trayectos Largos"
           }
         }
       },
       "cta": {
-        "badge": "Viajes Grupales",
+        "badge": "Viaje en Grupo",
         "title": "¿Listo para Reservar tu Furgoneta de 8 Plazas?",
-        "subtitle": "Perfecto para familias, grupos y equipos que viajan juntos en Barcelona.",
+        "subtitle": "Perfecta para familias, grupos y equipos que viajan juntos en Barcelona.",
         "whatsapp": "Reservar vía WhatsApp",
         "call": "Llámanos 📞"
       }
@@ -955,28 +952,28 @@
         "badge": "Servicio Exclusivo",
         "title": "Furgoneta Exclusiva",
         "titleHighlight": "con Chófer",
-        "subtitle": "Descubre nuestro servicio de Furgoneta de Lujo con Chófer Barcelona, la elección perfecta para traslados VIP, viajes ejecutivos y viajes de alta comodidad. Ya sea que vayas al aeropuerto, terminal de cruceros o un evento de negocios, nuestras furgonetas premium ofrecen comodidad, espacio y clase."
+        "subtitle": "Descubre nuestro servicio de Furgoneta de Lujo con Chófer en Barcelona, la elección perfecta para traslados VIP, viajes ejecutivos y paseos de alta comodidad. Ya sea que te dirijas al aeropuerto, terminal de cruceros o a un evento de negocios, nuestras furgonetas premium ofrecen confort, espacio y clase."
       },
       "labels": {
-        "keyFeatures": "Características Clave",
+        "keyFeatures": "Características Principales",
         "perfectFor": "Perfecto Para",
         "startingFrom": "Desde",
         "bookWhatsApp": "Reservar vía WhatsApp",
         "callUs": "Llámanos 📞"
       },
       "vehicle": {
-        "name": "Mercedes Clase V",
-        "tagline": "Furgoneta de Lujo con Chófer – donde la elegancia se encuentra con la comodidad",
+        "name": "Mercedes V-Class",
+        "tagline": "Furgoneta de Lujo con Chófer: donde la elegancia se encuentra con la comodidad",
         "vipBadge": "VIP",
         "passengersBadge": "7 Pasajeros",
-        "price": "€45",
+        "price": "45 €",
         "priceNote": "Basado en distancia y duración",
         "features": {
           "luggage": "Amplio espacio para equipaje",
           "passengers": "Hasta 7 pasajeros",
           "climate": "Control de clima y asientos de cuero",
-          "interiors": "Interiores premium con vidrio de privacidad",
-          "chauffeur": "Chófer que habla múltiples idiomas"
+          "interiors": "Interiores premium con vidrios de privacidad",
+          "chauffeur": "Chófer de habla multilingüe"
         },
         "perfectFor": {
           "airport": "Traslados Ejecutivos al Aeropuerto",
@@ -984,7 +981,7 @@
           "longDistance": "Viajes de Larga Distancia",
           "business": "Reuniones de Negocios",
           "hourly": "Servicio de Chófer por Horas",
-          "tours": "Tours Privados de Barcelona"
+          "tours": "Tours Privados por Barcelona"
         }
       },
       "highlights": {
@@ -996,12 +993,12 @@
           "description": "Mantente conectado durante todo tu viaje con Wi-Fi de alta velocidad gratuito."
         },
         "privacy": {
-          "title": "Ventanas Tintadas",
-          "description": "Disfruta de completa privacidad con ventanas tintadas premium en todo el vehículo."
+          "title": "Ventanas Polarizadas",
+          "description": "Disfruta de total privacidad con ventanas polarizadas premium en todo el vehículo."
         },
         "leather": {
           "title": "Asientos de Cuero",
-          "description": "Relájate en lujosos asientos de cuero diseñados para máxima comodidad."
+          "description": "Relájate en lujosos asientos de cuero diseñados para la máxima comodidad."
         },
         "multilingual": {
           "title": "Conductores Multilingües",
@@ -1011,7 +1008,7 @@
       "cta": {
         "badge": "Experiencia Premium",
         "title": "¿Listo para una Experiencia VIP?",
-        "subtitle": "Deja que Royal Transfers BCN redefina tu experiencia de viaje con nuestro servicio de furgoneta de lujo con chófer.",
+        "subtitle": "Permite que Royal Transfers BCN redefina tu experiencia de viaje con nuestro servicio de furgoneta de lujo con chófer.",
         "whatsapp": "Reservar vía WhatsApp",
         "call": "Llámanos 📞"
       }
@@ -1029,7 +1026,9 @@
     "transferType": {
       "label": "Tipo de Traslado",
       "oneWay": "Solo Ida",
-      "return": "Ida y Vuelta"
+      "return": "Ida y Vuelta",
+      "addReturn": "Añadir viaje de vuelta",
+      "returnDetails": "Detalles del viaje de vuelta"
     },
     "fields": {
       "pickup": {
@@ -1046,6 +1045,16 @@
       "time": {
         "label": "Hora de recogida"
       },
+      "returnDate": {
+        "label": "Fecha de vuelta"
+      },
+      "returnTime": {
+        "label": "Hora de vuelta"
+      },
+      "duration": {
+        "label": "Duración",
+        "hours": "{count, plural, =1 {Hora} other {Horas}}"
+      },
       "passengers": {
         "label": "Número de pasajeros",
         "count": "{count, plural, =1 {Pasajero} other {Pasajeros}}"
@@ -1055,29 +1064,29 @@
       "search": "Buscar Traslados"
     },
     "validation": {
-      "fillAllFields": "Por favor completa todos los campos"
+      "fillAllFields": "Por favor, complete todos los campos obligatorios"
     }
   },
   "bookingWizard": {
     "steps": {
       "rideDetails": {
         "title": "Detalles del Viaje",
-        "label": "Paso 1: Ingresa los detalles del viaje",
+        "label": "Paso 1: Ingrese los detalles del viaje",
         "aria": "Formulario de detalles del viaje"
       },
       "chooseVehicle": {
         "title": "Elegir Vehículo",
-        "label": "Paso 2: Selecciona tu vehículo",
+        "label": "Paso 2: Seleccione su vehículo",
         "aria": "Selección de vehículo"
       },
       "contactDetails": {
         "title": "Datos de Contacto",
-        "label": "Paso 3: Ingresa información de contacto",
+        "label": "Paso 3: Ingrese la información de contacto",
         "aria": "Formulario de información de contacto"
       },
       "confirmation": {
         "title": "Confirmación",
-        "label": "Paso 4: Revisa y confirma la reserva",
+        "label": "Paso 4: Revise y confirme la reserva",
         "aria": "Confirmación de reserva"
       }
     },
@@ -1093,7 +1102,7 @@
   },
   "step1": {
     "title": "Detalles del Viaje",
-    "subtitle": "Elige tu tipo de servicio e ingresa la información del viaje",
+    "subtitle": "Elija su tipo de servicio e ingrese la información del viaje",
     "serviceType": {
       "aria": "Seleccionar tipo de servicio",
       "distance": {
@@ -1117,11 +1126,11 @@
       },
       "pickup": {
         "label": "Lugar de Recogida",
-        "placeholder": "Ingresa lugar de recogida..."
+        "placeholder": "Ingrese lugar de recogida..."
       },
       "dropoff": {
         "label": "Lugar de Destino",
-        "placeholder": "Ingresa lugar de destino..."
+        "placeholder": "Ingrese lugar de destino..."
       },
       "transferType": {
         "label": "Tipo de Traslado",
@@ -1129,10 +1138,18 @@
         "return": "Ida y Vuelta",
         "returnNote": "Crea un nuevo viaje"
       },
+      "returnDetailsTitle": "Detalles del Viaje de Vuelta",
+      "returnDate": {
+        "label": "Fecha de Vuelta"
+      },
+      "returnTime": {
+        "label": "Hora de Vuelta",
+        "placeholder": "Seleccionar hora"
+      },
       "duration": {
         "label": "Duración (Horas)",
         "hours": "{count, plural, =1 {1 hora} other {{count} horas}}",
-        "note": "El precio se redondea solo a horas completas (sin cargos por media hora)"
+        "note": "El precio se redondea a horas completas (sin cargos por medias horas)"
       },
       "passengers": {
         "label": "Número de Pasajeros (hasta 8)",
@@ -1147,51 +1164,55 @@
     "calculating": "Calculando distancia..."
   },
   "step2": {
-    "title": "Elegir un Vehículo",
+    "title": "Elige un Vehículo",
     "subtitle": "Selecciona tu categoría de vehículo preferida",
     "summary": {
       "heading": "RESUMEN DEL VIAJE",
       "serviceType": "Tipo de Servicio",
-      "distance": "Distancia",
       "hourly": "Por Horas",
       "transferType": "Tipo de Traslado",
       "oneWay": "Solo Ida",
+      "return": "Ida y Vuelta",
+      "returnDateTime": "Vuelta",
       "pickup": "Recogida",
       "dropoff": "Destino",
       "dateTime": "Fecha y Hora",
+      "distance": "Distancia",
       "time": "Tiempo",
+      "duration": "Duración",
+      "hours": "horas",
       "passengers": "Pasajeros",
       "notSet": "No establecido"
     },
     "vehicles": {
       "heading": "Vehículos Disponibles",
-      "aria": "Seleccionar un vehículo",
+      "aria": "Selecciona un vehículo",
       "pax": "pax",
       "bags": "maletas",
       "from": "Desde",
-      "noVehicles": "No hay vehículos disponibles para {count} pasajeros. Por favor regresa y ajusta."
+      "noVehicles": "No hay vehículos disponibles para {count} pasajeros. Por favor, retrocede y ajústalo."
     },
     "extras": {
       "heading": "Extras Opcionales",
       "childSeat": {
         "title": "Silla Infantil",
-        "price": "€5 por silla",
+        "price": "5 € por silla",
         "aria": "Selector de cantidad de sillas infantiles",
-        "increase": "Agregar silla infantil",
+        "increase": "Añadir silla infantil",
         "decrease": "Quitar silla infantil"
       }
     },
     "pricing": {
-      "totalCost": "Costo Total",
+      "totalCost": "Coste Total",
       "base": "Base",
       "distance": "Distancia",
       "childSeats": "Sillas Infantiles",
-      "airportFee": "Tarifa de Aeropuerto",
+      "airportFee": "Tasa Aeroportuaria",
       "tax": "Impuesto (21% IVA)"
     }
   },
   "step3": {
-    "title": "Ingresa Datos de Contacto",
+    "title": "Ingresa los Datos de Contacto",
     "subtitle": "Usaremos esta información para confirmar tu reserva",
     "optional": "opcional",
     "contactInfo": {
@@ -1205,7 +1226,7 @@
         "placeholder": "Pérez"
       },
       "email": {
-        "label": "Dirección de Email",
+        "label": "Dirección de Correo Electrónico",
         "placeholder": "juan.perez@ejemplo.com"
       },
       "phone": {
@@ -1219,7 +1240,7 @@
       },
       "comments": {
         "label": "Comentarios",
-        "placeholder": "Cualquier requisito especial..."
+        "placeholder": "¿Algún requisito especial?..."
       }
     },
     "payment": {
@@ -1227,21 +1248,21 @@
       "aria": "Seleccionar método de pago",
       "cash": {
         "title": "Efectivo",
-        "description": "Pagar al conductor directamente",
-        "aria": "Pagar en efectivo"
+        "description": "Paga al conductor directamente",
+        "aria": "Pagar con efectivo"
       },
       "card": {
         "title": "Tarjeta",
-        "description": "Pagar en línea vía Stripe",
+        "description": "Paga en línea vía Stripe",
         "aria": "Pagar con tarjeta",
         "note": {
           "title": "Nota",
-          "description": "Serás redirigido a la página de pago segura de Stripe para completar tu pago."
+          "description": "Serás redirigido a la página de pago seguro de Stripe para completar tu pago."
         }
       }
     },
     "summary": {
-      "heading": "RESUMEN DE RESERVA",
+      "heading": "RESUMEN DE LA RESERVA",
       "service": "Servicio",
       "distance": "Basado en Distancia",
       "hourly": "Basado en Horas",
@@ -1249,10 +1270,10 @@
       "to": "Hasta",
       "dateTime": "Fecha y Hora",
       "at": "a las",
-      "distance": "Distancia",
       "passengers": "Pasajeros",
       "vehicle": "Vehículo",
       "childSeats": "Sillas Infantiles",
+      "paymentMethod": "Método de Pago",
       "subtotal": "Subtotal",
       "tax": "Impuesto (21%)",
       "total": "Total",
@@ -1260,10 +1281,12 @@
     }
   },
   "step4": {
-    "title": "Resumen de Reserva",
+    "title": "Resumen de la Reserva",
     "subtitle": "Revisa los detalles de tu reserva antes de confirmar",
     "at": "a las",
-    "error": "La reserva falló. Por favor intenta de nuevo.",
+    "returnAt": "Vuelta",
+    "hours": "horas",
+    "error": "Error en la reserva. Por favor, inténtalo de nuevo.",
     "processing": "Procesando...",
     "confirmButton": "Confirmar Reserva",
     "sections": {
@@ -1274,7 +1297,7 @@
     },
     "fields": {
       "name": "Nombre",
-      "email": "Email",
+      "email": "Correo Electrónico",
       "phone": "Teléfono",
       "passengers": "Pasajeros",
       "flightNumber": "Número de Vuelo",
@@ -1286,6 +1309,7 @@
       "dateTime": "Fecha y Hora",
       "distance": "Distancia",
       "duration": "Duración",
+      "hourlyDuration": "Duración",
       "vehicle": "Vehículo",
       "capacity": "Capacidad",
       "childSeats": "Sillas Infantiles"
@@ -1304,10 +1328,12 @@
       "card": "Tarjeta"
     },
     "priceSummary": {
-      "heading": "Resumen de Precio",
+      "heading": "Resumen de Precios",
+      "selectedVehicle": "Precio del vehículo seleccionado",
       "basePrice": "Precio Base",
       "distanceCharge": "Cargo por Distancia",
-      "airportFee": "Tarifa de Aeropuerto",
+      "airportFee": "Tasa Aeroportuaria",
+      "timeCharge": "Cargo por Tiempo",
       "childSeats": "Sillas Infantiles ({count})",
       "subtotal": "Subtotal",
       "tax": "Impuesto (21%)",
@@ -1316,80 +1342,83 @@
     "paymentNote": {
       "cash": {
         "title": "Pago en Efectivo",
-        "description": "Paga al conductor directamente al llegar. Reserva confirmada inmediatamente."
+        "description": "Paga al conductor directamente a la llegada. Reserva confirmada inmediatamente."
       },
       "card": {
         "title": "Pago con Tarjeta",
-        "description": "Serás redirigido a la página de pago segura de Stripe para completar el pago."
+        "description": "Serás redirigido a la pasarela segura de Stripe para completar el pago."
       }
     }
   },
-  
   "success": {
-    "title": "¡Reserva confirmada!",
-    "subtitleCash": "Su traslado ha sido reservado. Pague al conductor en efectivo.",
-    "subtitleCard": "Su pago se ha realizado correctamente. Su traslado está confirmado.",
-    "bookingId": "ID de la reserva",
-
-    "transferDetails": "Detalles del traslado",
-    "customerDetails": "Datos del cliente",
-    "paymentDetails": "Detalles del pago",
-
+    "title": "¡Reserva Confirmada!",
+    "subtitleCash": "Tu traslado ha sido reservado. Paga al conductor en efectivo.",
+    "subtitleCard": "Tu pago fue exitoso. Tu traslado está confirmado.",
+    "bookingId": "ID de Reserva",
+    "transferDetails": "Detalles del Traslado",
+    "customerDetails": "Detalles del Cliente",
+    "paymentDetails": "Detalles del Pago",
     "pickup": "Recogida",
     "dropoff": "Destino",
-    "dateTime": "Fecha y hora",
+    "dateTime": "Fecha y Hora",
     "vehicle": "Vehículo",
-    "passengers": "Pasajeros y equipaje",
-    "flightNumber": "Número de vuelo",
-
+    "passengers": "Pasajeros y Equipaje",
+    "flightNumber": "Número de Vuelo",
     "name": "Nombre",
-    "email": "Correo electrónico",
+    "email": "Correo Electrónico",
     "phone": "Teléfono",
-
-    "paymentMethod": "Método de pago",
+    "paymentMethod": "Método de Pago",
     "paymentStatus": "Estado",
-    "totalPaid": "Total pagado",
-
+    "totalPaid": "Total Pagado",
     "cash": "Efectivo",
-    "card": "Tarjeta de crédito",
-
+    "card": "Tarjeta de Crédito",
     "paymentStatusPaid": "Pagado",
-    "paymentStatusCash": "Pagar al conductor",
-    "paymentStatusProcessing": "En proceso",
-    "paymentStatusUnpaid": "No pagado",
-
-    "quickActions": "Acciones rápidas",
-    "emailSent": "Correo de confirmación enviado",
-    "downloadReceipt": "Descargar recibo",
-    "addToCalendar": "Añadir al calendario",
-    "print": "Imprimir confirmación",
-
-    "needHelp": "¿Necesita ayuda con su reserva?",
-    "contactSupport": "Contactar con soporte",
-
+    "paymentStatusCash": "Pagar al Conductor",
+    "paymentStatusProcessing": "Procesando",
+    "paymentStatusUnpaid": "No Pagado",
+    "quickActions": "Acciones Rápidas",
+    "emailSent": "Correo de Confirmación Enviado",
+    "downloadReceipt": "Descargar Recibo",
+    "addToCalendar": "Añadir al Calendario",
+    "print": "Imprimir Confirmación",
+    "needHelp": "¿Necesitas ayuda con tu reserva?",
+    "contactSupport": "Contactar a Soporte",
     "whatsNext": {
-      "title": "¿Qué sigue?",
+      "title": "¿Qué Sigue?",
       "step1": {
-        "title": "Confirmación enviada",
-        "description": "Revise su correo electrónico para ver los detalles y el recibo"
+        "title": "Confirmación Enviada",
+        "description": "Revisa tu correo electrónico para ver los detalles de la reserva y el recibo"
       },
       "step2": {
-        "title": "Asignación del conductor",
-        "description": "24 horas antes de la recogida recibirá los datos del conductor"
+        "title": "Asignación de Conductor",
+        "description": "24h antes de la recogida, recibirás la información de contacto del conductor"
       },
       "step3": {
-        "title": "Disfrute de su viaje",
-        "description": "El conductor le esperará en el punto de recogida"
+        "title": "Disfruta tu Viaje",
+        "description": "Tu conductor te esperará en el lugar de recogida"
       }
     },
-
-    "backToHome": "Volver al inicio",
-
+    "backToHome": "Volver al Inicio",
     "error": {
-      "title": "Error en la verificación del pago",
-      "tryAgain": "Intentar reservar de nuevo",
-      "contactSupport": "Contactar con soporte"
+      "title": "Error en la Verificación del Pago",
+      "tryAgain": "Intentar Reservar de Nuevo",
+      "contactSupport": "Contactar a Soporte"
+    }
+  },
+  "booking": {
+    "location": {
+      "pickupPlaceholder": "Ingrese lugar de recogida...",
+      "dropoffPlaceholder": "Ingrese destino...",
+      "useMyLocation": "Usar mi ubicación actual",
+      "fallbackMode": "Autocompletar no disponible. Aún puedes escribir direcciones manualmente.",
+      "noResults": "No se encontraron ubicaciones. Intenta con otra búsqueda.",
+      "errors": {
+        "geolocationUnsupported": "Tu navegador no soporta la geolocalización",
+        "geolocationDenied": "Permiso de ubicación denegado",
+        "geolocationUnavailable": "Información de ubicación no disponible",
+        "geolocationTimeout": "Tiempo de espera de la solicitud de ubicación agotado",
+        "geocodingFailed": "No se pudo determinar la dirección"
+      }
     }
   }
 }
-

@@ -1,19 +1,19 @@
 'use client';
 
 /**
- * Step 2: Choose a Vehicle - IMPROVED
- * - Mobile optimized
- * - SEO friendly
- * - Performance optimized
- * - i18n ready
+ * Step 2: Choose a Vehicle - UPDATED
+ * - No update loops (no bookingData in effect deps)
+ * - Summary reflects Step1 selections (distance/hourly, oneWay/return, return date/time, hourlyDuration)
+ * - Pricing recalculates on select + child seats change
+ * - Scrolls to top on mobile when Step2 mounts
  */
 
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import { m } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useBooking } from '@/lib/booking/context';
 import { formatPrice, calculatePrice } from '@/lib/booking/utils';
-import type { VehicleCategory } from '@/lib/booking/types';
+import type { VehicleCategory, Vehicle, TransferType } from '@/lib/booking/types';
 import Image from 'next/image';
 
 // Memoized vehicle categories
@@ -31,7 +31,7 @@ const VEHICLE_CATEGORIES = [
   {
     id: 'premium-sedan' as VehicleCategory,
     name: 'Premium Sedan',
-    description: 'Mercedes E-Class or BMW 5 Series',
+    description: 'Mercedes E-Class or similar',
     capacity: 3,
     luggage: 3,
     basePrice: 55,
@@ -51,8 +51,8 @@ const VEHICLE_CATEGORIES = [
   {
     id: 'standard-minivan-7' as VehicleCategory,
     name: 'Standard Minivan',
-    subtitle: '7 seats',
-    description: 'Mercedes V-Class',
+    subtitle: '7 passengers',
+    description: 'Mercedes Vito or Similar',
     capacity: 7,
     luggage: 7,
     basePrice: 75,
@@ -61,9 +61,9 @@ const VEHICLE_CATEGORIES = [
   },
   {
     id: 'standard-minivan-8' as VehicleCategory,
-    name: 'Standard Minivan',
+    name: 'Standard Minibus',
     subtitle: 'up to 8 passengers',
-    description: 'Mercedes Vito or Ford Tourneo',
+    description: 'Ford Custom',
     capacity: 8,
     luggage: 8,
     basePrice: 85,
@@ -73,7 +73,7 @@ const VEHICLE_CATEGORIES = [
   {
     id: 'executive-minivan' as VehicleCategory,
     name: 'Executive Minivan',
-    subtitle: '7-8 seats',
+    subtitle: 'up to 7 passengers',
     description: 'Mercedes V-Class Executive',
     capacity: 7,
     luggage: 7,
@@ -86,130 +86,186 @@ const VEHICLE_CATEGORIES = [
 export default function VehicleSelectionStep() {
   const t = useTranslations('step2');
   const { bookingData, updateBookingData, updatePricing } = useBooking();
-  const [childSeats, setChildSeats] = useState(0);
-  const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(null);
 
-  // Check if booking is hourly type
+  // Derived (single source of truth = context)
   const isHourlyBooking = bookingData.serviceType === 'hourly';
+  const isDistanceBooking = bookingData.serviceType === 'distance';
+
+  const selectedVehicleId = bookingData.selectedVehicle?.id ?? null;
+  const childSeats = bookingData.passengers.childSeats ?? 0;
+
+  // ✅ scroll to top on mobile when Step2 mounts
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.innerWidth <= 768) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
 
   // Memoized filtered vehicles
   const availableVehicles = useMemo(
-    () => VEHICLE_CATEGORIES.filter(
-      (vehicle) => vehicle.capacity >= bookingData.passengers.count
-    ),
+    () => VEHICLE_CATEGORIES.filter((vehicle) => vehicle.capacity >= bookingData.passengers.count),
     [bookingData.passengers.count]
   );
 
-  // Price calculation effect
-  useEffect(() => {
-    if (selectedVehicleId) {
-      const vehicle = VEHICLE_CATEGORIES.find((v) => v.id === selectedVehicleId);
-      if (vehicle) {
-        const mockVehicle = {
-          id: vehicle.id,
-          category: vehicle.id,
-          name: vehicle.name,
-          description: vehicle.description || '',
-          image: vehicle.image,
-          capacity: { passengers: vehicle.capacity, luggage: vehicle.luggage },
-          features: [...vehicle.features], // Spread to convert readonly to mutable
-          basePrice: vehicle.basePrice,
-          pricePerKm: 1.2,
-          pricePerHour: 45,
-        };
+  const buildVehicle = useCallback((vehicleId: string): Vehicle | null => {
+    const v = VEHICLE_CATEGORIES.find((x) => x.id === vehicleId);
+    if (!v) return null;
 
-        updateBookingData({
-          passengers: {
-            ...bookingData.passengers,
-            childSeats: childSeats,
-          },
-          selectedVehicle: mockVehicle,
-        });
+    // Your fleet list is “category-only”; we convert to the real Vehicle type used by pricing/booking.
+    const mockVehicle: Vehicle = {
+      id: v.id,
+      category: v.id,
+      name: v.name,
+      description: v.description || '',
+      image: v.image,
+      capacity: { passengers: v.capacity, luggage: v.luggage },
+      features: [...v.features], // convert readonly -> mutable string[]
+      basePrice: v.basePrice,
+      // pricing inputs (adjust if your rules differ)
+      pricePerKm: 1.2,
+      pricePerHour: 45,
+    };
 
-        const pricing = calculatePrice(
-          { ...bookingData, selectedVehicle: mockVehicle, passengers: { ...bookingData.passengers, childSeats } },
-          bookingData.distance
-        );
-        updatePricing(pricing);
-      }
-    }
-  }, [selectedVehicleId, childSeats, bookingData, updateBookingData, updatePricing]);
-
-  const handleSelectVehicle = useCallback((vehicleId: string) => {
-    setSelectedVehicleId(vehicleId);
+    return mockVehicle;
   }, []);
+
+  const recomputePricing = useCallback(
+    (nextSelectedVehicle: Vehicle | null, nextChildSeats: number) => {
+      if (!nextSelectedVehicle) return;
+
+      const nextBooking = {
+        ...bookingData,
+        selectedVehicle: nextSelectedVehicle,
+        passengers: { ...bookingData.passengers, childSeats: nextChildSeats },
+      };
+
+      // calculatePrice already knows how to handle hourly vs distance (based on bookingData/serviceType)
+      const pricing = calculatePrice(nextBooking, bookingData.distance);
+      updatePricing(pricing);
+    },
+    [bookingData, updatePricing]
+  );
+
+  const handleSelectVehicle = useCallback(
+    (vehicleId: string) => {
+      const vehicle = buildVehicle(vehicleId);
+      if (!vehicle) return;
+
+      updateBookingData({
+        selectedVehicle: vehicle,
+        passengers: { ...bookingData.passengers, childSeats },
+      });
+
+      recomputePricing(vehicle, childSeats);
+    },
+    [buildVehicle, bookingData.passengers, childSeats, updateBookingData, recomputePricing]
+  );
 
   const incrementChildSeats = useCallback(() => {
-    setChildSeats((prev) => Math.min(3, prev + 1));
-  }, []);
+    const next = Math.min(3, childSeats + 1);
+
+    updateBookingData({
+      passengers: { ...bookingData.passengers, childSeats: next },
+    });
+
+    if (bookingData.selectedVehicle) {
+      recomputePricing(bookingData.selectedVehicle, next);
+    }
+  }, [childSeats, bookingData.passengers, bookingData.selectedVehicle, updateBookingData, recomputePricing]);
 
   const decrementChildSeats = useCallback(() => {
-    setChildSeats((prev) => Math.max(0, prev - 1));
-  }, []);
+    const next = Math.max(0, childSeats - 1);
+
+    updateBookingData({
+      passengers: { ...bookingData.passengers, childSeats: next },
+    });
+
+    if (bookingData.selectedVehicle) {
+      recomputePricing(bookingData.selectedVehicle, next);
+    }
+  }, [childSeats, bookingData.passengers, bookingData.selectedVehicle, updateBookingData, recomputePricing]);
+
+  // Summary display helpers
+  const transferType: TransferType = bookingData.transferType === 'return' ? 'return' : 'oneWay';
+  const showReturn = isDistanceBooking && transferType === 'return';
+
+  const transferLabel =
+    transferType === 'return'
+      ? (t('summary.return') ?? 'Return')
+      : (t('summary.oneWay') ?? 'One-way');
 
   return (
     <div className="space-y-6 sm:space-y-8">
       {/* Title */}
       <header className="text-center">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
-          {t('title')}
-        </h1>
-        <p className="text-sm sm:text-lg text-gray-600">
-          {t('subtitle')}
-        </p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">{t('title')}</h1>
+        <p className="text-sm sm:text-lg text-gray-600">{t('subtitle')}</p>
       </header>
 
       {/* Ride Summary */}
-      <section 
+      <section
         className="max-w-5xl mx-auto bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100"
         aria-labelledby="ride-summary-heading"
       >
         <h2 id="ride-summary-heading" className="text-xs sm:text-sm font-semibold text-gray-600 mb-3 sm:mb-4">
           {t('summary.heading')}
         </h2>
+
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          <SummaryItem 
-            label={t('summary.serviceType')} 
-            value={isHourlyBooking ? t('summary.hourly') : t('summary.distance')} 
+          <SummaryItem
+            label={t('summary.serviceType')}
+            value={isHourlyBooking ? (t('summary.hourly') ?? 'Hourly') : (t('summary.distance') ?? 'Distance')}
           />
-          <SummaryItem label={t('summary.transferType')} value={t('summary.oneWay')} />
-          <SummaryItem label={t('summary.pickup')} value={bookingData.pickup.address || t('summary.notSet')} />
-          
-          {/* Only show dropoff for distance-based bookings */}
+
+          {/* ✅ show correct transfer type only for distance */}
           {!isHourlyBooking && (
-            <SummaryItem label={t('summary.dropoff')} value={bookingData.dropoff.address || t('summary.notSet')} />
+            <SummaryItem label={t('summary.transferType')} value={transferLabel} />
           )}
-          
-          <SummaryItem 
-            label={t('summary.dateTime')} 
-            value={`${bookingData.dateTime.date} ${bookingData.dateTime.time}`} 
-          />
-          
-          {/* Distance info only for distance-based bookings */}
-          {!isHourlyBooking && bookingData.distance && (
+
+          <SummaryItem label={t('summary.pickup')} value={bookingData.pickup.address || (t('summary.notSet') ?? 'Not set')} />
+
+          {/* ✅ dropoff optional */}
+          {!isHourlyBooking && (
+            <SummaryItem
+              label={t('summary.dropoff')}
+              value={bookingData.dropoff?.address || (t('summary.notSet') ?? 'Not set')}
+            />
+          )}
+
+          <SummaryItem label={t('summary.dateTime')} value={`${bookingData.dateTime.date} ${bookingData.dateTime.time}`} />
+
+          {/* ✅ return date/time only if return */}
+          {showReturn && (
+            <SummaryItem
+              label={t('summary.returnDateTime') ?? 'Return'}
+              value={`${bookingData.dateTime.returnDate || ''} ${bookingData.dateTime.returnTime || ''}`.trim() || (t('summary.notSet') ?? 'Not set')}
+            />
+          )}
+
+          {/* ✅ hourly duration only if hourly */}
+          {isHourlyBooking && (
+            <SummaryItem
+              label={t('summary.duration') ?? 'Duration'}
+              value={`${bookingData.hourlyDuration ?? 2} ${t('summary.hours') ?? 'hours'}`}
+            />
+          )}
+
+          {/* ✅ distance only for distance bookings */}
+          {!isHourlyBooking && bookingData.distance != null && (
             <SummaryItem label={t('summary.distance')} value={`${bookingData.distance.toFixed(1)} km`} />
           )}
-          
-          {!isHourlyBooking && bookingData.duration && (
-            <SummaryItem label={t('summary.time')} value={`${Math.round(bookingData.duration)} min`} />
-          )}
-          
+
           <SummaryItem label={t('summary.passengers')} value={`${bookingData.passengers.count}`} />
         </div>
       </section>
 
       {/* Vehicle Selection */}
       <section className="max-w-6xl mx-auto">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
-          {t('vehicles.heading')}
-        </h2>
-        
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">{t('vehicles.heading')}</h2>
+
         {availableVehicles.length > 0 ? (
-          <div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
-            role="radiogroup"
-            aria-label={t('vehicles.aria')}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" role="radiogroup" aria-label={t('vehicles.aria')}>
             {availableVehicles.map((vehicle, index) => (
               <VehicleCard
                 key={vehicle.id}
@@ -231,14 +287,9 @@ export default function VehicleSelectionStep() {
 
       {/* Optional Extras */}
       {selectedVehicleId && (
-        <m.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-6xl mx-auto"
-        >
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
-            {t('extras.heading')}
-          </h2>
+        <m.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-6xl mx-auto">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">{t('extras.heading')}</h2>
+
           <div className="bg-white rounded-xl border-2 border-gray-200 p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3 sm:gap-4">
@@ -246,20 +297,12 @@ export default function VehicleSelectionStep() {
                   <ChildSeatIcon className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600" />
                 </div>
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-900">
-                    {t('extras.childSeat.title')}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-600">
-                    {t('extras.childSeat.price')}
-                  </p>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900">{t('extras.childSeat.title')}</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">{t('extras.childSeat.price')}</p>
                 </div>
               </div>
 
-              <div 
-                className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto justify-between sm:justify-end"
-                role="group"
-                aria-label={t('extras.childSeat.aria')}
-              >
+              <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto justify-between sm:justify-end" role="group" aria-label={t('extras.childSeat.aria')}>
                 <button
                   onClick={decrementChildSeats}
                   disabled={childSeats === 0}
@@ -268,13 +311,11 @@ export default function VehicleSelectionStep() {
                 >
                   <MinusIcon />
                 </button>
-                <span 
-                  className="text-xl sm:text-2xl font-bold text-gray-900 w-10 sm:w-12 text-center"
-                  aria-live="polite"
-                  aria-atomic="true"
-                >
+
+                <span className="text-xl sm:text-2xl font-bold text-gray-900 w-10 sm:w-12 text-center" aria-live="polite" aria-atomic="true">
                   {childSeats}
                 </span>
+
                 <button
                   onClick={incrementChildSeats}
                   disabled={childSeats >= 3}
@@ -289,38 +330,22 @@ export default function VehicleSelectionStep() {
         </m.section>
       )}
 
-      {/* Pricing Summary */}
-      {bookingData.pricing && (
-        <m.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-6xl mx-auto bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200"
-          aria-labelledby="pricing-heading"
-        >
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex-1">
-              <p className="text-xs sm:text-sm text-gray-600 mb-1" id="pricing-heading">
-                {t('pricing.totalCost')}
-              </p>
-              <p className="text-3xl sm:text-4xl font-bold text-gray-900">
-                {formatPrice(bookingData.pricing.total)}
-              </p>
-              <p className="text-xs sm:text-sm text-gray-500 mt-2">
-                {t('pricing.base')}: {formatPrice(bookingData.pricing.basePrice)} + 
-                {t('pricing.distance')}: {formatPrice(bookingData.pricing.distanceCharge)}
-                {childSeats > 0 && ` + ${t('pricing.childSeats')}: ${formatPrice(childSeats * 5)}`}
-                {bookingData.pricing.airportFee > 0 && ` + ${t('pricing.airportFee')}: ${formatPrice(bookingData.pricing.airportFee)}`}
-              </p>
-            </div>
-            <div className="text-left sm:text-right">
-              <p className="text-xs sm:text-sm text-gray-600">{t('pricing.tax')}</p>
-              <p className="text-lg sm:text-xl font-semibold text-gray-900">
-                {formatPrice(bookingData.pricing.tax)}
-              </p>
-            </div>
-          </div>
-        </m.section>
-      )}
+{/* Pricing Summary */}
+{bookingData.pricing && (
+  <m.section
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="max-w-6xl mx-auto bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200"
+    aria-labelledby="pricing-heading"
+  >
+    <div className="flex flex-col items-center justify-center text-center">
+      <p className="text-xs sm:text-sm text-gray-600 mb-1" id="pricing-heading">
+        {t('pricing.totalCost')} (tax included)
+      </p>
+      <p className="text-3xl sm:text-4xl font-bold text-gray-900">{formatPrice(bookingData.pricing.total)}</p>
+    </div>
+  </m.section>
+)}
     </div>
   );
 }
@@ -329,7 +354,7 @@ export default function VehicleSelectionStep() {
 // VEHICLE CARD COMPONENT (Memoized)
 // ============================================================================
 
-interface Vehicle {
+interface VehicleCardData {
   id: string;
   name: string;
   subtitle?: string;
@@ -338,20 +363,20 @@ interface Vehicle {
   luggage: number;
   basePrice: number;
   image: string;
-  features?: readonly string[]; // Changed to readonly to match VEHICLE_CATEGORIES
+  features?: readonly string[];
 }
 
-const VehicleCard = React.memo(({
+const VehicleCard = React.memo(function VehicleCard({
   vehicle,
   isSelected,
   onSelect,
   index,
 }: {
-  vehicle: Vehicle;
+  vehicle: VehicleCardData;
   isSelected: boolean;
   onSelect: () => void;
   index: number;
-}) => {
+}) {
   const t = useTranslations('step2');
 
   return (
@@ -368,7 +393,6 @@ const VehicleCard = React.memo(({
         isSelected ? 'border-blue-500 shadow-xl shadow-blue-500/20' : 'border-gray-200 hover:border-blue-300'
       }`}
     >
-      {/* Selected Badge */}
       {isSelected && (
         <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
@@ -377,10 +401,11 @@ const VehicleCard = React.memo(({
         </div>
       )}
 
-      {/* Vehicle Image */}
-      <div className={`relative aspect-[4/3] overflow-hidden ${
-        isSelected ? 'bg-gradient-to-br from-blue-50 to-cyan-50' : 'bg-gradient-to-br from-gray-50 to-gray-100'
-      }`}>
+      <div
+        className={`relative aspect-[4/3] overflow-hidden ${
+          isSelected ? 'bg-gradient-to-br from-blue-50 to-cyan-50' : 'bg-gradient-to-br from-gray-50 to-gray-100'
+        }`}
+      >
         <Image
           src={vehicle.image}
           alt={`${vehicle.name} - ${vehicle.description || ''}`}
@@ -392,29 +417,26 @@ const VehicleCard = React.memo(({
         />
       </div>
 
-      {/* Vehicle Info */}
       <div className="p-4 sm:p-5">
         <h3 className="text-base sm:text-lg font-bold text-gray-900">{vehicle.name}</h3>
-        {vehicle.subtitle && (
-          <p className="text-xs sm:text-sm text-gray-600 mb-1">{vehicle.subtitle}</p>
-        )}
-        {vehicle.description && (
-          <p className="text-xs text-gray-500 mb-2 sm:mb-3">{vehicle.description}</p>
-        )}
+        {vehicle.subtitle && <p className="text-xs sm:text-sm text-gray-600 mb-1">{vehicle.subtitle}</p>}
+        {vehicle.description && <p className="text-xs text-gray-500 mb-2 sm:mb-3">{vehicle.description}</p>}
 
-        {/* Capacity */}
         <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 text-xs sm:text-sm text-gray-700">
           <div className="flex items-center gap-1">
             <UserIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>{vehicle.capacity} {t('vehicles.pax')}</span>
+            <span>
+              {vehicle.capacity} {t('vehicles.pax')}
+            </span>
           </div>
           <div className="flex items-center gap-1">
             <LuggageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>{vehicle.luggage} {t('vehicles.bags')}</span>
+            <span>
+              {vehicle.luggage} {t('vehicles.bags')}
+            </span>
           </div>
         </div>
 
-        {/* Price */}
         <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
           <span className="text-xs sm:text-sm text-gray-600">{t('vehicles.from')}</span>
           <span className="text-xl sm:text-2xl font-bold text-blue-600">{formatPrice(vehicle.basePrice)}</span>

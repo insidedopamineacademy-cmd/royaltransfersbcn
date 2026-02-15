@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, memo, useCallback } from 'react';
+import React, { useState, memo, useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { m, useReducedMotion, LazyMotion, domAnimation } from 'framer-motion';
@@ -10,59 +10,202 @@ import type { Location } from '@/lib/booking/types';
 type ServiceType = 'distance' | 'hourly';
 type TransferType = 'oneWay' | 'return';
 
+// ============================================================================
+// CONFIG
+// ============================================================================
+const MIN_ADVANCE_MINUTES = 120;
+
+// ============================================================================
+// DATE HELPERS
+// ============================================================================
+function getMinPickupDateTime() {
+  const d = new Date(Date.now() + MIN_ADVANCE_MINUTES * 60 * 1000);
+  // important: strip seconds/ms so validation never fails by seconds
+  d.setSeconds(0, 0);
+  return d;
+}
+
+function toDateString(d: Date) {
+  return d.toISOString().slice(0, 10);
+}
+
+function toTimeString(d: Date) {
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mm = String(d.getMinutes()).padStart(2, '0');
+  return `${hh}:${mm}`;
+}
+
+// ============================================================================
+// [NEW] HELPER: Generate a return date/time that is always > pickup date
+// ============================================================================
+function generateReturnDateTime(baseDateString: string): { returnDate: string; returnTime: string } {
+  const base = new Date(`${baseDateString}T00:00:00`);
+  const daysToAdd = Math.floor(Math.random() * 3) + 1; // 1..3 days later
+  base.setDate(base.getDate() + daysToAdd);
+
+  const year = base.getFullYear();
+  const month = String(base.getMonth() + 1).padStart(2, '0');
+  const day = String(base.getDate()).padStart(2, '0');
+  const returnDate = `${year}-${month}-${day}`;
+
+  const randomHour = Math.floor(Math.random() * 17) + 6; // 6..22
+  const randomMinuteOptions = [0, 15, 30, 45];
+  const randomMinute = randomMinuteOptions[Math.floor(Math.random() * randomMinuteOptions.length)];
+  const returnTime = `${String(randomHour).padStart(2, '0')}:${String(randomMinute).padStart(2, '0')}`;
+
+  return { returnDate, returnTime };
+}
+
 const HeroBookingForm = memo(function HeroBookingForm() {
   const router = useRouter();
   const t = useTranslations('heroBooking');
   const locale = useLocale();
   const prefersReducedMotion = useReducedMotion();
-  
+
   const [serviceType, setServiceType] = useState<ServiceType>('distance');
   const [transferType, setTransferType] = useState<TransferType>('oneWay');
   const [pickup, setPickup] = useState<Location>({ address: '' });
   const [dropoff, setDropoff] = useState<Location>({ address: '' });
-  
-  // 🎯 AUTO-FILL: Initialize date and time with current date/time + 2 hours
+
+  // Default pickup date/time = now + 2 hours (safe)
   const getDefaultDateTime = useCallback(() => {
-    const now = new Date();
-    now.setHours(now.getHours() + 2); // Add 2 hours minimum
-    
-    // Format date as YYYY-MM-DD for input[type="date"]
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const dateString = `${year}-${month}-${day}`;
-    
-    // Format time as HH:MM for input[type="time"]
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const timeString = `${hours}:${minutes}`;
-    
-    return { dateString, timeString };
+    const min = getMinPickupDateTime();
+    return { dateString: toDateString(min), timeString: toTimeString(min) };
   }, []);
-  
+
   const [date, setDate] = useState(() => getDefaultDateTime().dateString);
   const [time, setTime] = useState(() => getDefaultDateTime().timeString);
+
   const [passengers, setPassengers] = useState(1);
 
+  // Return date/time combined state (avoids mismatched pairs)
+  const [returnDateTime, setReturnDateTime] = useState<{ returnDate: string; returnTime: string }>(() =>
+    generateReturnDateTime(getDefaultDateTime().dateString)
+  );
+
+  const returnDate = returnDateTime.returnDate;
+  const returnTime = returnDateTime.returnTime;
+
+  const setReturnDate = useCallback((val: string) => {
+    setReturnDateTime((prev) => ({ ...prev, returnDate: val }));
+  }, []);
+  const setReturnTime = useCallback((val: string) => {
+    setReturnDateTime((prev) => ({ ...prev, returnTime: val }));
+  }, []);
+
+  const [hourlyDuration, setHourlyDuration] = useState<number>(2);
+
+  // Re-generate return date/time whenever pickup date changes while return type is selected
+  useEffect(() => {
+    if (serviceType === 'distance' && transferType === 'return') {
+      setReturnDateTime(generateReturnDateTime(date));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date, transferType, serviceType]);
+
+  // --------------------------------------------------------------------------
+  // ✅ FIX: Pickup time validity (minute precision; no seconds/ms bug)
+  // --------------------------------------------------------------------------
+  const isPickupTimeValid = useCallback((): boolean => {
+    if (!date || !time) return false;
+    const selected = new Date(`${date}T${time}:00`);
+    if (Number.isNaN(selected.getTime())) return false;
+
+    selected.setSeconds(0, 0);
+    const min = getMinPickupDateTime();
+
+    return selected.getTime() >= min.getTime();
+  }, [date, time]);
+
+  // Optional: auto-correct to minimum if user chooses an invalid time
+  useEffect(() => {
+    if (!date || !time) return;
+    const selected = new Date(`${date}T${time}:00`);
+    if (Number.isNaN(selected.getTime())) return;
+
+    selected.setSeconds(0, 0);
+    const min = getMinPickupDateTime();
+
+    if (selected.getTime() < min.getTime()) {
+      setDate(toDateString(min));
+      setTime(toTimeString(min));
+    }
+  }, [date, time]);
+
+  // Min date for input[type="date"] (based on min pickup datetime)
+  const minDateString = useMemo(() => toDateString(getMinPickupDateTime()), []);
+
+  // Minimum return date: at least next day after pickup date
+  const getMinReturnDate = useCallback(() => {
+    const base = new Date(`${date}T00:00:00`);
+    base.setDate(base.getDate() + 1);
+    return toDateString(base);
+  }, [date]);
+
+  // --------------------------------------------------------------------------
+  // ✅ SINGLE SOURCE OF TRUTH: Button enabled + submit validation
+  // --------------------------------------------------------------------------
+  const canSearch = useMemo(() => {
+    if (!pickup.address) return false;
+    if (!date || !time) return false;
+    if (!isPickupTimeValid()) return false;
+
+    if (serviceType === 'distance') {
+      if (!dropoff.address) return false;
+
+      // Require placeIds for distance bookings so Step2 distance calc works
+      if (!pickup.placeId || !dropoff.placeId) return false;
+
+      if (transferType === 'return') {
+        if (!returnDate || !returnTime) return false;
+
+        const pickupDT = new Date(`${date}T${time}:00`).getTime();
+        const returnDT = new Date(`${returnDate}T${returnTime}:00`).getTime();
+        if (!Number.isFinite(pickupDT) || !Number.isFinite(returnDT)) return false;
+        if (returnDT <= pickupDT) return false;
+      }
+    }
+
+    if (serviceType === 'hourly') {
+      if (!hourlyDuration || hourlyDuration < 2) return false;
+    }
+
+    return true;
+  }, [
+    pickup.address,
+    pickup.placeId,
+    dropoff.address,
+    dropoff.placeId,
+    date,
+    time,
+    serviceType,
+    transferType,
+    returnDate,
+    returnTime,
+    hourlyDuration,
+    isPickupTimeValid,
+  ]);
+
+  // --------------------------------------------------------------------------
+  // SEARCH ACTION (Aligned with context.tsx HeroDraftV2)
+  // --------------------------------------------------------------------------
   const handleSearch = useCallback(() => {
-    // For hourly bookings, dropoff is not required
-    const requiresDropoff = serviceType === 'distance';
-    
-    if (!pickup.address || !date || !time || (requiresDropoff && !dropoff.address)) {
+    if (!canSearch) {
       alert(t('validation.fillAllFields'));
       return;
     }
 
-    // Map serviceType to match booking wizard's expected format
-    const mappedServiceType = serviceType === 'distance' ? 'airport' : 'hourly';
+    // HeroDraft v2.0 (this matches hydrateFromDraft in context.tsx)
+    const bookingDraft = {
+      version: '2.0' as const,
+      timestamp: Date.now(),
+      fromHomepage: true,
 
-    const bookingData = {
-      // Service configuration
-      serviceType: mappedServiceType,
-      serviceCategory: serviceType, // Store original 'distance' or 'hourly'
-      transferType, // 'oneWay' or 'return' for distance-based
-      
-      // Locations with full details
+      // PRESERVE EXACT USER SELECTIONS
+      serviceType, // 'distance' | 'hourly'
+      transferType, // 'oneWay' | 'return'
+
+      // Locations
       pickup: {
         address: pickup.address,
         placeId: pickup.placeId || '',
@@ -70,85 +213,106 @@ const HeroBookingForm = memo(function HeroBookingForm() {
         lng: pickup.lng,
         type: pickup.type || 'address',
       },
-      // Only include dropoff for distance-based bookings
-      ...(serviceType === 'distance' && {
-        dropoff: {
-          address: dropoff.address,
-          placeId: dropoff.placeId || '',
-          lat: dropoff.lat,
-          lng: dropoff.lng,
-          type: dropoff.type || 'address',
-        },
-      }),
-      
-      // Date and time
-      dateTime: {
+
+      ...(serviceType === 'distance'
+        ? {
+            dropoff: {
+              address: dropoff.address,
+              placeId: dropoff.placeId || '',
+              lat: dropoff.lat,
+              lng: dropoff.lng,
+              type: dropoff.type || 'address',
+            },
+          }
+        : {}),
+
+      // Pickup date/time
+      pickupDateTime: {
         date,
         time,
       },
-      
+
+      // Return date/time (ONLY if distance + return)
+      ...(serviceType === 'distance' && transferType === 'return'
+        ? {
+            returnDateTime: {
+              date: returnDate,
+              time: returnTime,
+            },
+          }
+        : {}),
+
       // Passengers
       passengers: {
         count: passengers,
         luggage: 0,
         childSeats: 0,
       },
-      
-      // Metadata to help wizard pre-fill Step 1
-      fromHomepage: true,
+
+      // Hourly duration (ONLY if hourly)
+      ...(serviceType === 'hourly' ? { hourlyDuration } : {}),
+
+      // BACKWARD COMPATIBILITY (temporary)
+      _legacy: {
+        serviceType: serviceType === 'distance' ? 'airport' : 'hourly',
+        transferType: 'oneWay',
+      },
     };
-    
-    console.log('📦 Saving complete booking draft:', bookingData);
-    console.log('  - Service:', serviceType, '→', mappedServiceType);
-    console.log('  - Transfer:', transferType);
-    console.log('  - Date/Time:', date, time);
-    console.log('  - Passengers:', passengers);
-    
-    // Save to sessionStorage
-    sessionStorage.setItem('booking-draft', JSON.stringify(bookingData));
-    
-    // Navigate to booking page
+
+    sessionStorage.setItem('booking-draft', JSON.stringify(bookingDraft));
+
+    // ✅ Align with context.tsx: hydrateFromDraft sets currentStep(0)
     router.push(`/${locale}/book`);
-  }, [pickup, dropoff, date, time, serviceType, transferType, passengers, t, router, locale]);
-
-  // Validation: dropoff only required for distance-based bookings
-  const isValid = pickup.address && date && time && (serviceType === 'hourly' || dropoff.address);
-
-  // Calculate minimum date (current date + 2 hours)
-  const getMinDate = useCallback(() => {
-    const now = new Date();
-    now.setHours(now.getHours() + 2);
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }, []);
-  
-  const minDateString = getMinDate();
+  }, [
+    canSearch,
+    t,
+    serviceType,
+    transferType,
+    pickup,
+    dropoff,
+    date,
+    time,
+    returnDate,
+    returnTime,
+    passengers,
+    hourlyDuration,
+    router,
+    locale,
+  ]);
 
   return (
     <LazyMotion features={domAnimation} strict>
       <m.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-5xl mx-auto"
+        transition={{ duration: prefersReducedMotion ? 0.15 : 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-5xl mx-auto px-1 sm:px-0"
         role="search"
         aria-label={t('aria.bookingForm')}
         style={{ willChange: 'opacity, transform' }}
       >
-        <div className="bg-white/95 sm:backdrop-blur-sm rounded-2xl shadow-2xl p-4 sm:p-6 border border-gray-100">
+        <div className="bg-white/95 sm:backdrop-blur-sm rounded-2xl shadow-2xl p-3 sm:p-6 [@media(max-height:750px)]:p-2 border border-gray-100">
           {/* Service Type Toggle */}
-          <div className="flex gap-2 mb-4" role="tablist" aria-label={t('aria.serviceType')}>
+          <div
+            className="flex gap-2 mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2"
+            role="tablist"
+            aria-label={t('aria.serviceType')}
+          >
             <ServiceTypeButton
               active={serviceType === 'distance'}
-              onClick={() => setServiceType('distance')}
+              onClick={() => {
+                setServiceType('distance');
+                setTransferType('oneWay');
+              }}
               label={t('serviceType.distance')}
               icon={RouteIcon}
             />
             <ServiceTypeButton
               active={serviceType === 'hourly'}
-              onClick={() => setServiceType('hourly')}
+              onClick={() => {
+                setServiceType('hourly');
+                setTransferType('oneWay');
+              }}
               label={t('serviceType.hourly')}
               icon={ClockIcon}
             />
@@ -156,8 +320,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
 
           {/* Transfer Type (Only for Distance-Based) */}
           {serviceType === 'distance' && (
-            <div className="mb-4">
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
+            <div className="mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2">
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                 {t('transferType.label')}
               </label>
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
@@ -169,7 +333,10 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                 />
                 <TransferTypeButton
                   active={transferType === 'return'}
-                  onClick={() => setTransferType('return')}
+                  onClick={() => {
+                    setReturnDateTime(generateReturnDateTime(date));
+                    setTransferType('return');
+                  }}
                   label={t('transferType.return')}
                   icon={ArrowsIcon}
                 />
@@ -177,50 +344,90 @@ const HeroBookingForm = memo(function HeroBookingForm() {
             </div>
           )}
 
-          {/* Form Fields - All Stacked on Mobile */}
-          <div className="space-y-3">
-            {/* Pickup Location */}
+          {/* Form Fields */}
+          <div className="space-y-2 sm:space-y-3 [@media(max-height:750px)]:space-y-1.5">
+            {/* Pickup */}
             <div>
-              <label htmlFor="pickup-location" className="block text-xs font-medium text-gray-700 mb-1.5">
+              <label htmlFor="pickup-location" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                 {t('fields.pickup.label')}
               </label>
               <LocationAutocomplete
                 value={pickup.address}
-                onChange={(location) => {
-                  console.log('🔵 Pickup selected:', location);
-                  setPickup(location);
-                }}
+                onChange={(location) => setPickup(location)}
                 placeholder={t('fields.pickup.placeholder')}
                 type="pickup"
                 aria-label={t('fields.pickup.label')}
               />
             </div>
 
-            {/* Dropoff Location - Only for Distance-Based Bookings */}
+            {/* Dropoff */}
             {serviceType === 'distance' && (
               <div>
-                <label htmlFor="dropoff-location" className="block text-xs font-medium text-gray-700 mb-1.5">
+                <label htmlFor="dropoff-location" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                   {t('fields.dropoff.label')}
                 </label>
                 <LocationAutocomplete
                   value={dropoff.address}
-                  onChange={(location) => {
-                    console.log('🟢 Dropoff selected:', location);
-                    setDropoff(location);
-                  }}
+                  onChange={(location) => setDropoff(location)}
                   placeholder={t('fields.dropoff.placeholder')}
                   type="dropoff"
-                  pickupLocation={pickup} // 🎯 Pass pickup for 30km radius
+                  pickupLocation={pickup}
                   aria-label={t('fields.dropoff.label')}
                 />
               </div>
             )}
 
-            {/* Date & Time Row */}
+            {/* Return Date/Time */}
+            {serviceType === 'distance' && transferType === 'return' && (
+              <div className="rounded-xl border-2 border-blue-100 bg-blue-50/60 p-2 sm:p-3 [@media(max-height:750px)]:p-2 space-y-2 sm:space-y-3">
+                <p className="text-xs font-semibold text-blue-700 flex items-center gap-1.5">
+                  <ArrowsIcon className="w-3.5 h-3.5" />
+                  {t('transferType.returnDetails')}
+                </p>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label htmlFor="return-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
+                      {t('fields.returnDate.label')}
+                    </label>
+                    <div className="relative">
+                      <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
+                      <input
+                        id="return-date"
+                        type="date"
+                        value={returnDate}
+                        onChange={(e) => setReturnDate(e.target.value)}
+                        min={getMinReturnDate()}
+                        aria-label={t('fields.returnDate.label')}
+                        className="w-full pl-10 pr-3 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="return-time" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
+                      {t('fields.returnTime.label')}
+                    </label>
+                    <div className="relative">
+                      <ClockIconSmall className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
+                      <input
+                        id="return-time"
+                        type="time"
+                        value={returnTime}
+                        onChange={(e) => setReturnTime(e.target.value)}
+                        aria-label={t('fields.returnTime.label')}
+                        className="w-full pl-10 pr-3 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Date & Time */}
             <div className="grid grid-cols-2 gap-3">
-              {/* Date */}
               <div>
-                <label htmlFor="pickup-date" className="block text-xs font-medium text-gray-700 mb-1.5">
+                <label htmlFor="pickup-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                   {t('fields.date.label')}
                 </label>
                 <div className="relative">
@@ -232,18 +439,13 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     onChange={(e) => setDate(e.target.value)}
                     min={minDateString}
                     aria-label={t('fields.date.label')}
-                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
-                    style={{ 
-                      WebkitAppearance: 'none',
-                      MozAppearance: 'textfield'
-                    }}
+                    className="w-full pl-10 pr-3 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
                   />
                 </div>
               </div>
 
-              {/* Time */}
               <div>
-                <label htmlFor="pickup-time" className="block text-xs font-medium text-gray-700 mb-1.5">
+                <label htmlFor="pickup-time" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                   {t('fields.time.label')}
                 </label>
                 <div className="relative">
@@ -254,19 +456,41 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
                     aria-label={t('fields.time.label')}
-                    className="w-full pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
-                    style={{ 
-                      WebkitAppearance: 'none',
-                      MozAppearance: 'textfield'
-                    }}
+                    className="w-full pl-10 pr-3 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
                   />
                 </div>
               </div>
             </div>
 
+            {/* Hourly Duration */}
+            {serviceType === 'hourly' && (
+              <div>
+                <label htmlFor="hourly-duration" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
+                  {t('fields.duration.label')}
+                </label>
+                <div className="relative">
+                  <ClockIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
+                  <select
+                    id="hourly-duration"
+                    value={hourlyDuration}
+                    onChange={(e) => setHourlyDuration(Number(e.target.value))}
+                    aria-label={t('fields.duration.label')}
+                    className="w-full pl-10 pr-10 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                  >
+                    {Array.from({ length: 23 }, (_, i) => i + 2).map((hours) => (
+                      <option key={hours} value={hours}>
+                        {hours} {t('fields.duration.hours', { count: hours })}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                </div>
+              </div>
+            )}
+
             {/* Passengers */}
             <div>
-              <label htmlFor="passengers" className="block text-xs font-medium text-gray-700 mb-1.5">
+              <label htmlFor="passengers" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                 {t('fields.passengers.label')}
               </label>
               <div className="relative">
@@ -276,7 +500,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                   value={passengers}
                   onChange={(e) => setPassengers(Number(e.target.value))}
                   aria-label={t('fields.passengers.label')}
-                  className="w-full pl-10 pr-10 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                  className="w-full pl-10 pr-10 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                     <option key={num} value={num}>
@@ -291,10 +515,10 @@ const HeroBookingForm = memo(function HeroBookingForm() {
             {/* Search Button */}
             <button
               onClick={handleSearch}
-              disabled={!isValid}
+              disabled={!canSearch}
               aria-label={t('button.search')}
-              className={`w-full px-6 py-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg active:scale-95 ${
-                isValid
+              className={`w-full px-6 py-3 sm:py-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg active:scale-95 ${
+                canSearch
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-amber-500/25'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
@@ -312,7 +536,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
 });
 
 // ============================================================================
-// MEMOIZED BUTTON COMPONENTS
+// BUTTONS + ICONS (unchanged)
 // ============================================================================
 
 const ServiceTypeButton = memo(function ServiceTypeButton({
@@ -363,9 +587,7 @@ const TransferTypeButton = memo(function TransferTypeButton({
       aria-pressed={active}
       aria-label={label}
       className={`px-4 py-3 rounded-xl border-2 font-semibold text-sm transition-all duration-200 active:scale-95 ${
-        active
-          ? 'border-blue-500 bg-blue-50 text-blue-700'
-          : 'border-gray-200 text-gray-700 hover:border-gray-300'
+        active ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-700 hover:border-gray-300'
       }`}
     >
       <div className="flex items-center justify-center gap-2">
@@ -376,14 +598,14 @@ const TransferTypeButton = memo(function TransferTypeButton({
   );
 });
 
-// ============================================================================
-// MEMOIZED ICON COMPONENTS
-// ============================================================================
-
 const RouteIcon = memo(function RouteIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+      />
     </svg>
   );
 });
@@ -407,7 +629,11 @@ const ClockIconSmall = memo(function ClockIconSmall({ className }: { className?:
 const CalendarIcon = memo(function CalendarIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+      />
     </svg>
   );
 });
@@ -415,7 +641,11 @@ const CalendarIcon = memo(function CalendarIcon({ className }: { className?: str
 const UserIcon = memo(function UserIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+      />
     </svg>
   );
 });
@@ -423,7 +653,7 @@ const UserIcon = memo(function UserIcon({ className }: { className?: string }) {
 const SearchIcon = memo(function SearchIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 9 9 0 0114 0z" />
     </svg>
   );
 });

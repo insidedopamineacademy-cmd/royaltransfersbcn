@@ -1,1407 +1,1424 @@
 {
   "contact": {
     "hero": {
-      "title": "Mettiti in Contatto con",
+      "title": "Kontaktieren Sie",
       "titleHighlight": "Royal Transfers BCN",
-      "subtitle": "Stai pianificando il tuo prossimo transfer a Barcellona? Che tu stia andando all'aeroporto, al terminal crociere o in un hotel, il nostro team è pronto ad assisterti con supporto personalizzato, risposte rapide e completa flessibilità."
+      "subtitle": "Planen Sie Ihren nächsten Transfer in Barcelona? Egal, ob Sie zum Flughafen, Kreuzfahrtterminal oder einem Hotel fahren, unser Team steht mit persönlichem Support, schnellen Antworten und vollständiger Flexibilität bereit."
     },
     "intro": {
-      "title": "Siamo Qui per",
-      "titleHighlight": "Aiutarti",
-      "paragraph1": "Crediamo che ogni viaggio dovrebbe iniziare con serenità. Il nostro obiettivo è rendere il processo di prenotazione semplice e lineare, in modo che tu possa concentrarti sul goderti il viaggio.",
-      "paragraph2": "Hai domande sui transfer a Barcellona? Il nostro team di Royal Transfers BCN è qui per aiutarti, sia che tu abbia bisogno di un preventivo, voglia pianificare un percorso personalizzato o confermare una prenotazione. Ci impegniamo per risposte veloci e un supporto senza problemi."
+      "title": "Wir Sind Hier, Um",
+      "titleHighlight": "Zu Helfen",
+      "paragraph1": "Wir glauben, dass jede Reise mit Ruhe und Gelassenheit beginnen sollte. Unser Ziel ist es, den Buchungsprozess einfach und reibungslos zu gestalten, damit Sie sich auf die Freuden Ihrer Reise konzentrieren können.",
+      "paragraph2": "Haben Sie Fragen zu Transfers in Barcelona? Unser Team von Royal Transfers BCN ist für Sie da – ob Sie ein Angebot benötigen, eine individuelle Route planen oder eine Buchung bestätigen möchten. Wir garantieren schnelle Antworten und problemlose Unterstützung."
     },
     "methods": {
-      "title": "Come",
-      "titleHighlight": "Contattarci",
+      "title": "Wie Sie",
+      "titleHighlight": "Uns Erreichen",
       "whatsapp": {
-        "title": "Messaggio via WhatsApp",
-        "description": "Risposte rapide, comunicazione facile",
+        "title": "Nachricht via WhatsApp",
+        "description": "Schnelle Antworten, einfache Kommunikation",
         "value": "+34 617 629 115"
       },
       "email": {
-        "title": "Inviaci un'Email",
-        "description": "Risponderemo entro 24 ore",
+        "title": "Senden Sie Uns Eine E-Mail",
+        "description": "Wir antworten innerhalb von 24 Stunden",
         "value": "email@royaltransfersbcn.com"
       },
       "phone": {
-        "title": "Chiamaci",
-        "description": "Disponibili 24/7 per richieste urgenti",
+        "title": "Rufen Sie Uns An",
+        "description": "24/7 für dringende Anfragen verfügbar",
         "value": "+34 617 629 115"
       }
     },
     "cta": {
-      "title": "Pronto a Prenotare il Tuo Transfer?",
-      "subtitle": "Mettiti in contatto ora e lascia che ci occupiamo del tuo viaggio a Barcellona.",
-      "whatsapp": "Chatta su WhatsApp",
-      "email": "Invia Email"
+      "title": "Bereit, Ihren Transfer zu Buchen?",
+      "subtitle": "Nehmen Sie jetzt Kontakt auf und lassen Sie uns uns um Ihre Reise in Barcelona kümmern.",
+      "whatsapp": "Chat auf WhatsApp",
+      "email": "E-Mail senden"
     }
   },
   "about": {
     "hero": {
-      "title": "Chi",
-      "titleHighlight": "Siamo",
-      "subtitle": "Ci specializziamo nel fornire servizi premium di autonoleggio con conducente e taxi sia per turisti che per viaggiatori d'affari. La nostra missione è offrire comfort, affidabilità e un'esperienza di viaggio senza intoppi nella vivace città di Barcellona e oltre."
+      "title": "Über",
+      "titleHighlight": "Royal Transfers BCN",
+      "subtitle": "Wir sind spezialisiert auf erstklassige Chauffeur- und Taxidienste für Touristen und Geschäftsreisende. Unsere Mission ist es, Komfort, Zuverlässigkeit und ein nahtloses Reiseerlebnis in der pulsierenden Stadt Barcelona und darüber hinaus zu bieten."
     },
     "story": {
-      "title": "La Nostra",
-      "titleHighlight": "Storia",
-      "paragraph1": "Royal Transfers BCN è nata con un obiettivo chiaro: rendere i viaggi a Barcellona fluidi, affidabili e privi di stress. Il nostro team professionale fornisce transfer privati per ogni occasione.",
-      "paragraph2": "Che tu arrivi all'aeroporto, salga su una crociera o viaggi verso il tuo hotel o meeting, ci assicuriamo che la tua esperienza sia confortevole dall'inizio alla fine."
+      "title": "Unsere",
+      "titleHighlight": "Geschichte",
+      "paragraph1": "Royal Transfers BCN wurde mit einem klaren Ziel gegründet – das Reisen in Barcelona reibungslos, zuverlässig und stressfrei zu gestalten. Unser professionelles Team bietet private Transfers für jeden Anlass.",
+      "paragraph2": "Ob Sie am Flughafen ankommen, eine Kreuzfahrt antreten oder zu Ihrem Hotel oder Meeting reisen, wir sorgen dafür, dass Ihre Erfahrung von Anfang bis Ende komfortabel ist."
     },
     "offer": {
-      "title": "Cosa",
-      "titleHighlight": "Offriamo",
+      "title": "Was Wir",
+      "titleHighlight": "Bieten",
       "fleet": {
-        "title": "Flotta Moderna",
-        "description": "Offriamo una flotta moderna di berline, van spaziosi e veicoli di lusso, tutti mantenuti con grande cura. Ogni auto include servizi moderni per garantire un viaggio piacevole."
+        "title": "Moderne Flotte",
+        "description": "Wir bieten eine moderne Flotte von Limousinen, geräumigen Vans und Luxusfahrzeugen, die alle mit großer Sorgfalt gewartet werden. Jedes Auto verfügt über moderne Annehmlichkeiten für eine angenehme Fahrt."
       },
       "drivers": {
-        "title": "Autisti Multilingue",
-        "description": "I nostri autisti multilingue ti aiutano a sentirti il benvenuto e sicuro mentre ti muovi per la città. La loro conoscenza locale e la puntualità significano che puoi sempre viaggiare con serenità."
+        "title": "Mehrsprachige Fahrer",
+        "description": "Unsere mehrsprachigen Fahrer helfen Ihnen, sich willkommen und sicher zu fühlen, während Sie sich in der Stadt bewegen. Ihre Ortskenntnis und Pünktlichkeit bedeuten, dass Sie immer beruhigt reisen können."
       },
       "service": {
-        "title": "Servizio Personalizzato",
-        "description": "Sia per transfer individuali che di gruppo, adattiamo ogni servizio alle tue esigenze. Ogni viaggio viene gestito con attenzione ai dettagli."
+        "title": "Personalisierter Service",
+        "description": "Ob für Einzel- oder Gruppentransfers, wir passen jeden Service an Ihre Bedürfnisse an. Jede Fahrt wird mit Liebe zum Detail durchgeführt."
       }
     },
     "trust": {
-      "title": "Eccellenza",
-      "titleHighlight": "Fidata",
-      "description": "Nel tempo, abbiamo guadagnato la fiducia dei nostri clienti attraverso un servizio costante e attenzione ai dettagli. Royal Transfers BCN vanta con orgoglio una reputazione di eccellenza e feedback a 5 stelle.",
-      "promise": "Che tu stia visitando Barcellona per la prima volta o che tu ci ritorni, il tuo viaggio sarà sempre gestito con cura. Scegli Royal Transfers BCN, dove il trasporto privato diventa una parte fluida e memorabile del tuo viaggio."
+      "title": "Vertrauenswürdige",
+      "titleHighlight": "Exzellenz",
+      "description": "Im Laufe der Zeit haben wir uns durch konsequenten Service und Liebe zum Detail das Vertrauen unserer Kunden erworben. Royal Transfers BCN ist stolz auf seinen Ruf für Exzellenz und 5-Sterne-Feedback.",
+      "promise": "Egal, ob Sie Barcelona zum ersten Mal besuchen oder wiederkommen, Ihre Reise wird stets mit Sorgfalt behandelt. Wählen Sie Royal Transfers BCN – wo privater Transport zu einem reibungslosen und unvergesslichen Teil Ihrer Reise wird."
     },
     "rating": {
-      "title": "Valutato 5.0 ★ su Google",
-      "subtitle": "Fidati di viaggiatori, professionisti e locali: i nostri clienti ci valutano costantemente 5 stelle per puntualità, pulizia e qualità del servizio."
+      "title": "Bewertet mit 5.0 ★ auf Google",
+      "subtitle": "Vertraut von Reisenden, Geschäftsleuten und Einheimischen gleichermaßen – unsere Kunden bewerten uns durchweg mit 5 Sternen für Pünktlichkeit, Sauberkeit und Servicequalität."
     },
     "testimonial": {
-      "quote": "Prenotato un transfer last minute dall'aeroporto e tutto è stato perfetto. L'autista era in anticipo, gentile e il van era impeccabile. Userò sicuramente di nuovo Royal Transfers BCN!",
-      "source": "Recensione Verificata Google"
+      "quote": "Ich habe kurzfristig einen Transfer vom Flughafen gebucht und alles war perfekt. Der Fahrer war früh da, höflich und der Van war makellos sauber. Ich werde Royal Transfers BCN auf jeden Fall wieder nutzen!",
+      "source": "Verifizierte Google-Bewertung"
     },
     "cta": {
-      "title": "Pronto a Vivere la Differenza?",
-      "bookWhatsApp": "Prenota via WhatsApp",
-      "or": "o",
-      "contactUs": "Contattaci"
+      "title": "Bereit, den Unterschied zu Erleben?",
+      "bookWhatsApp": "Buchen via WhatsApp",
+      "or": "oder",
+      "contactUs": "Kontaktieren Sie Uns"
     }
   },
   "home": {
     "hero": {
-      "title": "Transfer Aeroportuali Premium",
-      "titleHighlight": "a Barcellona",
-      "subtitle": "Vivi lusso, comfort e affidabilità ad ogni viaggio. Autisti professionisti, veicoli premium e servizio senza interruzioni dall'atterraggio alla destinazione.",
-      "bookNow": "Prenota il Tuo Transfer",
-      "viewFleet": "Vedi la Nostra Flotta",
-      "trustBadge1": "Valutazione 4.9★",
-      "trustBadge2": "10K+ Corse",
-      "trustBadge3": "Servizio 24/7",
-  
+      "title": "Zuverlässige Flughafentransfers",
+      "titleHighlight": "in Barcelona",
+      "subtitle": "Erleben Sie Luxus, Komfort und Zuverlässigkeit bei jeder Fahrt. Professionelle Fahrer, erstklassige Fahrzeuge und nahtloser Service von der Landung bis zum Ziel.",
+      "bookNow": "Ihren Transfer Buchen",
+      "viewFleet": "Unsere Flotte Ansehen",
       "bookingSteps": {
-        "title": "Prenota il Tuo Trasferimento",
-        "subtitle": "Inizia il Tuo Viaggio",
-        "description": "Prenotazione rapida e semplice in pochi passaggi. Ricevi conferma immediata e miglior prezzo garantito."
+        "title": "Buchen Sie Ihren Transfer",
+        "subtitle": "Starten Sie Ihre Reise",
+        "description": "Schnelle und einfache Buchung in nur wenigen Schritten. Sofortige Bestätigung und beste Preisgarantie."
       },
       "features": {
-        "freeCancellation": "Cancellazione Gratuita",
-        "instantConfirmation": "Conferma Istantanea",
-        "bestPriceGuarantee": "Miglior Prezzo Garantito",
-        "support24": "Supporto 24/7"
+        "freeCancellation": "Kostenlose Stornierung",
+        "instantConfirmation": "Sofortbestätigung",
+        "bestPriceGuarantee": "Beste Preisgarantie",
+        "support24": "24/7 Support"
       }
-    
-
     },
     "services": {
-      "title": "I Nostri",
-      "titleHighlight": "Servizi",
-      "subtitle": "Soluzioni di transfer complete su misura per le tue esigenze, che tu stia arrivando in aeroporto, partendo da una crociera o esplorando la regione.",
+      "title": "Unsere",
+      "titleHighlight": "Dienstleistungen",
+      "subtitle": "Umfassende Transferlösungen, maßgeschneidert auf Ihre Bedürfnisse, ob Sie am Flughafen ankommen, von einer Kreuzfahrt abreisen oder die Region erkunden.",
       "airportTaxi": {
-        "title": "Taxi Aeroporto Barcellona",
-        "description": "Transfer senza stress da e per l'Aeroporto di Barcellona El Prat con monitoraggio voli e servizio di incontro."
+        "title": "Flughafentaxi Barcelona",
+        "description": "Stressfreie Transfers zum und vom Flughafen Barcelona-El Prat mit Flugverfolgung und Meet & Greet-Service."
       },
       "cruisePort": {
-        "title": "Transfer Porti Crociera",
-        "description": "Transfer confortevoli tra i terminal crociera di Barcellona e il tuo hotel o l'aeroporto."
+        "title": "Kreuzfahrthafen-Transfer",
+        "description": "Komfortable Transfers zwischen den Kreuzfahrtterminals von Barcelona und Ihrem Hotel oder dem Flughafen."
       },
       "longDistance": {
-        "title": "Viaggi a Lunga Distanza",
-        "description": "Viaggia oltre Barcellona verso Costa Brava, Andorra o ovunque in Spagna con il nostro servizio a lunga distanza."
+        "title": "Fernreisen",
+        "description": "Reisen Sie über Barcelona hinaus nach Costa Brava, Andorra oder überall in Spanien mit unserem Fernverkehrsservice."
       },
       "hourlyBooking": {
-        "title": "Noleggio Taxi Orario",
-        "description": "Prenotazioni orarie flessibili per meeting di lavoro, tour della città o shopping a Barcellona."
+        "title": "Stündliche Taxibuchung",
+        "description": "Flexible Buchung nach Stunden für Geschäftstreffen, Stadtrundfahrten oder Einkaufstouren in Barcelona."
       },
-      "learnMore": "Scopri di Più"
+      "learnMore": "Mehr Erfahren"
     },
     "howItWorks": {
-      "title": "Come",
-      "titleHighlight": "Funziona",
-      "subtitle": "Prenotare il tuo transfer aeroportuale premium a Barcellona è semplice, veloce e completamente senza stress.",
+      "title": "Wie Es",
+      "titleHighlight": "Funktioniert",
+      "subtitle": "Die Buchung Ihres erstklassigen Flughafentransfers in Barcelona ist einfach, schnell und völlig stressfrei.",
       "step1": {
-        "title": "Prenota il Tuo Transfer",
-        "description": "Scegli il tuo punto di ritiro, consegna, tipo di veicolo ed extra opzionali in pochi clic."
+        "title": "Buchen Sie Ihren Transfer",
+        "description": "Wählen Sie Abholort, Zielort, Fahrzeugtyp und optionale Extras in nur wenigen Klicks."
       },
       "step2": {
-        "title": "Confermiamo i Dettagli",
-        "description": "Il nostro team verifica il tuo viaggio e il tuo volo per garantire puntualità e comfort."
+        "title": "Wir Bestätigen Details",
+        "description": "Unser Team überprüft Ihre Reise und Ihren Flug, um Pünktlichkeit und Komfort zu gewährleisten."
       },
       "step3": {
-        "title": "Goditi il Tuo Viaggio",
-        "description": "Incontra il tuo autista e goditi un transfer lussuoso e senza problemi a Barcellona."
+        "title": "Genießen Sie Ihre Fahrt",
+        "description": "Treffen Sie Ihren Fahrer und genießen Sie einen luxuriösen, problemlosen Transfer in Barcelona."
       }
     },
     "fleet": {
-      "title": "La Nostra",
-      "titleHighlight": "Flotta",
-      "subtitle": "Scegli tra la nostra gamma di veicoli premium per abbinare il tuo stile, le dimensioni del gruppo e le preferenze di comfort.",
-      "passengers": "passeggeri",
-      "luggage": "bagagli",
-      "from": "Da",
+      "title": "Unsere",
+      "titleHighlight": "Flotte",
+      "subtitle": "Wählen Sie aus unserer Palette erstklassiger Fahrzeuge passend zu Ihrem Stil, Ihrer Gruppengröße und Ihren Komfortvorlieben.",
+      "passengers": "Passagiere",
+      "luggage": "Gepäck",
+      "from": "Ab",
       "standard": {
         "title": "Standard",
-        "description": "Berline confortevoli perfette per viaggiatori singoli o coppie."
+        "description": "Komfortable Limousinen, perfekt für Alleinreisende oder Paare."
       },
       "luxurySedan": {
-        "title": "Berlina di Lusso",
-        "description": "Mercedes Classe E o BMW Serie 5 premium per il viaggiatore esigente."
+        "title": "Luxus-Limousine",
+        "description": "Premium Mercedes E-Klasse oder BMW 5er Serie für den anspruchsvollen Reisenden."
       },
       "eightSeaterVan": {
-        "title": "Van 8 Posti",
-        "description": "Van spazioso ideale per famiglie o piccoli gruppi con bagagli extra."
+        "title": "8-Sitzer Van",
+        "description": "Geräumiger Van, ideal für Familien oder kleine Gruppen mit zusätzlichem Gepäck."
       },
       "luxuryChaufferVan": {
-        "title": "Van con Autista di Lusso",
-        "description": "Mercedes V-Class con servizi premium per l'esperienza di gruppo definitiva."
+        "title": "Luxus-Chauffeur-Van",
+        "description": "Mercedes V-Class mit Premium-Ausstattung für das ultimative Gruppenerlebnis."
       }
     },
     "whyChooseUs": {
-      "title": "Perché Scegliere",
-      "titleHighlight": "Royal Transfers",
-      "subtitle": "Facciamo di più per rendere eccezionale il tuo transfer a Barcellona.",
+      "title": "Warum",
+      "titleHighlight": "Royal Transfers Wählen",
+      "subtitle": "Wir gehen die Extrameile, um Ihren Barcelona-Transfer außergewöhnlich zu machen.",
       "feature1": {
-        "title": "Autisti Professionisti",
-        "description": "Autisti autorizzati, esperti e multilingue che conoscono Barcellona a fondo."
+        "title": "Professionelle Fahrer",
+        "description": "Lizenzierte, erfahrene und mehrsprachige Fahrer, die Barcelona in- und auswendig kennen."
       },
       "feature2": {
-        "title": "Monitoraggio Voli",
-        "description": "Monitoriamo il tuo volo in tempo reale e regoliamo automaticamente gli orari di ritiro."
+        "title": "Flugverfolgung",
+        "description": "Wir überwachen Ihren Flug in Echtzeit und passen die Abholzeiten automatisch an."
       },
       "feature3": {
-        "title": "Prezzi Fissi",
-        "description": "Nessuna sorpresa o costo nascosto. Il prezzo che vedi è quello che paghi."
+        "title": "Feste Preise",
+        "description": "Keine Überraschungen oder versteckten Gebühren. Der Preis, den Sie sehen, ist der Preis, den Sie zahlen."
       },
       "feature4": {
-        "title": "Disponibilità 24/7",
-        "description": "Prenota in qualsiasi momento, viaggia in qualsiasi momento. Siamo qui per voli mattutini e arrivi notturni."
+        "title": "24/7 Verfügbarkeit",
+        "description": "Buchen Sie jederzeit, reisen Sie jederzeit. Wir sind für frühe Flüge und späte Ankünfte da."
       },
       "feature5": {
-        "title": "Incontro e Assistenza",
-        "description": "Il tuo autista ti aspetta con un cartello con il tuo nome agli arrivi per un ritiro senza problemi."
+        "title": "Meet & Greet",
+        "description": "Ihr Fahrer wartet am Ankunftsbereich mit einem Namensschild für eine reibungslose Abholung."
       },
       "feature6": {
-        "title": "Cancellazione Gratuita",
-        "description": "I piani cambiano. Cancella fino a 24 ore prima per un rimborso completo."
+        "title": "Kostenlose Stornierung",
+        "description": "Pläne ändern sich. Stornieren Sie bis zu 24 Stunden vorher für eine vollständige Rückerstattung."
       }
     },
     "testimonials": {
-      "title": "Cosa Dicono i Nostri",
-      "titleHighlight": "Clienti",
-      "subtitle": "Non credere solo a noi. Ecco cosa dicono i viaggiatori di Royal Transfers BCN.",
+      "title": "Was Unsere",
+      "titleHighlight": "Kunden Sagen",
+      "subtitle": "Verlassen Sie sich nicht nur auf unser Wort. Hier ist, was Reisende über Royal Transfers BCN sagen.",
       "review1": {
         "name": "Sarah M.",
-        "location": "Londra, Regno Unito",
-        "text": "Servizio assolutamente fantastico! L'autista ci aspettava agli arrivi, ha aiutato con i bagagli e la Mercedes era impeccabile. Lo userò sicuramente di nuovo."
+        "location": "London, UK",
+        "text": "Absolut fantastischer Service! Der Fahrer wartete am Ankunftsbereich, half mit dem Gepäck und der Mercedes war makellos. Werde ich auf jeden Fall wieder nutzen."
       },
       "review2": {
         "name": "Thomas K.",
-        "location": "Berlino, Germania",
-        "text": "Il nostro volo è stato ritardato di 2 ore ma l'autista era lì quando siamo atterrati. Questo è vero servizio. Altamente raccomandato!"
+        "location": "Berlin, Deutschland",
+        "text": "Unser Flug hatte 2 Stunden Verspätung, aber der Fahrer war da, als wir landeten. Das ist echter Service. Sehr empfehlenswert!"
       },
       "review3": {
         "name": "Maria L.",
-        "location": "Milano, Italia",
-        "text": "Abbiamo usato Royal Transfers per il nostro viaggio in famiglia. Il van da 8 posti era perfetto e l'autista è stato così gentile con i bambini."
+        "location": "Mailand, Italien",
+        "text": "Ich habe Royal Transfers für unseren Familienausflug genutzt. Der 8-Sitzer Van war perfekt und der Fahrer war so freundlich zu den Kindern."
       }
     },
     "cta": {
-      "title": "Pronto a Vivere Transfer Premium?",
-      "subtitle": "Unisciti a migliaia di viaggiatori soddisfatti che scelgono Royal Transfers BCN per i loro viaggi a Barcellona.",
-      "bookNow": "Prenota il Tuo Transfer Ora",
-      "or": "o",
-      "contactUs": "Contattaci"
+      "title": "Bereit für Premium-Transfers?",
+      "subtitle": "Schließen Sie sich Tausenden zufriedener Reisender an, die Royal Transfers BCN für ihre Barcelona-Reisen wählen.",
+      "bookNow": "Buchen Sie Ihren Transfer Jetzt",
+      "or": "oder",
+      "contactUs": "Kontaktieren Sie Uns"
     }
   },
   "header": {
-    "home": "Home",
-    "aboutUs": "Chi Siamo",
-    "contactUs": "Contattaci",
-    "services": "Servizi",
-    "fleet": "Flotta",
-    "bookNow": "Prenota Ora",
+    "home": "Startseite",
+    "aboutUs": "Über Uns",
+    "contactUs": "Kontakt",
+    "services": "Dienstleistungen",
+    "fleet": "Flotte",
+    "bookNow": "Jetzt Buchen",
     "servicesMenu": {
-      "airportTaxi": "Taxi Aeroporto Barcellona",
-      "cruisePort": "Transfer Porti Crociera",
-      "longDistance": "Viaggi a Lunga Distanza",
-      "hourlyBooking": "Noleggio Taxi Orario"
+      "airportTaxi": "Flughafentaxi Barcelona",
+      "cruisePort": "Kreuzfahrthafen-Transfer",
+      "longDistance": "Fernreisen",
+      "hourlyBooking": "Stündliche Taxibuchung"
     },
     "fleetMenu": {
       "standard": "Standard",
-      "luxurySedan": "Berlina di Lusso",
-      "eightSeaterVan": "Van 8 Posti",
-      "luxuryChaufferVan": "Van con Autista di Lusso"
+      "luxurySedan": "Luxus-Limousine",
+      "eightSeaterVan": "8-Sitzer Van",
+      "luxuryChaufferVan": "Luxus-Chauffeur-Van"
     },
-    "language": "Lingua",
-    "menu": "Menu",
-    "closeMenu": "Chiudi Menu"
+    "language": "Sprache",
+    "menu": "Menü",
+    "closeMenu": "Menü Schließen"
   },
   "footer": {
     "companyName": "Royal Transfers BCN",
-    "tagline": "Servizi Premium di Transfer Aeroportuale a Barcellona",
-    "quickLinks": "Link Rapidi",
-    "ourServices": "I Nostri Servizi",
-    "ourFleet": "La Nostra Flotta",
-    "contact": "Contatto",
-    "address": "Barcellona, Spagna",
+    "tagline": "Premium Flughafentransfer-Service in Barcelona",
+    "quickLinks": "Schnelllinks",
+    "ourServices": "Unsere Dienstleistungen",
+    "ourFleet": "Unsere Flotte",
+    "contact": "Kontakt",
+    "address": "Barcelona, Spanien",
     "email": "info@royaltransfersbcn.com",
     "phone": "+34 123 456 789",
-    "available": "Disponibile 24/7",
-    "followUs": "Seguici",
-    "copyright": "© {year} Royal Transfers BCN. Tutti i diritti riservati.",
-    "privacyPolicy": "Informativa sulla Privacy",
-    "termsConditions": "Termini & Condizioni",
-    "cookiePolicy": "Informativa sui Cookie"
+    "available": "24/7 verfügbar",
+    "followUs": "Folgen Sie Uns",
+    "copyright": "© {year} Royal Transfers BCN. Alle Rechte vorbehalten.",
+    "privacyPolicy": "Datenschutzerklärung",
+    "termsConditions": "AGB",
+    "cookiePolicy": "Cookie-Richtlinie"
   },
-  
   "services": {
     "hourlyBooking": {
       "hero": {
-        "title": "Noleggio Taxi Orario",
-        "titleHighlight": "Barcellona",
-        "subtitle": "Hai bisogno di un taxi che ti aspetti? Prenota a ore per shopping, commissioni, eventi o visite turistiche. Pacchetti orari flessibili con auto e van fino a 8 passeggeri.",
-        "ctaWhatsApp": "Prenota Veloce via WhatsApp",
-        "ctaCall": "Chiamaci 📞",
-        "badge1": "Prenota 3–8 ore",
-        "badge2": "Il taxi ti aspetta",
-        "badge3": "Autisti parlanti inglese",
-        "badge4": "Berline & van fino a 8 pax",
-        "badge5": "Seggiolini su richiesta",
-        "badge6": "Disponibilità 24/7"
+        "title": "Stündliche Taxibuchung",
+        "titleHighlight": "Barcelona",
+        "subtitle": "Brauchen Sie ein Taxi, das auf Sie wartet? Buchen Sie stundenweise für Einkäufe, Besorgungen, Veranstaltungen oder Besichtigungen. Flexible Stundenpakete mit Autos und Vans für bis zu 8 Passagiere.",
+        "ctaWhatsApp": "Schnell via WhatsApp Buchen",
+        "ctaCall": "Rufen Sie Uns An 📞",
+        "badge1": "Buchen Sie 3–8 Stunden",
+        "badge2": "Taxi wartet auf Sie",
+        "badge3": "Englischsprachige Fahrer",
+        "badge4": "Limousinen & Vans bis zu 8 Pers.",
+        "badge5": "Kindersitze auf Anfrage",
+        "badge6": "24/7 Verfügbarkeit"
       },
       "features": {
-        "flexible": { "title": "Resta Flessibile", "description": "Non c'è bisogno di ordinare una nuova corsa ogni volta: il tuo taxi ti aspetta." },
-        "fleet": { "title": "Flotta Moderna", "description": "Berline confortevoli, ibride e van spaziosi per 7–8 passeggeri." },
-        "rates": { "title": "Tariffe Orarie Chiare", "description": "Prezzo orario fisso, nessun costo nascosto. Tempo di attesa incluso." },
-        "occasion": { "title": "Qualsiasi Occasione", "description": "Perfetto per shopping, visite mediche, visite turistiche ed eventi." }
+        "flexible": { "title": "Bleiben Sie Flexibel", "description": "Sie müssen nicht jedes Mal eine neue Fahrt bestellen – Ihr Taxi wartet auf Sie." },
+        "fleet": { "title": "Moderne Flotte", "description": "Komfortable Limousinen, Hybride und geräumige Vans für 7–8 Passagiere." },
+        "rates": { "title": "Klare Stundensätze", "description": "Fester Stundensatz, keine versteckten Kosten. Wartezeit inklusive." },
+        "occasion": { "title": "Jeder Anlass", "description": "Perfekt für Einkäufe, Arztbesuche, Besichtigungen und Veranstaltungen." }
       },
       "packages": {
-        "title": "Pacchetti Taxi",
-        "titleHighlight": "Orari",
-        "popular": "Popolare",
-        "threeHours": { "title": "3 Ore", "subtitle": "Commissioni Rapide", "price": "da €85", "note": "€120 (van)" },
-        "fourHours": { "title": "4 Ore", "subtitle": "Shopping / Appuntamenti", "price": "da €110", "note": "Include attesa e ritorno" },
-        "sixHours": { "title": "6 Ore", "subtitle": "Mezza Giornata", "price": "da €160", "note": "Per eventi & visite turistiche" },
-        "eightHours": { "title": "8 Ore", "subtitle": "Taxi Giornata Intera", "price": "da €210", "note": "Ideale per programmi lunghi" },
-        "note": "I prezzi dipendono dalle dimensioni del veicolo e dall'orario. Ottieni il tuo preventivo esatto all'istante.",
-        "cta": "Ottieni il Tuo Prezzo"
+        "title": "Stundenweise Taxi-",
+        "titleHighlight": "Pakete",
+        "popular": "Beliebt",
+        "threeHours": { "title": "3 Stunden", "subtitle": "Schnelle Besorgungen", "price": "ab 85 €", "note": "120 € (Van)" },
+        "fourHours": { "title": "4 Stunden", "subtitle": "Einkaufen / Termine", "price": "ab 110 €", "note": "Inkl. Warten & Rückfahrt" },
+        "sixHours": { "title": "6 Stunden", "subtitle": "Halber Tag", "price": "ab 160 €", "note": "Für Events & Besichtigungen" },
+        "eightHours": { "title": "8 Stunden", "subtitle": "Ganztagestaxi", "price": "ab 210 €", "note": "Ideal für lange Programme" },
+        "note": "Die Preise hängen von der Fahrzeuggröße und der Tageszeit ab. Erhalten Sie sofort Ihr genaues Angebot.",
+        "cta": "Preis Erhalten"
       },
       "howItWorks": {
-        "title": "Come Funziona il Noleggio",
-        "titleHighlight": "Taxi Orario",
-        "step1": { "title": "Scegli le Tue Ore", "description": "Scegli le tue ore (3–8h) e comunicaci il tuo itinerario." },
-        "step2": { "title": "Ottieni il Preventivo", "description": "Ottieni un preventivo orario fisso per berlina, berlina di lusso o van." },
-        "step3": { "title": "Goditi la Tua Giornata", "description": "Goditi la tua giornata con un taxi che ti aspetta e ti porta ovunque." }
+        "title": "So Funktioniert die Stündliche",
+        "titleHighlight": "Taxibuchung",
+        "step1": { "title": "Wählen Sie Ihre Stunden", "description": "Wählen Sie Ihre Stunden (3–8h) und teilen Sie uns Ihre Route mit." },
+        "step2": { "title": "Erhalten Sie Ihr Angebot", "description": "Erhalten Sie ein festes Stundengebot für Limousine, Luxuslimousine oder Van." },
+        "step3": { "title": "Genießen Sie Ihren Tag", "description": "Genießen Sie Ihren Tag mit einem Taxi, das wartet und Sie überall hinfährt." }
       },
       "fleet": {
-        "title": "La Nostra",
-        "titleHighlight": "Flotta",
-        "pax": "pax",
-        "tesla": { "name": "Tesla Model 3", "type": "Berlina ecolusso" },
-        "prius": { "name": "Toyota Prius+", "type": "Ibrida efficiente" },
-        "vito": { "name": "Mercedes Vito", "type": "Van spazioso per famiglie" },
-        "vclass": { "name": "Mercedes V-Class", "type": "Van di lusso" }
+        "title": "Unsere",
+        "titleHighlight": "Flotte",
+        "pax": "Pers.",
+        "tesla": { "name": "Tesla Model 3", "type": "Öko-Luxuslimousine" },
+        "prius": { "name": "Toyota Prius+", "type": "Effizienter Hybrid" },
+        "vito": { "name": "Mercedes Vito", "type": "Geräumiger Familienvan" },
+        "vclass": { "name": "Mercedes V-Class", "type": "Luxusvan-Option" }
       },
       "faq": {
-        "title": "Taxi Orario",
-        "titleHighlight": "FAQ",
-        "faq1": { "question": "Cosa è incluso nel prezzo orario?", "answer": "L'autista, il veicolo, il carburante e il tempo di attesa entro i limiti della città di Barcellona." },
-        "faq2": { "question": "Posso estendere la mia prenotazione?", "answer": "Sì, ore extra possono essere aggiunte il giorno stesso se disponibili, alla stessa tariffa." },
-        "faq3": { "question": "Offrite van per gruppi?", "answer": "Sì, Mercedes Vito & V-Class van per fino a 7–8 persone con bagagli." },
-        "faq4": { "question": "Posso usare il taxi orario per visite turistiche?", "answer": "Certamente, ideale per visitare più attrazioni in un giorno senza stress." }
+        "title": "Häufig Gestellte Fragen",
+        "titleHighlight": "Stundentaxi",
+        "faq1": { "question": "Was ist im Stundensatz enthalten?", "answer": "Der Fahrer, das Fahrzeug, Kraftstoff und Wartezeit innerhalb der Stadtgrenzen Barcelonas." },
+        "faq2": { "question": "Kann ich meine Buchung verlängern?", "answer": "Ja, zusätzliche Stunden können am selben Tag hinzugefügt werden, falls verfügbar, zum gleichen Satz." },
+        "faq3": { "question": "Bieten Sie Vans für Gruppen an?", "answer": "Ja, Mercedes Vito & V-Class Vans für bis zu 7–8 Personen mit Gepäck." },
+        "faq4": { "question": "Kann ich das Stundentaxi für Besichtigungen nutzen?", "answer": "Natürlich – ideal, um an einem Tag mehrere Sehenswürdigkeiten stressfrei zu besuchen." }
       },
       "cta": {
-        "title": "Pronto a Prenotare il Tuo Taxi Orario?",
-        "subtitle": "Mettiti in contatto ora e goditi un trasporto flessibile a Barcellona.",
-        "whatsapp": "Chatta & Prenota",
-        "call": "Chiamaci 📞"
+        "title": "Bereit, Ihr Stundentaxi zu Buchen?",
+        "subtitle": "Nehmen Sie jetzt Kontakt auf und genießen Sie flexiblen Transport in Barcelona.",
+        "whatsapp": "Chatten & Buchen",
+        "call": "Rufen Sie Uns An 📞"
       }
     },
     "longDistance": {
       "hero": {
-        "title": "Taxi a Lunga Distanza & Transfer Privati",
-        "titleHighlight": "da Barcellona",
-        "subtitle": "Transfer confortevoli da città a città attraverso la Catalogna, la Spagna e i Pirenei. Prezzi fissi, servizio porta a porta e autisti professionisti. Perfetto per famiglie, viaggi d'affari e piccoli gruppi.",
-        "ctaWhatsApp": "Prenota Veloce via WhatsApp",
-        "ctaCall": "Chiamaci 📞",
-        "badge1": "Prezzi fissi anticipati",
-        "badge2": "Servizio porta a porta",
-        "badge3": "Autisti parlanti inglese",
-        "badge4": "Seggiolini su richiesta",
-        "badge5": "Berline & van 7–8 posti",
-        "badge6": "Disponibilità 24/7"
+        "title": "Fern-Taxi & Private Transfers",
+        "titleHighlight": "ab Barcelona",
+        "subtitle": "Komfortable Stadt-zu-Stadt Transfers durch Katalonien, Spanien und die Pyrenäen. Feste Preise, Tür-zu-Tür Service und professionelle Fahrer. Perfekt für Familien, Geschäftsreisen und kleine Gruppen.",
+        "ctaWhatsApp": "Schnell via WhatsApp Buchen",
+        "ctaCall": "Rufen Sie Uns An 📞",
+        "badge1": "Feste Vorabpreise",
+        "badge2": "Tür-zu-Tür Service",
+        "badge3": "Englischsprachige Fahrer",
+        "badge4": "Kindersitze auf Anfrage",
+        "badge5": "Limousinen & 7–8-Sitzer Vans",
+        "badge6": "24/7 Verfügbarkeit"
       },
       "features": {
-        "specialists": { "title": "Specialisti Città-Città", "description": "Transfer diretti per Girona, Tarragona, Sitges, Andorra, Costa Brava & oltre." },
-        "fleet": { "title": "Flotta Confortevole", "description": "Tesla & ibride per 1–4 ospiti, più van di lusso per famiglie e gruppi." },
-        "pricing": { "title": "Prezzi Trasparenti", "description": "Nessuna tariffa dinamica, nessuna sorpresa: solo preventivi fissi prima del viaggio." },
-        "stops": { "title": "Fermate Flessibili", "description": "Soste opzionali per visite turistiche, foto, cibo o visite veloci durante il percorso." }
+        "specialists": { "title": "Stadt-zu-Stadt Spezialisten", "description": "Direkte Transfers nach Girona, Tarragona, Sitges, Andorra, Costa Brava & darüber hinaus." },
+        "fleet": { "title": "Komfortable Flotte", "description": "Tesla & Hybride für 1–4 Gäste, plus Luxus-Vans für Familien und Gruppen." },
+        "pricing": { "title": "Transparente Preise", "description": "Keine Preissprünge, keine Überraschungen – nur feste Angebote vor der Fahrt." },
+        "stops": { "title": "Flexible Stopps", "description": "Optionale Besichtigungspausen für Fotos, Essen oder kurze Besuche entlang der Route." }
       },
       "routes": {
-        "title": "Percorsi e Prezzi",
-        "titleHighlight": "a Lunga Distanza Popolari",
-        "popular": "Popolare",
-        "girona": { "name": "Barcellona ↔ Girona", "description": "Città / Aeroporto", "price": "da €160", "note": "€215 (van 8 posti)" },
-        "tarragona": { "name": "Barcellona ↔ Tarragona", "description": "PortAventura", "price": "da €165", "note": "Transfer diretto al resort" },
-        "sitges": { "name": "Barcellona ↔ Sitges", "description": "Vilanova", "price": "da €70", "note": "Percorso costiero, aiuto bagagli" },
-        "lloret": { "name": "Barcellona ↔ Lloret de Mar", "description": "Costa Brava", "price": "da €130", "note": "Servizio porta a porta" },
-        "andorra": { "name": "Barcellona ↔ Andorra", "description": "la Vella / Grandvalira", "price": "da €290", "note": "Veicoli invernali disponibili" },
-        "intercity": { "name": "Barcellona ↔ Saragozza / Valencia / Madrid", "description": "Transfer interurbani", "price": "Richiedi preventivo", "note": "Transfer interurbani su richiesta" },
-        "note": "I prezzi dipendono dalla distanza, dall'ora del giorno e dal tipo di veicolo. Ottieni un preventivo esatto in pochi secondi.",
-        "cta": "Controlla il Tuo Prezzo"
+        "title": "Beliebte Fernstrecken",
+        "titleHighlight": "& Preise",
+        "popular": "Beliebt",
+        "girona": { "name": "Barcelona ↔ Girona", "description": "Stadt / Flughafen", "price": "ab 160 €", "note": "215 € (8-Sitzer Van)" },
+        "tarragona": { "name": "Barcelona ↔ Tarragona", "description": "PortAventura", "price": "ab 165 €", "note": "Direkter Resort-Transfer" },
+        "sitges": { "name": "Barcelona ↔ Sitges", "description": "Vilanova", "price": "ab 70 €", "note": "Küstenroute, Gepäckhilfe" },
+        "lloret": { "name": "Barcelona ↔ Lloret de Mar", "description": "Costa Brava", "price": "ab 130 €", "note": "Tür-zu-Tür Service" },
+        "andorra": { "name": "Barcelona ↔ Andorra", "description": "la Vella / Grandvalira", "price": "ab 290 €", "note": "Wintertaugliche Fahrzeuge verfügbar" },
+        "intercity": { "name": "Barcelona ↔ Saragossa / Valencia / Madrid", "description": "Intercity-Transfers", "price": "Angebot anfragen", "note": "Intercity-Transfers auf Anfrage" },
+        "note": "Die Preise hängen von der Entfernung, Tageszeit und Fahrzeugtyp ab. Erhalten Sie in Sekunden ein genaues Angebot.",
+        "cta": "Preis Prüfen"
       },
       "howItWorks": {
-        "title": "Come Funzionano i Transfer",
-        "titleHighlight": "a Lunga Distanza",
-        "step1": { "title": "Condividi il Tuo Percorso", "description": "Condividi il tuo percorso (ritiro, destinazione, passeggeri, bagagli) tramite modulo di prenotazione o WhatsApp." },
-        "step2": { "title": "Ricevi il Preventivo", "description": "Ricevi un preventivo fisso con il veicolo migliore per il tuo gruppo e i bagagli." },
-        "step3": { "title": "Goditi il Viaggio", "description": "Goditi il viaggio, porta a porta con soste opzionali per cibo, foto o shopping." }
+        "title": "So Funktionieren",
+        "titleHighlight": "Fern-Transfers",
+        "step1": { "title": "Teilen Sie Ihre Route Mit", "description": "Teilen Sie Ihre Route (Abholung, Ziel, Passagiere, Gepäck) über das Buchungsformular oder WhatsApp mit." },
+        "step2": { "title": "Erhalten Sie Ihr Angebot", "description": "Erhalten Sie ein festes Angebot mit dem besten Fahrzeug für Ihre Gruppe und Ihr Gepäck." },
+        "step3": { "title": "Genießen Sie die Fahrt", "description": "Genießen Sie die Fahrt – Tür-zu-Tür mit optionalen Stopps für Essen, Fotos oder Shopping." }
       },
       "fleet": {
-        "title": "La Nostra",
-        "titleHighlight": "Flotta",
-        "pax": "pax",
-        "tesla": { "name": "Tesla Model 3", "type": "Berlina ecolusso" },
-        "prius": { "name": "Toyota Prius+", "type": "Ibrida efficiente" },
-        "vito": { "name": "Mercedes Vito", "type": "Van spazioso per famiglie" },
-        "vclass": { "name": "Mercedes V-Class", "type": "Van con autista di lusso" }
+        "title": "Unsere",
+        "titleHighlight": "Flotte",
+        "pax": "Pers.",
+        "tesla": { "name": "Tesla Model 3", "type": "Öko-Luxuslimousine" },
+        "prius": { "name": "Toyota Prius+", "type": "Effizienter Hybrid" },
+        "vito": { "name": "Mercedes Vito", "type": "Geräumiger Familienvan" },
+        "vclass": { "name": "Mercedes V-Class", "type": "Luxus-Chauffeur-Van" }
       },
       "faq": {
-        "title": "Transfer a Lunga Distanza",
-        "titleHighlight": "FAQ",
-        "faq1": { "question": "Possiamo richiedere soste lungo il percorso?", "answer": "Sì, soste brevi per foto/caffè sono gratuite entro limiti ragionevoli. Deviazioni più lunghe possono essere aggiunte al preventivo." },
-        "faq2": { "question": "Come calcolate il prezzo?", "answer": "In base a distanza, ora del giorno e dimensioni del veicolo. Ti invieremo un preventivo fisso prima della conferma." },
-        "faq3": { "question": "Fornite seggiolini per bambini?", "answer": "Seggiolini per neonati e rialzi disponibili su richiesta, specifica le età durante la prenotazione." },
-        "faq4": { "question": "C'è un sovrapprezzo notturno?", "answer": "I transfer tra le 22:00 e le 06:00 possono avere un piccolo supplemento, incluso nel preventivo." }
+        "title": "Häufig Gestellte Fragen",
+        "titleHighlight": "Fern-Transfers",
+        "faq1": { "question": "Können wir unterwegs Stopps einlegen?", "answer": "Ja, kurze Foto-/Kaffeepausen sind im Rahmen des Zumutbaren kostenlos. Längere Umwege können dem Angebot hinzugefügt werden." },
+        "faq2": { "question": "Wie wird der Preis berechnet?", "answer": "Basierend auf Entfernung, Tageszeit und Fahrzeuggröße. Wir senden Ihnen ein festes Angebot, bevor Sie bestätigen." },
+        "faq3": { "question": "Stellen Sie Kindersitze zur Verfügung?", "answer": "Babyschalen und Kindersitze sind auf Anfrage verfügbar – bitte geben Sie bei der Buchung das Alter an." },
+        "faq4": { "question": "Gibt es einen Nachtzuschlag?", "answer": "Für Transfers zwischen 22:00 und 06:00 Uhr kann ein kleiner Zuschlag anfallen – dieser ist in Ihrem Angebot enthalten." }
       },
       "cta": {
-        "title": "Pronto a Prenotare il Tuo Transfer a Lunga Distanza?",
-        "subtitle": "Mettiti in contatto ora e viaggia comodamente in Catalogna e oltre.",
-        "whatsapp": "Chatta & Prenota",
-        "call": "Chiamaci 📞"
+        "title": "Bereit, Ihren Fern-Transfer zu Buchen?",
+        "subtitle": "Nehmen Sie jetzt Kontakt auf und reisen Sie bequem durch Katalonien und darüber hinaus.",
+        "whatsapp": "Chatten & Buchen",
+        "call": "Rufen Sie Uns An 📞"
       }
     },
     "cruisePortTaxi": {
       "structuredData": {
-        "name": "Transfer Taxi Porti Crociera Barcellona",
-        "description": "Transfer affidabili in taxi per i porti crociera di Barcellona. Servizio di incontro, prezzi fissi, assistenza bagagli e veicoli confortevoli per passeggeri crocieristi."
+        "name": "Taxi-Transfers Kreuzfahrthafen Barcelona",
+        "description": "Zuverlässige Taxi-Transfers vom/zum Kreuzfahrthafen in Barcelona. Meet & Greet Service, feste Preise, Gepäckassistenz und komfortable Fahrzeuge für Kreuzfahrtpassagiere."
       },
       "hero": {
-        "title": "Transfer Taxi Porti Crociera Barcellona",
-        "subtitle": "Transfer affidabili con incontro tra i terminal crociera di Barcellona, aeroporti, hotel e centro città. Prezzi fissi, assistenza bagagli e supporto per l'imbarco prioritario.",
-        "ctaWhatsApp": "Prenota Veloce via WhatsApp",
-        "ctaCall": "Chiamaci 📞",
+        "title": "Taxi-Transfers Kreuzfahrthafen Barcelona",
+        "subtitle": "Zuverlässige Meet & Greet Transfers zwischen den Kreuzfahrtterminals von Barcelona, Flughäfen, Hotels und der Innenstadt. Feste Preise, Gepäckassistenz und Unterstützung bei der prioritären Einschiffung.",
+        "ctaWhatsApp": "Schnell via WhatsApp Buchen",
+        "ctaCall": "Rufen Sie Uns An 📞",
         "badges": {
-          "fixedPrice": "Prezzi fissi",
-          "meetGreet": "Incontro e assistenza",
-          "luggage": "Assistenza bagagli",
-          "availability": "Disponibilità 24/7",
-          "childSeats": "Seggiolini disponibili",
-          "vans": "Berline & van 8 posti"
+          "fixedPrice": "Feste Preise",
+          "meetGreet": "Meet & Greet",
+          "luggage": "Gepäckassistenz",
+          "availability": "24/7 Verfügbarkeit",
+          "childSeats": "Kindersitze verfügbar",
+          "vans": "Limousinen & 8-Sitzer Vans"
         },
         "aria": {
-          "whatsapp": "Prenota transfer porto crociera via WhatsApp",
-          "call": "Chiamaci per transfer porto crociera",
-          "features": "Caratteristiche principali del nostro servizio transfer porto crociera"
+          "whatsapp": "Kreuzfahrthafentransfer via WhatsApp buchen",
+          "call": "Rufen Sie uns für Kreuzfahrthafentransfer an",
+          "features": "Hauptmerkmale unseres Kreuzfahrthafentransfer-Service"
         }
       },
       "features": {
         "specialists": {
-          "title": "Specialisti Porti Crociera",
-          "description": "Conosciamo i terminal, gli orari e i percorsi migliori per MSC, Royal Caribbean, Norwegian e tutte le compagnie crocieristiche."
+          "title": "Kreuzfahrthafen-Spezialisten",
+          "description": "Wir kennen die Terminals, Fahrpläne und besten Routen für MSC, Royal Caribbean, Norwegian und alle Kreuzfahrtlinien."
         },
         "fleet": {
-          "title": "Flotta Confortevole",
-          "description": "Berline ibride per 1–4 ospiti, più van spaziosi per famiglie e gruppi con molti bagagli."
+          "title": "Komfortable Flotte",
+          "description": "Hybrid-Limousinen für 1–4 Gäste, plus geräumige Vans für Familien und Gruppen mit viel Gepäck."
         },
         "pricing": {
-          "title": "Prezzi Trasparenti",
-          "description": "Nessun costo nascosto, il prezzo include l'accesso al porto, il tempo di attesa, il trasporto bagagli e tutte le tasse."
+          "title": "Transparente Preise",
+          "description": "Keine versteckten Gebühren – der Preis beinhaltet Hafen-Zugang, Wartezeit, Gepäckabfertigung und alle Steuern."
         },
         "support": {
-          "title": "Supporto Imbarco",
-          "description": "Ti aiutiamo con i bagagli al terminal e assicuriamo che tu raggiunga il check-in con ampio anticipo."
+          "title": "Einschiffungsunterstützung",
+          "description": "Wir helfen mit dem Gepäck am Terminal und sorgen dafür, dass Sie rechtzeitig zum Check-in kommen."
         }
       },
       "routes": {
-        "title": "Percorsi e Prezzi Popolari per Porti Crociera",
-        "subtitle": "Transfer a prezzo fisso da/per i terminal crociera di Barcellona",
-        "popular": "Più Popolare",
-        "popularLabel": "Percorso più popolare",
+        "title": "Beliebte Kreuzfahrthafen-Strecken & Preise",
+        "subtitle": "Transfers zum/vom Kreuzfahrthafen in Barcelona zum Festpreis",
+        "popular": "Beliebteste",
+        "popularLabel": "Beliebteste Strecke",
         "airport": {
-          "name": "Aeroporto a Porto Crociera",
-          "description": "BCN/T1/T2 a Moll Adossat/Moll de la Costa",
-          "price": "da €45",
-          "note": "45-60 minuti a seconda del traffico"
+          "name": "Flughafen zu Kreuzfahrthafen",
+          "description": "BCN/T1/T2 nach Moll Adossat/Moll de la Costa",
+          "price": "ab 45 €",
+          "note": "45-60 Minuten je nach Verkehr"
         },
         "city": {
-          "name": "Centro Città a Porto Crociera",
-          "description": "Sagrada Família/Quartiere Gotico ai terminal",
-          "price": "da €35",
-          "note": "Transfer diretto, nessun costo extra"
+          "name": "Stadtzentrum zu Kreuzfahrthafen",
+          "description": "Sagrada Família/Gotisches Viertel zu den Terminals",
+          "price": "ab 35 €",
+          "note": "Direkter Transfer, keine Zusatzkosten"
         },
         "sightseeing": {
-          "name": "Porto a Park Güell/Camp Nou",
-          "description": "Visite turistiche pre/post crociera",
-          "price": "da €55",
-          "note": "Ritiro/consegna flessibile"
+          "name": "Hafen zu Park Güell/Camp Nou",
+          "description": "Besichtigungen vor/nach der Kreuzfahrt",
+          "price": "ab 55 €",
+          "note": "Flexible Abholung/Rückgabe"
         },
         "coastal": {
-          "name": "Porto a Sitges/Costa Brava",
-          "description": "Transfer costieri estesi",
-          "price": "da €85",
-          "note": "Servizio porta a porta"
+          "name": "Hafen zu Sitges/Costa Brava",
+          "description": "Erweiterte Küstentransfers",
+          "price": "ab 85 €",
+          "note": "Tür-zu-Tür Service"
         },
-        "note": "Tutti i prezzi includono tasse portuali, tempo di attesa e bagagli. Gruppi di 5+ e soste extra disponibili.",
-        "cta": "Ottieni il Tuo Preventivo",
+        "note": "Alle Preise inklusive Hafengebühren, Wartezeit und Gepäck. Gruppen ab 5 Personen und zusätzliche Stopps möglich.",
+        "cta": "Angebot Einholen",
         "aria": {
-          "quote": "Ottieni un preventivo per il tuo transfer porto crociera"
+          "quote": "Angebot für Ihren Kreuzfahrthafentransfer einholen"
         }
       },
       "howItWorks": {
-        "title": "Come Funzionano i Transfer Porti Crociera",
-        "subtitle": "Processo in tre fasi per un'esperienza crocieristica senza stress",
+        "title": "So Funktionieren Kreuzfahrthafen-Transfers",
+        "subtitle": "Einfacher Drei-Schritte-Prozess für ein stressfreies Kreuzfahrterlebnis",
         "step1": {
-          "title": "Condividi i Tuoi Dettagli",
-          "description": "Comunicaci la compagnia crocieristica, il terminal, il nome della nave, l'orario di ritiro e il numero di passeggeri."
+          "title": "Teilen Sie Ihre Daten Mit",
+          "description": "Teilen Sie uns Ihre Kreuzfahrtlinie, das Terminal, den Schiffsnamen, die Abholzeit und die Anzahl der Passagiere mit."
         },
         "step2": {
-          "title": "Ricevi la Conferma",
-          "description": "Ti invieremo un preventivo a prezzo fisso e i dettagli dell'autista con le istruzioni per l'incontro."
+          "title": "Erhalten Sie Bestätigung",
+          "description": "Wir senden Ihnen ein Festpreisangebot und Fahrerdaten mit Treffpunktanweisungen."
         },
         "step3": {
-          "title": "Incontra il Tuo Autista",
-          "description": "Il tuo autista ti aspetta nel punto concordato con un cartello con il tuo nome e ti aiuta con i bagagli."
+          "title": "Treffen Sie Ihren Fahrer",
+          "description": "Ihr Fahrer trifft Sie am vereinbarten Ort mit einem Namensschild und hilft mit dem Gepäck."
         }
       },
       "fleet": {
-        "title": "La Nostra Flotta per Transfer Crociera",
-        "subtitle": "Veicoli moderni e confortevoli perfetti per passeggeri crocieristi con bagagli",
-        "pax": "passeggero",
-        "pax_plural": "passeggeri",
-        "paxLabel": "capienza passeggeri",
+        "title": "Unsere Flotte für Kreuzfahrt-Transfers",
+        "subtitle": "Moderne, komfortable Fahrzeuge, perfekt für Kreuzfahrtpassagiere mit Gepäck",
+        "pax": "Passagier",
+        "pax_plural": "Passagiere",
+        "paxLabel": "Passagierkapazität",
         "tesla": {
           "name": "Tesla Model 3",
-          "type": "Berlina ecolusso"
+          "type": "Öko-Luxuslimousine"
         },
         "prius": {
           "name": "Toyota Prius+",
-          "type": "Ibrida spaziosa"
+          "type": "Geräumiger Hybrid"
         },
         "vito": {
           "name": "Mercedes Vito",
-          "type": "Van per famiglie con spazio bagagli"
+          "type": "Familienvan mit Gepäckraum"
         },
         "vclass": {
           "name": "Mercedes V-Class",
-          "type": "Van con autista premium"
+          "type": "Premium-Chauffeur-Van"
         }
       },
       "faq": {
-        "title": "FAQ Transfer Porti Crociera",
-        "subtitle": "Domande comuni sul nostro servizio di transfer crociera a Barcellona",
+        "title": "Häufig Gestellte Fragen zu Kreuzfahrthafen-Transfers",
+        "subtitle": "Häufige Fragen zu unserem Barcelona-Kreuzfahrttransfer-Service",
         "q1": {
-          "question": "Dove mi incontrerà l'autista al terminal crociera?",
-          "answer": "Per gli arrivi, ti incontriamo appena fuori dalla dogana con un cartello con il tuo nome. Per le partenze, ti incontriamo al tuo hotel o all'indirizzo specificato. Ti invieremo istruzioni dettagliate con la conferma della prenotazione."
+          "question": "Wo trifft mich der Fahrer am Kreuzfahrtterminal?",
+          "answer": "Bei Ankünften treffen wir Sie direkt nach dem Zoll mit einem Namensschild. Bei Abfahrten holen wir Sie an Ihrem Hotel oder Ihrer angegebenen Adresse ab. Wir senden detaillierte Treffpunktanweisungen mit Ihrer Buchungsbestätigung."
         },
         "q2": {
-          "question": "Aiutate con i bagagli?",
-          "answer": "Sì! I nostri autisti assistono con il carico/scarico bagagli sia al punto di ritiro che di consegna. Tutti i nostri veicoli hanno ampio spazio per i bagagli da crociera, comprese le valigie grandi."
+          "question": "Helfen Sie mit dem Gepäck?",
+          "answer": "Ja! Unsere Fahrer helfen beim Be- und Entladen des Gepäcks sowohl bei Abholung als auch am Zielort. Alle unsere Fahrzeuge haben ausreichend Platz für Kreuzfahrtgepäck, einschließlich großer Koffer."
         },
         "q3": {
-          "question": "E se la mia crociera è in ritardo?",
-          "answer": "Monitoriamo gli arrivi delle crociere e adeguiamo gli orari di ritiro di conseguenza. Nessun costo extra per ritardi ragionevoli. Per ritardi significativi, coordineremo con te via WhatsApp/chiamata."
+          "question": "Was passiert, wenn meine Kreuzfahrt Verspätung hat?",
+          "answer": "Wir überwachen die Ankünfte von Kreuzfahrten und passen die Abholzeiten entsprechend an. Keine zusätzlichen Kosten für angemessene Verspätungen. Bei erheblichen Verspätungen koordinieren wir uns über WhatsApp/Telefon mit Ihnen."
         },
         "q4": {
-          "question": "Sono disponibili seggiolini per bambini?",
-          "answer": "Sì, seggiolini per neonati e rialzi sono disponibili gratuitamente. Specifica età e requisiti durante la prenotazione in modo da poter preparare i seggiolini appropriati."
+          "question": "Sind Kindersitze verfügbar?",
+          "answer": "Ja, Babyschalen und Kindersitze sind kostenlos erhältlich. Bitte geben Sie bei der Buchung Alter und Anforderungen an, damit wir die entsprechenden Sitze vorbereiten können."
         }
       },
       "cta": {
-        "title": "Pronto per un Transfer Crociera Senza Stress?",
-        "subtitle": "Prenota oggi il tuo transfer per il porto crociera di Barcellona e viaggia con sicurezza",
-        "whatsapp": "Chatta & Prenota Ora",
-        "call": "Chiama per Prenotare",
+        "title": "Bereit für einen Stressfreien Kreuzfahrttransfer?",
+        "subtitle": "Buchen Sie noch heute Ihren Barcelona-Kreuzfahrthafentransfer und reisen Sie sicher",
+        "whatsapp": "Chatten & Jetzt Buchen",
+        "call": "Zum Buchen Anrufen",
         "aria": {
-          "whatsapp": "Chatta e prenota transfer crociera su WhatsApp",
-          "call": "Chiama per prenotare transfer crociera"
+          "whatsapp": "Kreuzfahrttransfer auf WhatsApp chatten und buchen",
+          "call": "Anrufen, um Kreuzfahrttransfer zu buchen"
         }
       }
     },
     "airportTaxi": {
       "structuredData": {
-        "name": "Transfer Taxi Aeroporto Barcellona",
-        "description": "Transfer affidabili in taxi per l'aeroporto di Barcellona. Servizio di incontro, prezzi fissi, monitoraggio voli e veicoli confortevoli per transfer aeroportuali."
+        "name": "Taxi-Transfers Flughafen Barcelona",
+        "description": "Zuverlässige Taxi-Transfers vom/zum Flughafen Barcelona. Meet & Greet Service, feste Preise, Flugverfolgung und komfortable Fahrzeuge für Flughafentransfers."
       },
       "hero": {
-        "badge": "Servizio di Transfer Aeroportuale Fidato",
-        "title": "Transfer Taxi Aeroporto Barcellona",
-        "subtitle": "Transfer affidabili con incontro tra l'Aeroporto di Barcellona (BCN/T1/T2), hotel e centro città. Prezzi fissi, monitoraggio voli e 60 minuti di attesa gratuita.",
-        "ctaWhatsApp": "Prenota Veloce via WhatsApp",
-        "ctaCall": "Chiamaci 📞",
+        "badge": "Vertrauenswürdiger Flughafentransfer-Service",
+        "title": "Taxi-Transfers Flughafen Barcelona",
+        "subtitle": "Zuverlässige Meet & Greet Transfers zwischen dem Flughafen Barcelona (BCN/T1/T2), Hotels und der Innenstadt. Feste Preise, Flugverfolgung und 60 Minuten kostenlose Wartezeit.",
+        "ctaWhatsApp": "Schnell via WhatsApp Buchen",
+        "ctaCall": "Rufen Sie Uns An 📞",
         "badges": {
-          "fixedPrice": "Prezzi fissi",
-          "meetGreet": "Incontro e assistenza",
-          "flightTracking": "Monitoraggio voli",
-          "freeWait": "60 min attesa gratis",
-          "childSeats": "Seggiolini disponibili",
-          "fastLanes": "Corsie aeroportuali veloci"
+          "fixedPrice": "Feste Preise",
+          "meetGreet": "Meet & Greet",
+          "flightTracking": "Flugverfolgung",
+          "freeWait": "60 Min. kostenlose Wartezeit",
+          "childSeats": "Kindersitze verfügbar",
+          "fastLanes": "Schnelle Flughafenspuren"
         },
         "aria": {
-          "whatsapp": "Prenota transfer aeroporto via WhatsApp",
-          "call": "Chiamaci per transfer aeroporto",
-          "features": "Caratteristiche principali del nostro servizio transfer aeroportuale"
+          "whatsapp": "Flughafentransfer via WhatsApp buchen",
+          "call": "Rufen Sie uns für Flughafentransfer an",
+          "features": "Hauptmerkmale unseres Flughafentransfer-Service"
         }
       },
       "features": {
         "drivers": {
-          "title": "Autisti Professionisti",
-          "description": "Autisti parlanti inglese con permessi aeroportuali e ampia conoscenza di Barcellona."
+          "title": "Professionelle Fahrer",
+          "description": "Englischsprachige Fahrer mit Flughafengenehmigungen und umfassenden Ortskenntnissen in Barcelona."
         },
         "fleet": {
-          "title": "Flotta Confortevole",
-          "description": "Berline ibride per 1–4 ospiti, più van spaziosi per famiglie e gruppi con bagagli."
+          "title": "Komfortable Flotte",
+          "description": "Hybrid-Limousinen für 1–4 Gäste, plus geräumige Vans für Familien und Gruppen mit Gepäck."
         },
         "pricing": {
-          "title": "Prezzi Trasparenti",
-          "description": "Nessun costo nascosto, il prezzo include tasse aeroportuali, pedaggi, tempo di attesa e tutte le tasse."
+          "title": "Transparente Preise",
+          "description": "Keine versteckten Gebühren – der Preis beinhaltet Flughafengebühren, Maut, Wartezeit und alle Steuern."
         },
         "support": {
-          "title": "Supporto 24/7",
-          "description": "Monitoraggio ritardi voli e supporto WhatsApp durante il tuo viaggio."
+          "title": "24/7 Support",
+          "description": "Überwachung von Flugverspätungen und WhatsApp-Support während Ihrer gesamten Reise."
         }
       },
       "routes": {
-        "title": "Percorsi e Prezzi Aeroportuali Popolari",
-        "subtitle": "Transfer a prezzo fisso da/per l'Aeroporto di Barcellona (BCN)",
-        "popular": "Più Popolare",
-        "popularLabel": "Percorso più popolare",
+        "title": "Beliebte Flughafenstrecken & Preise",
+        "subtitle": "Transfers zum/vom Flughafen Barcelona (BCN) zum Festpreis",
+        "popular": "Beliebteste",
+        "popularLabel": "Beliebteste Strecke",
         "city": {
-          "name": "Aeroporto a Centro Città",
-          "description": "BCN a Quartiere Gotico/Eixample",
+          "name": "Flughafen zu Stadtzentrum",
+          "description": "BCN zum Gotischen Viertel/Eixample",
           "price": {
-            "sedan": "da €39",
-            "van": "da €55"
+            "sedan": "ab 39 €",
+            "van": "ab 55 €"
           },
-          "note": "30-45 minuti a seconda del traffico"
+          "note": "30-45 Minuten je nach Verkehr"
         },
         "sagrada": {
-          "name": "Aeroporto a Sagrada Familia",
-          "description": "Direttamente al capolavoro di Gaudí",
-          "price": "da €42",
-          "note": "Servizio porta a porta"
+          "name": "Flughafen zur Sagrada Familia",
+          "description": "Direkt zu Gaudís Meisterwerk",
+          "price": "ab 42 €",
+          "note": "Tür-zu-Tür Service"
         },
         "cruise": {
-          "name": "Aeroporto a Porto Crociera",
-          "description": "Terminal Moll Adossat",
-          "price": "da €45",
-          "note": "Transfer diretto, nessun costo extra"
+          "name": "Flughafen zu Kreuzfahrthafen",
+          "description": "Moll Adossat Terminals",
+          "price": "ab 45 €",
+          "note": "Direkter Transfer, keine Zusatzkosten"
         },
         "sitges": {
-          "name": "Aeroporto a Sitges",
-          "description": "Bella città costiera",
-          "price": "da €75",
-          "note": "Viaggio di 45-60 minuti"
+          "name": "Flughafen nach Sitges",
+          "description": "Wunderschöne Küstenstadt",
+          "price": "ab 75 €",
+          "note": "45-60 Minuten Fahrt"
         },
         "portAventura": {
-          "name": "Aeroporto a PortAventura",
-          "description": "Resort del parco a tema",
-          "price": "da €85",
-          "note": "Transfer diretto al resort"
+          "name": "Flughafen zu PortAventura",
+          "description": "Themenpark-Resort",
+          "price": "ab 85 €",
+          "note": "Direkter Resort-Transfer"
         },
         "lloret": {
-          "name": "Aeroporto a Lloret de Mar",
-          "description": "Destinazione Costa Brava",
-          "price": "da €95",
-          "note": "Servizio porta a porta"
+          "name": "Flughafen nach Lloret de Mar",
+          "description": "Costa Brava Reiseziel",
+          "price": "ab 95 €",
+          "note": "Tür-zu-Tür Service"
         },
         "reus": {
-          "name": "BCN a Aeroporto Reus",
-          "description": "Transfer aeroporto-aeroporto",
-          "price": "da €130",
-          "note": "Servizio autista professionista"
+          "name": "BCN zu Flughafen Reus",
+          "description": "Flughafen-zu-Flughafen Transfer",
+          "price": "ab 130 €",
+          "note": "Professioneller Fahrerservice"
         },
         "girona": {
-          "name": "BCN a Aeroporto Girona",
-          "description": "Transfer aeroporto GRO",
-          "price": "da €150",
-          "note": "Transfer diretto confortevole"
+          "name": "BCN zu Flughafen Girona",
+          "description": "GRO Flughafentransfer",
+          "price": "ab 150 €",
+          "note": "Komfortabler Direkttransfer"
         },
-        "sedan": "Berlina (1-4 pax)",
-        "van": "Van (5-8 pax)",
-        "note": "Tutti i prezzi includono tasse aeroportuali, tempo di attesa e bagagli. Gruppi di 5+ e soste extra disponibili.",
-        "timeNote": "Circa 30-45 minuti al centro città",
-        "cta": "Ottieni il Tuo Preventivo",
+        "sedan": "Limousine (1-4 Pers.)",
+        "van": "Van (5-8 Pers.)",
+        "note": "Alle Preise inklusive Flughafengebühren, Wartezeit und Gepäck. Gruppen ab 5 Personen und zusätzliche Stopps möglich.",
+        "timeNote": "Ca. 30-45 Minuten ins Stadtzentrum",
+        "cta": "Angebot Einholen",
         "aria": {
-          "quote": "Ottieni un preventivo per il tuo transfer aeroportuale"
+          "quote": "Angebot für Ihren Flughafentransfer einholen"
         }
       },
       "howItWorks": {
-        "title": "Come Funzionano i Transfer Aeroportuali",
-        "subtitle": "Processo in tre fasi per un'esperienza aeroportuale senza stress",
+        "title": "So Funktionieren Flughafentransfers",
+        "subtitle": "Einfacher Drei-Schritte-Prozess für ein stressfreies Flughafenerlebnis",
         "step1": {
-          "title": "Prenota il Tuo Transfer",
-          "description": "Fornisci dettagli del volo, orario di ritiro, numero di passeggeri e requisiti bagagli."
+          "title": "Buchen Sie Ihren Transfer",
+          "description": "Geben Sie Flugdetails, Abholzeit, Passagierzahl und Gepäckanforderungen an."
         },
         "step2": {
-          "title": "Ricevi la Conferma",
-          "description": "Ottieni dettagli dell'autista, istruzioni sul punto di incontro e conferma monitoraggio volo."
+          "title": "Erhalten Sie Bestätigung",
+          "description": "Sie erhalten Fahrerdetails, Treffpunktanweisungen und Bestätigung der Flugverfolgung."
         },
         "step3": {
-          "title": "Incontra il Tuo Autista",
-          "description": "Il tuo autista ti aspetta agli arrivi con un cartello con il tuo nome e ti aiuta con i bagagli."
+          "title": "Treffen Sie Ihren Fahrer",
+          "description": "Ihr Fahrer wartet am Ankunftsbereich mit Ihrem Namensschild und hilft mit dem Gepäck."
         }
       },
       "fleet": {
-        "title": "La Nostra Flotta per Transfer Aeroportuali",
-        "subtitle": "Veicoli moderni e confortevoli perfetti per transfer aeroportuali con bagagli",
-        "pax": "passeggero",
-        "pax_plural": "passeggeri",
-        "paxLabel": "capienza passeggeri",
+        "title": "Unsere Flotte für Flughafentransfers",
+        "subtitle": "Moderne, komfortable Fahrzeuge, perfekt für Flughafentransfers mit Gepäck",
+        "pax": "Passagier",
+        "pax_plural": "Passagiere",
+        "paxLabel": "Passagierkapazität",
         "tesla": {
           "name": "Tesla Model 3",
-          "type": "Berlina ecolusso"
+          "type": "Öko-Luxuslimousine"
         },
         "prius": {
           "name": "Toyota Prius+",
-          "type": "Ibrida spaziosa"
+          "type": "Geräumiger Hybrid"
         },
         "vito": {
           "name": "Mercedes Vito",
-          "type": "Van per famiglie con spazio bagagli"
+          "type": "Familienvan mit Gepäckraum"
         },
         "vclass": {
           "name": "Mercedes V-Class",
-          "type": "Van con autista premium"
+          "type": "Premium-Chauffeur-Van"
         },
         "features": {
-          "eco": "Ecosostenibile",
-          "luxury": "Lusso",
-          "hybrid": "Ibrida",
-          "efficient": "Efficiente",
-          "spacious": "Spaziosa",
-          "family": "Adatta alle famiglie",
-          "comfort": "Confort"
+          "eco": "Ökologisch",
+          "luxury": "Luxus",
+          "hybrid": "Hybrid",
+          "efficient": "Effizient",
+          "spacious": "Geräumig",
+          "family": "Familienfreundlich",
+          "comfort": "Komfort"
         }
       },
       "faq": {
-        "title": "FAQ Transfer Aeroportuali",
-        "subtitle": "Domande comuni sul nostro servizio di transfer aeroportuale a Barcellona",
+        "title": "Häufig Gestellte Fragen zu Flughafentransfers",
+        "subtitle": "Häufige Fragen zu unserem Barcelona-Flughafentransfer-Service",
         "q1": {
-          "question": "Dove mi incontrerà l'autista in aeroporto?",
-          "answer": "Per gli arrivi, ti incontriamo nella sala arrivi con un cartello con il tuo nome. Per le partenze, ti preleviamo al tuo hotel o all'indirizzo specificato. Ti invieremo istruzioni dettagliate con la conferma della prenotazione."
+          "question": "Wo trifft mich der Fahrer am Flughafen?",
+          "answer": "Bei Ankünften treffen wir Sie in der Ankunftshalle mit einem Namensschild. Bei Abflügen holen wir Sie an Ihrem Hotel oder Ihrer angegebenen Adresse ab. Wir senden detaillierte Treffpunktanweisungen mit Ihrer Buchungsbestätigung."
         },
         "q2": {
-          "question": "E se il mio volo è in ritardo?",
-          "answer": "Monitoriamo gli arrivi dei voli e adeguiamo automaticamente gli orari di ritiro. Nessun costo extra per ritardi ragionevoli. Per ritardi significativi, coordineremo con te via WhatsApp."
+          "question": "Was passiert, wenn mein Flug Verspätung hat?",
+          "answer": "Wir überwachen Flugankünfte und passen die Abholzeiten automatisch an. Keine zusätzlichen Kosten für angemessene Verspätungen. Bei erheblichen Verspätungen koordinieren wir uns über WhatsApp mit Ihnen."
         },
         "q3": {
-          "question": "Sono disponibili seggiolini per bambini?",
-          "answer": "Sì, seggiolini per neonati e rialzi sono disponibili gratuitamente. Specifica età e requisiti durante la prenotazione in modo da poter preparare i seggiolini appropriati."
+          "question": "Sind Kindersitze verfügbar?",
+          "answer": "Ja, Babyschalen und Kindersitze sind kostenlos erhältlich. Bitte geben Sie bei der Buchung Alter und Anforderungen an, damit wir die entsprechenden Sitze vorbereiten können."
         },
         "q4": {
-          "question": "Quanti bagagli posso portare?",
-          "answer": "Le berline ospitano 3-4 valigie + bagaglio a mano. I van ospitano 6-8 valigie + bagaglio a mano. Per oggetti di grandi dimensioni (mazze da golf, sci), menzionalo durante la prenotazione."
+          "question": "Wie viel Gepäck kann ich mitnehmen?",
+          "answer": "Limousinen bieten Platz für 3-4 Koffer + Handgepäck. Vans bieten Platz für 6-8 Koffer + Handgepäck. Für übergroße Gegenstände (Golfschläger, Ski) bitte bei der Buchung angeben."
         }
       },
       "cta": {
-        "title": "Pronto per un Transfer Aeroportuale Senza Stress?",
-        "subtitle": "Prenota oggi il tuo transfer per l'aeroporto di Barcellona e viaggia con sicurezza",
-        "whatsapp": "Chatta & Prenota Ora",
-        "call": "Chiama per Prenotare",
+        "title": "Bereit für einen Stressfreien Flughafentransfer?",
+        "subtitle": "Buchen Sie noch heute Ihren Barcelona-Flughafentransfer und reisen Sie sicher",
+        "whatsapp": "Chatten & Jetzt Buchen",
+        "call": "Zum Buchen Anrufen",
         "aria": {
-          "whatsapp": "Chatta e prenota transfer aeroportuale su WhatsApp",
-          "call": "Chiama per prenotare transfer aeroportuale"
+          "whatsapp": "Flughafentransfer auf WhatsApp chatten und buchen",
+          "call": "Anrufen, um Flughafentransfer zu buchen"
         }
       }
     }
   },
-  
   "fleet": {
     "standard": {
       "hero": {
-        "badge": "4 Passeggeri",
-        "title": "Berlina Standard 4 Posti",
-        "titleHighlight": "Barcellona",
-        "subtitle": "Viaggia con stile e comfort con il nostro servizio Berlina Standard 4 Posti Barcellona, perfetto per viaggiatori singoli, coppie e piccoli gruppi. Goditi un viaggio fluido verso l'aeroporto, il porto crociere o in giro per la città."
+        "badge": "4 Passagiere",
+        "title": "4-Sitzer Standard-Limousine",
+        "titleHighlight": "Barcelona",
+        "subtitle": "Reisen Sie stilvoll und komfortabel mit unserem Service 4-Sitzer Standard-Limousine Barcelona – perfekt für Alleinreisende, Paare und kleine Gruppen. Genießen Sie eine entspannte Fahrt zum Flughafen, Kreuzfahrthafen oder durch die Stadt."
       },
       "labels": {
-        "keyFeatures": "Caratteristiche Principali",
-        "perfectFor": "Perfetta Per",
-        "startingFrom": "A partire da",
-        "bookWhatsApp": "Prenota via WhatsApp"
+        "keyFeatures": "Hauptmerkmale",
+        "perfectFor": "Perfekt Für",
+        "startingFrom": "Ab",
+        "bookWhatsApp": "Buchen via WhatsApp"
       },
       "vehicles": {
         "tesla": {
           "name": "Tesla Model 3",
-          "tagline": "Berlina Eco-Lusso, dove sostenibilità incontra sofisticazione",
-          "price": "€33",
-          "priceNote": "Soggetto a percorso e durata del servizio",
+          "tagline": "Öko-Luxuslimousine – Nachhaltigkeit trifft auf Eleganz",
+          "price": "33 €",
+          "priceNote": "Abhängig von Route und Service-Dauer",
           "features": {
-            "electric": "100% Elettrica – zero emissioni",
-            "leather": "Sedili in pelle premium per 4 ospiti",
-            "climate": "Climatizzatore e finestrini oscurati per la privacy",
-            "navigation": "Navigazione e infotainment a bordo",
-            "drivers": "Autisti amichevoli e professionali"
+            "electric": "100% Elektrisch – null Emissionen",
+            "leather": "Premium-Ledersitze für 4 Gäste",
+            "climate": "Klimaanlage & getönte Fenster für Privatsphäre",
+            "navigation": "Bordnavigation und Infotainment",
+            "drivers": "Freundliche, professionelle Fahrer"
           },
           "perfectFor": {
-            "eco": "Transfer Executive Ecosostenibili",
-            "airport": "Prelievi e Consegne Aeroportuali",
-            "business": "Viaggi d'Affari Urbani",
-            "hourly": "Servizio Autista Orario",
-            "tours": "Tour Moderni della Città di Barcellona"
+            "eco": "Umweltbewusste Executive-Transfers",
+            "airport": "Flughafen Abholungen & Rückfahrten",
+            "business": "Städtische Geschäftsreisen",
+            "hourly": "Stündlicher Chauffeur-Service",
+            "tours": "Moderne Stadtrundfahrten in Barcelona"
           }
         },
         "prius": {
           "name": "Toyota Prius+",
-          "tagline": "Berlina Ibrida Efficiente – comfort affidabile per corse in città e aeroportuali",
-          "price": "€35",
-          "priceNote": "Varia in base al luogo e all'ora di ritiro",
+          "tagline": "Effiziente Hybrid-Limousine – zuverlässiger Komfort für Stadt- und Flughafenfahrten",
+          "price": "35 €",
+          "priceNote": "Variiert je nach Abholort und -zeit",
           "features": {
-            "hybrid": "Motore ibrido – efficiente nei consumi ed ecosostenibile",
-            "luggage": "Spazio per fino a 4 ospiti con bagaglio standard",
-            "climate": "Interno climatizzato, pulito e ben mantenuto",
-            "infotainment": "Infotainment a bordo e porte di ricarica",
-            "drivers": "Autisti amichevoli e professionali"
+            "hybrid": "Hybridmotor – kraftstoffsparend & umweltfreundlich",
+            "luggage": "Platz für bis zu 4 Gäste mit normalem Gepäck",
+            "climate": "Klimatisierter, sauberer und gepflegter Innenraum",
+            "infotainment": "Bord-Infotainment & Ladeanschlüsse",
+            "drivers": "Freundliche, professionelle Fahrer"
           },
           "perfectFor": {
-            "airport": "Transfer Aeroportuali",
-            "hotel": "Consegne Hotel",
-            "cruise": "Partenze Terminal Crociere",
-            "local": "Transfer Locali Barcellona",
-            "hourly": "Prenotazioni Orarie"
+            "airport": "Flughafentransfers",
+            "hotel": "Hotel-Rückfahrten",
+            "cruise": "Abfahrten vom Kreuzfahrtterminal",
+            "local": "Lokale Transfers in Barcelona",
+            "hourly": "Stündliche Buchungen"
           }
         }
       },
       "cta": {
-        "title": "Pronto a Prenotare la Tua Berlina Standard?",
-        "subtitle": "Vivi comfort e stile con le nostre berline ecosostenibili da 4 posti.",
-        "whatsapp": "Prenota via WhatsApp",
-        "call": "Chiamaci 📞"
+        "title": "Bereit, Ihre Standard-Limousine zu Buchen?",
+        "subtitle": "Erleben Sie Komfort und Stil mit unseren umweltfreundlichen 4-Sitzer-Limousinen.",
+        "whatsapp": "Buchen via WhatsApp",
+        "call": "Rufen Sie Uns An 📞"
       }
     },
     "luxurySedan": {
       "hero": {
-        "badge": "Esperienza VIP",
-        "title": "Berlina di Lusso",
-        "titleHighlight": "Barcellona",
-        "subtitle": "Viaggia con stile con il nostro servizio Berlina di Lusso Barcellona, perfetto per dirigenti aziendali, ospiti VIP ed eventi speciali. Goditi interni lussuosi, viaggi fluidi e un autista professionista per transfer aeroportuali, meeting o tour privati."
+        "badge": "VIP-Erlebnis",
+        "title": "Luxus-Limousine",
+        "titleHighlight": "Barcelona",
+        "subtitle": "Reisen Sie stilvoll mit unserem Service Luxus-Limousine Barcelona – perfekt für Geschäftsleute, VIP-Gäste und besondere Anlässe. Genießen Sie edle Innenräume, entspannte Fahrten und einen professionellen Chauffeur für Flughafentransfers, Meetings oder private Touren."
       },
       "labels": {
-        "keyFeatures": "Caratteristiche Principali",
-        "perfectFor": "Perfetta Per",
-        "startingFrom": "A partire da",
-        "bookWhatsApp": "Prenota via WhatsApp",
-        "getQuote": "Ottieni un Preventivo",
-        "flagship": "Top di gamma"
+        "keyFeatures": "Hauptmerkmale",
+        "perfectFor": "Perfekt Für",
+        "startingFrom": "Ab",
+        "bookWhatsApp": "Buchen via WhatsApp",
+        "getQuote": "Angebot Einholen",
+        "flagship": "Flaggschiff"
       },
       "vehicles": {
         "sclass": {
-          "name": "Mercedes-Benz Classe S",
-          "tagline": "Berlina di Lusso Top di Gamma, dove prestigio incontra perfezione",
-          "description": "Vivi il massimo comfort e stile con il nostro servizio Berlina di Lusso Barcellona con Mercedes-Benz Classe S. Perfetta per transfer VIP, eventi e viaggi d'affari.",
-          "price": "€103",
-          "priceNote": "Varia in base a distanza, durata e tipo di richiesta",
+          "name": "Mercedes-Benz S-Klasse",
+          "tagline": "Flaggschiff-Luxuslimousine – wo Prestige auf Perfektion trifft",
+          "description": "Erleben Sie ultimativen Komfort und Stil mit unserem Service Luxus-Limousine Barcelona, der Mercedes-Benz S-Klasse. Perfekt für VIP-Transfers, Events und Geschäftsreisen.",
+          "price": "103 €",
+          "priceNote": "Variiert je nach Entfernung, Dauer und Art der Anfrage",
           "features": {
-            "seating": "Sedili posteriori di prima classe con opzione di reclinazione",
-            "cabin": "Abitacolo ultra silenzioso con doppi vetri",
-            "massage": "Sedili riscaldati, ventilati e massaggianti",
-            "sound": "Sistema audio surround premium Burmester®",
-            "chauffeur": "Autista professionista parlante inglese e multilingue"
+            "seating": "First-Class-Fondsitze mit Rücksitzverstellung",
+            "cabin": "Extrem leiser Innenraum mit Doppelverglasung",
+            "massage": "Beheizbare und belüftete Massagesitze",
+            "sound": "Burmester® Premium-Surround-Sound-System",
+            "chauffeur": "Professioneller, mehrsprachiger Chauffeur (Englisch inkl.)"
           },
           "perfectFor": {
-            "business": "Transfer d'Affari di Alto Profilo",
-            "vip": "Prelievi Aeroportuali VIP",
-            "diplomatic": "Viaggi Diplomatici o Governativi",
-            "wedding": "Matrimoni o Eventi di Gala",
-            "hourly": "Prenotazioni Autista Orarie",
-            "tours": "Tour di Lusso Privati"
+            "business": "Hochkarätige Geschäftstransfers",
+            "vip": "VIP-Flughafenabholungen",
+            "diplomatic": "Diplomatische oder Regierungsreisen",
+            "wedding": "Hochzeits- oder Galaevents",
+            "hourly": "Stündliche Chauffeur-Buchungen",
+            "tours": "Private Luxus-Touren"
           }
         },
         "eclass": {
-          "name": "Mercedes Classe E",
-          "tagline": "Berlina Business Class – sofisticazione per ogni occasione",
-          "description": "Viaggia con stile con il nostro servizio autista Mercedes Classe E Barcellona, ideale per transfer executive, eventi e tour cittadini. Comfort, eleganza ed efficienza in un unico viaggio.",
-          "price": "€39",
-          "priceNote": "Basato su distanza e durata",
+          "name": "Mercedes E-Klasse",
+          "tagline": "Business-Class-Limousine – Raffinesse für jeden Anlass",
+          "description": "Reisen Sie stilvoll mit unserem Mercedes E-Klasse Chauffeur-Service in Barcelona – ideal für Executive-Transfers, Events und Stadtrundfahrten. Komfort, Eleganz und Effizienz in einer Fahrt.",
+          "price": "39 €",
+          "priceNote": "Basierend auf Entfernung und Dauer",
           "features": {
-            "luggage": "Capacità bagagli adatta per viaggi d'affari",
-            "passengers": "Fino a 3 passeggeri",
-            "climate": "Sedili executive con climatizzatore",
-            "quiet": "Viaggio silenzioso e fluido con illuminazione ambientale",
-            "chauffeur": "Autista professionista multilingue"
+            "luggage": "Angemessene Gepäckkapazität für Geschäftsreisen",
+            "passengers": "Bis zu 3 Passagiere",
+            "climate": "Executive-Sitze mit Klimaanlage",
+            "quiet": "Leise, angenehme Fahrt mit Ambientebeleuchtung",
+            "chauffeur": "Professioneller, mehrsprachiger Chauffeur"
           },
           "perfectFor": {
-            "airport": "Transfer Aeroportuali Executive",
-            "cruise": "Transfer Porti Crociera",
-            "longDistance": "Viaggi a Lunga Distanza",
-            "meetings": "Meeting ed Eventi d'Affari",
-            "hourly": "Servizio Autista Orario",
-            "tours": "Tour Privati di Barcellona"
+            "airport": "Executive-Flughafentransfers",
+            "cruise": "Kreuzfahrthafen-Transfers",
+            "longDistance": "Fernreisen",
+            "meetings": "Geschäftstreffen & Events",
+            "hourly": "Stündlicher Chauffeur-Service",
+            "tours": "Private Barcelona-Touren"
           }
         },
         "bmw5": {
-          "name": "BMW Serie 5",
-          "tagline": "Eleganza Dinamica – design raffinato ed eccellenza di guida",
-          "description": "Scopri il comfort e lo stile del nostro servizio autista BMW Serie 5 Barcellona, perfetto per viaggi d'affari, eventi, transfer aeroportuali e viaggi di lusso.",
-          "price": "€39",
-          "priceNote": "Basato su percorso e orario",
+          "name": "BMW 5er Reihe",
+          "tagline": "Dynamische Eleganz – raffiniertes Design und Fahrkultur",
+          "description": "Entdecken Sie den Komfort und Stil unseres BMW 5er Reihe Chauffeur-Service in Barcelona – perfekt für Geschäftsreisen, Events, Flughafentransfers und luxuriöse Ausflüge.",
+          "price": "39 €",
+          "priceNote": "Basierend auf Route und Zeit",
           "features": {
-            "trunk": "Bagagliaio spazioso",
-            "seating": "Sedili di lusso per fino a 3 passeggeri",
-            "sound": "Sistema audio premium e illuminazione ambientale",
-            "comfort": "Viaggio fluido con tecnologia di comfort all'avanguardia",
-            "chauffeur": "Autista professionista parlante inglese"
+            "trunk": "Geräumiger Kofferraum für Gepäck",
+            "seating": "Luxuriöse Sitzplätze für bis zu 3 Passagiere",
+            "sound": "Premium-Soundsystem & Ambientebeleuchtung",
+            "comfort": "Angenehme Fahrt mit modernster Komforttechnik",
+            "chauffeur": "Professioneller, englischsprachiger Chauffeur"
           },
           "perfectFor": {
-            "airport": "Transfer Aeroportuali Executive",
-            "cruise": "Transfer Porti Crociera",
-            "longDistance": "Viaggi a Lunga Distanza",
-            "business": "Viaggi ed Eventi d'Affari",
-            "hourly": "Noleggio Autista Orario",
-            "tours": "Tour Personalizzati di Barcellona"
+            "airport": "Executive-Flughafentransfers",
+            "cruise": "Kreuzfahrthafen-Transfers",
+            "longDistance": "Fernreisen",
+            "business": "Geschäftsreisen & Events",
+            "hourly": "Stündliche Chauffeur-Anmietung",
+            "tours": "Personalisierte Barcelona-Touren"
           }
         }
       },
       "cta": {
-        "badge": "Servizio Premium",
-        "title": "Pronto per un'Esperienza di Lusso?",
-        "subtitle": "Prenota il tuo transfer in berlina di lusso e viaggia con stile a Barcellona.",
-        "whatsapp": "Prenota via WhatsApp",
-        "call": "Chiamaci 📞"
+        "badge": "Premium-Service",
+        "title": "Bereit für ein Luxuserlebnis?",
+        "subtitle": "Buchen Sie Ihren Luxuslimousinen-Transfer und reisen Sie stilvoll durch Barcelona.",
+        "whatsapp": "Buchen via WhatsApp",
+        "call": "Rufen Sie Uns An 📞"
       }
     },
     "eightSeaterVan": {
       "hero": {
-        "badge": "8 Passeggeri",
-        "title": "Van 8 Posti",
-        "titleHighlight": "Barcellona",
-        "subtitle": "Vivi il massimo nei viaggi di gruppo con il nostro servizio Van 8 Posti Barcellona, perfetto per famiglie, amici e team aziendali. Goditi sedute spaziose, ampio spazio bagagli e un viaggio fluido attraverso la città, verso l'aeroporto o in viaggi a lunga distanza."
+        "badge": "8 Passagiere",
+        "title": "8-Sitzer Van",
+        "titleHighlight": "Barcelona",
+        "subtitle": "Erleben Sie ultimativen Komfort bei Gruppenreisen mit unserem Service 8-Sitzer Van Barcelona – perfekt für Familien, Freunde und Arbeitsteams. Genießen Sie geräumige Sitze, viel Gepäckraum und eine angenehme Fahrt durch die Stadt, zum Flughafen oder auf Fernstrecken."
       },
       "labels": {
-        "keyFeatures": "Caratteristiche Principali",
-        "perfectFor": "Perfetto Per",
-        "startingFrom": "A partire da",
-        "bookWhatsApp": "Prenota via WhatsApp",
-        "eightPassengers": "8 Passeggeri"
+        "keyFeatures": "Hauptmerkmale",
+        "perfectFor": "Perfekt Für",
+        "startingFrom": "Ab",
+        "bookWhatsApp": "Buchen via WhatsApp",
+        "eightPassengers": "8 Passagiere"
       },
       "vehicles": {
         "vito": {
           "name": "Mercedes Vito",
-          "tagline": "Trasporto affidabile e spazioso – perfetto per viaggi di gruppo e familiari",
-          "price": "€43",
-          "priceNote": "A seconda del luogo di ritiro e del percorso",
+          "tagline": "Zuverlässiger und geräumiger Transport – perfekt für Gruppen- und Familienreisen",
+          "price": "43 €",
+          "priceNote": "Abhängig von Abholung und Route",
           "features": {
-            "passengers": "Ospita fino a 8 passeggeri",
-            "luggage": "Grande capacità bagagli",
-            "seats": "Sedili confortevoli con ampio spazio per le gambe",
-            "climate": "Climatizzatore dual-zone",
-            "driver": "Autista professionista multilingue"
+            "passengers": "Platz für bis zu 8 Passagiere",
+            "luggage": "Große Gepäckkapazität",
+            "seats": "Bequeme Sitze mit viel Beinfreiheit",
+            "climate": "Zweizonen-Klimaanlage",
+            "driver": "Mehrsprachiger, professioneller Fahrer"
           },
           "perfectFor": {
-            "airport": "Transfer Aeroportuali per Gruppi",
-            "cruise": "Prelievi/Consegne Porti Crociera",
-            "hotel": "Transfer Hotel o Airbnb",
-            "sightseeing": "Tour Visite Turistiche Città",
-            "hourly": "Prenotazione Oraria",
-            "longDistance": "Viaggi Interurbani o a Lunga Distanza"
+            "airport": "Flughafentransfers für Gruppen",
+            "cruise": "Abholungen/Rückfahrten am Kreuzfahrthafen",
+            "hotel": "Hotel- oder Airbnb-Transfers",
+            "sightseeing": "Stadtrundfahrten",
+            "hourly": "Stündliche Buchung",
+            "longDistance": "Intercity- oder Fernreisen"
           }
         },
         "tourneo": {
           "name": "Ford Tourneo Custom",
-          "tagline": "Van spazioso 8 posti – intelligente, moderno e molto confortevole per tutti i tuoi transfer",
-          "price": "€47",
-          "priceNote": "Costo finale dipende da distanza e tipo di prenotazione",
+          "tagline": "Geräumiger 8-Sitzer Van – intelligent, modern und sehr komfortabel für alle Ihre Transfers",
+          "price": "47 €",
+          "priceNote": "Endpreis abhängig von Entfernung und Buchungsart",
           "features": {
-            "luggage": "Ampio spazio bagagli per famiglie e gruppi",
-            "passengers": "8 sedili passeggeri a grandezza naturale",
-            "connectivity": "Connettività Apple CarPlay / Android Auto",
-            "climate": "Climatizzatore posteriore e illuminazione ambientale",
-            "driver": "Autista professionista multilingue"
+            "luggage": "Großzügiger Gepäckraum für Familien & Gruppen",
+            "passengers": "8 Passagiersitze in Originalgröße",
+            "connectivity": "Apple CarPlay / Android Auto Konnektivität",
+            "climate": "Klimaanlage hinten und Ambientebeleuchtung",
+            "driver": "Mehrsprachiger, professioneller Fahrer"
           },
           "perfectFor": {
-            "airport": "Transfer Aeroportuali per Piccoli Gruppi",
-            "cruise": "Consegne e Prelievi Porti Crociera",
-            "hotel": "Transfer Hotel & Airbnb",
-            "tours": "Tour di Gruppo ed Escursioni",
-            "hourly": "Prenotazioni Orarie per Eventi o Shopping",
-            "intercity": "Viaggi Interurbani e Corse Lunghe"
+            "airport": "Flughafentransfers für kleine Gruppen",
+            "cruise": "Rückfahrten und Abholungen am Kreuzfahrthafen",
+            "hotel": "Hotel- & Airbnb-Transfers",
+            "tours": "Gruppentouren & Ausflüge",
+            "hourly": "Stündliche Buchungen für Events oder Shopping",
+            "intercity": "Intercity-Reisen & lange Fahrten"
           }
         }
       },
       "cta": {
-        "badge": "Viaggio di Gruppo",
-        "title": "Pronto a Prenotare il Tuo Van 8 Posti?",
-        "subtitle": "Perfetto per famiglie, gruppi e team che viaggiano insieme a Barcellona.",
-        "whatsapp": "Prenota via WhatsApp",
-        "call": "Chiamaci 📞"
+        "badge": "Gruppenreise",
+        "title": "Bereit, Ihren 8-Sitzer Van zu Buchen?",
+        "subtitle": "Perfekt für Familien, Gruppen und Teams, die gemeinsam in Barcelona reisen.",
+        "whatsapp": "Buchen via WhatsApp",
+        "call": "Rufen Sie Uns An 📞"
       }
     },
     "luxuryVan": {
       "hero": {
-        "badge": "Servizio Esclusivo",
-        "title": "Van Esclusivo",
-        "titleHighlight": "Con Autista",
-        "subtitle": "Scopri il nostro servizio Van con Autista di Lusso Barcellona, la scelta perfetta per transfer VIP, viaggi executive e corse ad alto comfort. Che tu stia andando in aeroporto, al terminal crociere o a un evento d'affari, i nostri van premium offrono comfort, spazio e classe."
+        "badge": "Exklusiver Service",
+        "title": "Exklusiver Van",
+        "titleHighlight": "mit Chauffeur",
+        "subtitle": "Entdecken Sie unseren Service Luxus-Chauffeur-Van Barcelona – die perfekte Wahl für VIP-Transfers, Executive-Reisen und Fahrten mit höchstem Komfort. Egal, ob Sie zum Flughafen, Kreuzfahrtterminal oder zu einem Geschäftstermin fahren, unsere Premium-Vans bieten Komfort, Platz und Klasse."
       },
       "labels": {
-        "keyFeatures": "Caratteristiche Principali",
-        "perfectFor": "Perfetto Per",
-        "startingFrom": "A partire da",
-        "bookWhatsApp": "Prenota via WhatsApp",
-        "callUs": "Chiamaci 📞"
+        "keyFeatures": "Hauptmerkmale",
+        "perfectFor": "Perfekt Für",
+        "startingFrom": "Ab",
+        "bookWhatsApp": "Buchen via WhatsApp",
+        "callUs": "Rufen Sie Uns An 📞"
       },
       "vehicle": {
         "name": "Mercedes V-Class",
-        "tagline": "Van con Autista di Lusso – dove eleganza incontra comfort",
+        "tagline": "Luxus-Chauffeur-Van – wo Eleganz auf Komfort trifft",
         "vipBadge": "VIP",
-        "passengersBadge": "7 Passeggeri",
-        "price": "€45",
-        "priceNote": "Basato su distanza e durata",
+        "passengersBadge": "7 Passagiere",
+        "price": "45 €",
+        "priceNote": "Basierend auf Entfernung und Dauer",
         "features": {
-          "luggage": "Ampio spazio bagagli",
-          "passengers": "Fino a 7 passeggeri",
-          "climate": "Climatizzatore e sedili in pelle",
-          "interiors": "Interni premium con vetri oscurati per la privacy",
-          "chauffeur": "Autista parlante multilingue"
+          "luggage": "Reichlich Gepäckraum",
+          "passengers": "Bis zu 7 Passagiere",
+          "climate": "Klimaanlage & Ledersitze",
+          "interiors": "Premium-Innenausstattung mit Privacy-Verglasung",
+          "chauffeur": "Mehrsprachiger Chauffeur"
         },
         "perfectFor": {
-          "airport": "Transfer Aeroportuali Executive",
-          "cruise": "Transfer Porti Crociera",
-          "longDistance": "Viaggi a Lunga Distanza",
-          "business": "Meeting d'Affari",
-          "hourly": "Servizio Autista Orario",
-          "tours": "Tour Privati di Barcellona"
+          "airport": "Executive-Flughafentransfers",
+          "cruise": "Kreuzfahrthafen-Transfers",
+          "longDistance": "Fernreisen",
+          "business": "Geschäftstreffen",
+          "hourly": "Stündlicher Chauffeur-Service",
+          "tours": "Private Barcelona-Touren"
         }
       },
       "highlights": {
-        "title": "Perché Scegliere il Nostro",
-        "titleHighlight": "Van di Lusso",
-        "subtitle": "Oltre ad autisti professionisti multilingue, offriamo servizi premium per un viaggio tranquillo, privato e su misura.",
+        "title": "Warum Unseren",
+        "titleHighlight": "Luxus-Van Wählen",
+        "subtitle": "Zusätzlich zu professionellen mehrsprachigen Fahrern bieten wir Premium-Ausstattung für eine ruhige, private und maßgeschneiderte Reise.",
         "wifi": {
-          "title": "Wi-Fi a Bordo",
-          "description": "Rimani connesso durante il viaggio con Wi-Fi ad alta velocità gratuito."
+          "title": "Wi-Fi an Bord",
+          "description": "Bleiben Sie während Ihrer gesamten Reise mit kostenlosem Highspeed-WLAN verbunden."
         },
         "privacy": {
-          "title": "Vetri Oscurati",
-          "description": "Goditi la massima privacy con vetri oscurati premium su tutto il veicolo."
+          "title": "Getönte Scheiben",
+          "description": "Genießen Sie absolute Privatsphäre mit erstklassigen getönten Scheiben im gesamten Fahrzeug."
         },
         "leather": {
-          "title": "Sedili in Pelle",
-          "description": "Rilassati in sedili di pelle lussuosa progettati per il massimo comfort."
+          "title": "Ledersitze",
+          "description": "Entspannen Sie in luxuriösen Ledersitzen, die für maximalen Komfort ausgelegt sind."
         },
         "multilingual": {
-          "title": "Autisti Multilingue",
-          "description": "Autisti professionisti fluenti in inglese, spagnolo e altre lingue."
+          "title": "Mehrsprachige Fahrer",
+          "description": "Professionelle Chauffeure, die Englisch, Spanisch und mehr sprechen."
         }
       },
       "cta": {
-        "badge": "Esperienza Premium",
-        "title": "Pronto per un'Esperienza VIP?",
-        "subtitle": "Lascia che Royal Transfers BCN ridefinisca la tua esperienza di viaggio con il nostro servizio van con autista di lusso.",
-        "whatsapp": "Prenota via WhatsApp",
-        "call": "Chiamaci 📞"
+        "badge": "Premium-Erlebnis",
+        "title": "Bereit für ein VIP-Erlebnis?",
+        "subtitle": "Lassen Sie sich von Royal Transfers BCN Ihr Reiseerlebnis mit unserem Luxus-Chauffeur-Van-Service neu definieren.",
+        "whatsapp": "Buchen via WhatsApp",
+        "call": "Rufen Sie Uns An 📞"
       }
     }
   },
-  
   "heroBooking": {
     "aria": {
-      "bookingForm": "Modulo di prenotazione transfer",
-      "serviceType": "Seleziona tipo di servizio"
+      "bookingForm": "Transfer-Buchungsformular",
+      "serviceType": "Servicetyp auswählen"
     },
     "serviceType": {
-      "distance": "Distanza",
-      "hourly": "Orario"
+      "distance": "Strecke",
+      "hourly": "Stündlich"
     },
     "transferType": {
-      "label": "Tipo di Transfer",
-      "oneWay": "Solo Andata",
-      "return": "Andata e Ritorno"
+      "label": "Transfertyp",
+      "oneWay": "Einfache Fahrt",
+      "return": "Hin- und Rückfahrt",
+      "addReturn": "Rückfahrt hinzufügen",
+      "returnDetails": "Details zur Rückfahrt"
     },
     "fields": {
       "pickup": {
-        "label": "Luogo di ritiro",
-        "placeholder": "Luogo di ritiro..."
+        "label": "Abholort",
+        "placeholder": "Abholort..."
       },
       "dropoff": {
-        "label": "Luogo di consegna",
-        "placeholder": "Luogo di consegna..."
+        "label": "Zielort",
+        "placeholder": "Zielort..."
       },
       "date": {
-        "label": "Data di ritiro"
+        "label": "Abholdatum"
       },
       "time": {
-        "label": "Orario di ritiro"
+        "label": "Abholzeit"
+      },
+      "returnDate": {
+        "label": "Rückreisedatum"
+      },
+      "returnTime": {
+        "label": "Rückreisezeit"
+      },
+      "duration": {
+        "label": "Dauer",
+        "hours": "{count, plural, =1 {Stunde} other {Stunden}}"
       },
       "passengers": {
-        "label": "Numero di passeggeri",
-        "count": "{count, plural, =1 {Passeggero} other {Passeggeri}}"
+        "label": "Anzahl der Passagiere",
+        "count": "{count, plural, =1 {Passagier} other {Passagiere}}"
       }
     },
     "button": {
-      "search": "Cerca Transfer"
+      "search": "Transfers Suchen"
     },
     "validation": {
-      "fillAllFields": "Compila tutti i campi"
+      "fillAllFields": "Bitte füllen Sie alle erforderlichen Felder aus"
     }
   },
-  
   "bookingWizard": {
     "steps": {
       "rideDetails": {
-        "title": "Dettagli della Corsa",
-        "label": "Passo 1: Inserisci i dettagli della corsa",
-        "aria": "Modulo dettagli corsa"
+        "title": "Fahrtdetails",
+        "label": "Schritt 1: Fahrtdetails eingeben",
+        "aria": "Formular für Fahrtdetails"
       },
       "chooseVehicle": {
-        "title": "Scegli Veicolo",
-        "label": "Passo 2: Seleziona il tuo veicolo",
-        "aria": "Selezione veicolo"
+        "title": "Fahrzeug Wählen",
+        "label": "Schritt 2: Wählen Sie Ihr Fahrzeug",
+        "aria": "Fahrzeugauswahl"
       },
       "contactDetails": {
-        "title": "Dettagli di Contatto",
-        "label": "Passo 3: Inserisci informazioni di contatto",
-        "aria": "Modulo informazioni di contatto"
+        "title": "Kontaktdaten",
+        "label": "Schritt 3: Kontaktinformationen eingeben",
+        "aria": "Formular für Kontaktinformationen"
       },
       "confirmation": {
-        "title": "Conferma",
-        "label": "Passo 4: Rivedi e conferma la prenotazione",
-        "aria": "Conferma prenotazione"
+        "title": "Bestätigung",
+        "label": "Schritt 4: Buchung überprüfen und bestätigen",
+        "aria": "Buchungsbestätigung"
       }
     },
     "navigation": {
-      "previous": "Precedente",
-      "next": "Avanti",
-      "aria": "Navigazione wizard di prenotazione"
+      "previous": "Zurück",
+      "next": "Weiter",
+      "aria": "Buchungsassistent-Navigation"
     },
     "progress": {
-      "step": "Passo {current} di {total}",
-      "percentage": "{percentage}% Completato"
+      "step": "Schritt {current} von {total}",
+      "percentage": "{percentage}% Abgeschlossen"
     }
   },
-  
   "step1": {
-    "title": "Dettagli della Corsa",
-    "subtitle": "Scegli il tipo di servizio e inserisci le informazioni sulla corsa",
+    "title": "Fahrtdetails",
+    "subtitle": "Wählen Sie Ihren Servicetyp und geben Sie die Fahrtinformationen ein",
     "serviceType": {
-      "aria": "Seleziona tipo di servizio",
+      "aria": "Servicetyp auswählen",
       "distance": {
-        "full": "A Distanza",
-        "short": "Distanza",
-        "label": "Servizio transfer basato sulla distanza"
+        "full": "Streckenbasiert",
+        "short": "Strecke",
+        "label": "Streckenbasierter Transferservice"
       },
       "hourly": {
-        "full": "A Ore",
-        "short": "Orario",
-        "label": "Servizio transfer basato sulle ore"
+        "full": "Stundenbasiert",
+        "short": "Stündlich",
+        "label": "Stundenbasierter Transferservice"
       }
     },
     "fields": {
       "date": {
-        "label": "Data di Ritiro"
+        "label": "Abholdatum"
       },
       "time": {
-        "label": "Orario di Ritiro",
-        "placeholder": "Seleziona orario"
+        "label": "Abholzeit",
+        "placeholder": "Zeit auswählen"
       },
       "pickup": {
-        "label": "Luogo di Ritiro",
-        "placeholder": "Inserisci luogo di ritiro..."
+        "label": "Abholort",
+        "placeholder": "Abholort eingeben..."
       },
       "dropoff": {
-        "label": "Luogo di Consegna",
-        "placeholder": "Inserisci luogo di consegna..."
+        "label": "Zielort",
+        "placeholder": "Zielort eingeben..."
       },
       "transferType": {
-        "label": "Tipo di Transfer",
-        "oneWay": "Solo Andata",
-        "return": "Andata e Ritorno",
-        "returnNote": "Crea una nuova corsa"
+        "label": "Transfertyp",
+        "oneWay": "Einfache Fahrt",
+        "return": "Hin- und Rückfahrt",
+        "returnNote": "Erstellt eine neue Fahrt"
+      },
+      "returnDetailsTitle": "Details zur Rückfahrt",
+      "returnDate": {
+        "label": "Rückreisedatum"
+      },
+      "returnTime": {
+        "label": "Rückreisezeit",
+        "placeholder": "Zeit auswählen"
       },
       "duration": {
-        "label": "Durata (Ore)",
-        "hours": "{count, plural, =1 {1 ora} other {{count} ore}}",
-        "note": "Il prezzo si arrotonda solo a ore intere (nessun costo per mezze ore)"
+        "label": "Dauer (Stunden)",
+        "hours": "{count, plural, =1 {1 Stunde} other {{count} Stunden}}",
+        "note": "Die Preisberechnung erfolgt auf volle Stunden (keine halben Stunden)"
       },
       "passengers": {
-        "label": "Numero di Passeggeri (fino a 8)",
-        "count": "{count, plural, =1 {1 passeggero} other {{count} passeggeri}}"
+        "label": "Anzahl der Passagiere (bis zu 8)",
+        "count": "{count, plural, =1 {1 Passagier} other {{count} Passagiere}}"
       }
     },
     "summary": {
-      "distance": "Distanza Totale",
-      "time": "Tempo Totale",
-      "transferType": "Tipo di Transfer"
+      "distance": "Gesamtstrecke",
+      "time": "Gesamtzeit",
+      "transferType": "Transfertyp"
     },
-    "calculating": "Calcolo distanza in corso..."
+    "calculating": "Berechne Entfernung..."
   },
-  
   "step2": {
-    "title": "Scegli un Veicolo",
-    "subtitle": "Seleziona la tua categoria di veicolo preferita",
+    "title": "Wählen Sie ein Fahrzeug",
+    "subtitle": "Wählen Sie Ihre bevorzugte Fahrzeugkategorie",
     "summary": {
-      "heading": "RIEPILOGO CORSA",
-      "serviceType": "Tipo di Servizio",
-      "distance": "Distanza",
-      "hourly": "Orario",
-      "transferType": "Tipo di Transfer",
-      "oneWay": "Solo Andata",
-      "pickup": "Ritiro",
-      "dropoff": "Consegna",
-      "dateTime": "Data & Ora",
-      "distance": "Distanza",
-      "time": "Tempo",
-      "passengers": "Passeggeri",
-      "notSet": "Non impostato"
+      "heading": "FAHRTZUSAMMENFASSUNG",
+      "serviceType": "Servicetyp",
+      "hourly": "Stündlich",
+      "transferType": "Transfertyp",
+      "oneWay": "Einfache Fahrt",
+      "return": "Hin- und Rückfahrt",
+      "returnDateTime": "Rückfahrt",
+      "pickup": "Abholung",
+      "dropoff": "Ziel",
+      "dateTime": "Datum & Zeit",
+      "distance": "Entfernung",
+      "time": "Zeit",
+      "duration": "Dauer",
+      "hours": "Stunden",
+      "passengers": "Passagiere",
+      "notSet": "Nicht festgelegt"
     },
     "vehicles": {
-      "heading": "Veicoli Disponibili",
-      "aria": "Seleziona un veicolo",
-      "pax": "pax",
-      "bags": "bagagli",
-      "from": "Da",
-      "noVehicles": "Nessun veicolo disponibile per {count} passeggeri. Torna indietro e modifica."
+      "heading": "Verfügbare Fahrzeuge",
+      "aria": "Wählen Sie ein Fahrzeug",
+      "pax": "Pers.",
+      "bags": "Gepäckstücke",
+      "from": "Ab",
+      "noVehicles": "Keine Fahrzeuge verfügbar für {count} Passagiere. Bitte gehen Sie zurück und passen Sie die Anzahl an."
     },
     "extras": {
-      "heading": "Extra Opzionali",
+      "heading": "Optionale Extras",
       "childSeat": {
-        "title": "Seggiolino",
-        "price": "€5 per seggiolino",
-        "aria": "Selettore quantità seggiolini",
-        "increase": "Aggiungi seggiolino",
-        "decrease": "Rimuovi seggiolino"
+        "title": "Kindersitz",
+        "price": "5 € pro Sitz",
+        "aria": "Auswahl der Anzahl Kindersitze",
+        "increase": "Kindersitz hinzufügen",
+        "decrease": "Kindersitz entfernen"
       }
     },
     "pricing": {
-      "totalCost": "Costo Totale",
-      "base": "Base",
-      "distance": "Distanza",
-      "childSeats": "Seggiolini",
-      "airportFee": "Tassa Aeroportuale",
-      "tax": "IVA (21%)"
+      "totalCost": "Gesamtkosten",
+      "base": "Basis",
+      "distance": "Entfernung",
+      "childSeats": "Kindersitze",
+      "airportFee": "Flughafengebühr",
+      "tax": "MwSt. (21%)"
     }
   },
-  
   "step3": {
-    "title": "Inserisci Dettagli di Contatto",
-    "subtitle": "Useremo queste informazioni per confermare la tua prenotazione",
-    "optional": "opzionale",
+    "title": "Kontaktdaten Eingeben",
+    "subtitle": "Wir verwenden diese Informationen, um Ihre Buchung zu bestätigen",
+    "optional": "optional",
     "contactInfo": {
-      "heading": "Informazioni di Contatto",
+      "heading": "Kontaktinformationen",
       "firstName": {
-        "label": "Nome",
-        "placeholder": "Mario"
+        "label": "Vorname",
+        "placeholder": "Max"
       },
       "lastName": {
-        "label": "Cognome",
-        "placeholder": "Rossi"
+        "label": "Nachname",
+        "placeholder": "Mustermann"
       },
       "email": {
-        "label": "Indirizzo Email",
-        "placeholder": "mario.rossi@esempio.com"
+        "label": "E-Mail-Adresse",
+        "placeholder": "max.mustermann@beispiel.de"
       },
       "phone": {
-        "label": "Numero di Telefono",
+        "label": "Telefonnummer",
         "placeholder": "612345678",
-        "countryCodeAria": "Seleziona prefisso internazionale"
+        "countryCodeAria": "Ländervorwahl auswählen"
       },
       "flightNumber": {
-        "label": "Numero Volo",
+        "label": "Flugnummer",
         "placeholder": "BA123"
       },
       "comments": {
-        "label": "Commenti",
-        "placeholder": "Eventuali richieste speciali..."
+        "label": "Kommentare",
+        "placeholder": "Besondere Anforderungen?..."
       }
     },
     "payment": {
-      "heading": "Metodo di Pagamento",
-      "aria": "Seleziona metodo di pagamento",
+      "heading": "Zahlungsmethode",
+      "aria": "Zahlungsmethode auswählen",
       "cash": {
-        "title": "Contanti",
-        "description": "Paga direttamente all'autista",
-        "aria": "Paga in contanti"
+        "title": "Barzahlung",
+        "description": "Zahlen Sie direkt beim Fahrer",
+        "aria": "Mit Bargeld bezahlen"
       },
       "card": {
-        "title": "Carta",
-        "description": "Paga online tramite Stripe",
-        "aria": "Paga con carta",
+        "title": "Karte",
+        "description": "Online bezahlen via Stripe",
+        "aria": "Mit Karte bezahlen",
         "note": {
-          "title": "Nota",
-          "description": "Sarai reindirizzato alla pagina di checkout sicura di Stripe per completare il pagamento."
+          "title": "Hinweis",
+          "description": "Sie werden zur sicheren Zahlungsseite von Stripe weitergeleitet, um Ihre Zahlung abzuschließen."
         }
       }
     },
     "summary": {
-      "heading": "RIEPILOGO PRENOTAZIONE",
-      "service": "Servizio",
-      "distance": "A Distanza",
-      "hourly": "A Ore",
-      "from": "Da",
-      "to": "A",
-      "dateTime": "Data & Ora",
-      "at": "alle",
-      "distance": "Distanza",
-      "passengers": "Passeggeri",
-      "vehicle": "Veicolo",
-      "childSeats": "Seggiolini",
-      "subtotal": "Subtotale",
-      "tax": "IVA (21%)",
-      "total": "Totale",
-      "notSet": "Non impostato"
+      "heading": "BUCHUNGSZUSAMMENFASSUNG",
+      "service": "Service",
+      "distance": "Streckenbasiert",
+      "hourly": "Stundenbasiert",
+      "from": "Von",
+      "to": "Nach",
+      "dateTime": "Datum & Zeit",
+      "at": "um",
+      "passengers": "Passagiere",
+      "vehicle": "Fahrzeug",
+      "childSeats": "Kindersitze",
+      "paymentMethod": "Zahlungsmethode",
+      "subtotal": "Zwischensumme",
+      "tax": "MwSt. (21%)",
+      "total": "Gesamt",
+      "notSet": "Nicht festgelegt"
     }
   },
-  
   "step4": {
-    "title": "Riepilogo Prenotazione",
-    "subtitle": "Rivedi i dettagli della prenotazione prima di confermare",
-    "at": "alle",
-    "error": "Prenotazione fallita. Riprova.",
-    "processing": "Elaborazione in corso...",
-    "confirmButton": "Conferma Prenotazione",
+    "title": "Buchungsübersicht",
+    "subtitle": "Überprüfen Sie Ihre Buchungsdetails vor der Bestätigung",
+    "at": "um",
+    "returnAt": "Rückfahrt",
+    "hours": "Stunden",
+    "error": "Buchung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "processing": "Wird verarbeitet...",
+    "confirmButton": "Buchung Bestätigen",
     "sections": {
-      "contact": "Informazioni di Contatto & Fatturazione",
-      "payment": "Metodo di Pagamento",
-      "ride": "Dettagli della Corsa",
-      "vehicle": "Informazioni Veicolo"
+      "contact": "Kontakt- & Rechnungsinformationen",
+      "payment": "Zahlungsmethode",
+      "ride": "Fahrtdetails",
+      "vehicle": "Fahrzeuginformationen"
     },
     "fields": {
-      "name": "Nome",
-      "email": "Email",
-      "phone": "Telefono",
-      "passengers": "Passeggeri",
-      "flightNumber": "Numero Volo",
-      "comments": "Commenti",
-      "serviceType": "Tipo di Servizio",
-      "transferType": "Tipo di Transfer",
-      "pickup": "Luogo di Ritiro",
-      "dropoff": "Luogo di Consegna",
-      "dateTime": "Data & Ora",
-      "distance": "Distanza",
-      "duration": "Durata",
-      "vehicle": "Veicolo",
-      "capacity": "Capacità",
-      "childSeats": "Seggiolini"
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "passengers": "Passagiere",
+      "flightNumber": "Flugnummer",
+      "comments": "Kommentare",
+      "serviceType": "Servicetyp",
+      "transferType": "Transfertyp",
+      "pickup": "Abholort",
+      "dropoff": "Zielort",
+      "dateTime": "Datum & Zeit",
+      "distance": "Entfernung",
+      "duration": "Dauer",
+      "hourlyDuration": "Dauer",
+      "vehicle": "Fahrzeug",
+      "capacity": "Kapazität",
+      "childSeats": "Kindersitze"
     },
     "serviceTypes": {
-      "distance": "A Distanza",
-      "hourly": "A Ore"
+      "distance": "Streckenbasiert",
+      "hourly": "Stundenbasiert"
     },
     "transferTypes": {
-      "oneWay": "Solo Andata",
-      "return": "Andata e Ritorno"
+      "oneWay": "Einfache Fahrt",
+      "return": "Hin- und Rückfahrt"
     },
-    "capacityValue": "{passengers} passeggeri, {luggage} bagagli",
+    "capacityValue": "{passengers} Passagiere, {luggage} Gepäckstücke",
     "payment": {
-      "cash": "Contanti",
-      "card": "Carta"
+      "cash": "Bar",
+      "card": "Karte"
     },
     "priceSummary": {
-      "heading": "Riepilogo Prezzo",
-      "basePrice": "Prezzo Base",
-      "distanceCharge": "Tariffa Distanza",
-      "airportFee": "Tassa Aeroportuale",
-      "childSeats": "Seggiolini ({count})",
-      "subtotal": "Subtotale",
-      "tax": "IVA (21%)",
-      "total": "Totale"
+      "heading": "Preiszusammenfassung",
+      "selectedVehicle": "Preis des ausgewählten Fahrzeugs",
+      "basePrice": "Grundpreis",
+      "distanceCharge": "Streckengebühr",
+      "airportFee": "Flughafengebühr",
+      "timeCharge": "Zeitgebühr",
+      "childSeats": "Kindersitze ({count})",
+      "subtotal": "Zwischensumme",
+      "tax": "MwSt. (21%)",
+      "total": "Gesamt"
     },
     "paymentNote": {
       "cash": {
-        "title": "Pagamento in Contanti",
-        "description": "Paga direttamente all'autista all'arrivo. Prenotazione confermata immediatamente."
+        "title": "Barzahlung",
+        "description": "Zahlen Sie direkt bei Ankunft beim Fahrer. Buchung sofort bestätigt."
       },
       "card": {
-        "title": "Pagamento con Carta",
-        "description": "Sarai reindirizzato al checkout sicuro di Stripe per completare il pagamento."
+        "title": "Kartenzahlung",
+        "description": "Sie werden zum sicheren Zahlungsgateway von Stripe weitergeleitet, um die Zahlung abzuschließen."
       }
     }
   },
-  
   "success": {
-    "title": "Prenotazione confermata!",
-    "subtitleCash": "Il tuo trasferimento è stato prenotato. Paga l’autista in contanti.",
-    "subtitleCard": "Il pagamento è andato a buon fine. Il tuo trasferimento è confermato.",
-    "bookingId": "ID prenotazione",
-
-    "transferDetails": "Dettagli del trasferimento",
-    "customerDetails": "Dati del cliente",
-    "paymentDetails": "Dettagli di pagamento",
-
-    "pickup": "Prelievo",
-    "dropoff": "Destinazione",
-    "dateTime": "Data e ora",
-    "vehicle": "Veicolo",
-    "passengers": "Passeggeri e bagagli",
-    "flightNumber": "Numero del volo",
-
-    "name": "Nome",
-    "email": "Email",
-    "phone": "Telefono",
-
-    "paymentMethod": "Metodo di pagamento",
-    "paymentStatus": "Stato",
-    "totalPaid": "Totale pagato",
-
-    "cash": "Contanti",
-    "card": "Carta di credito",
-
-    "paymentStatusPaid": "Pagato",
-    "paymentStatusCash": "Paga l’autista",
-    "paymentStatusProcessing": "In elaborazione",
-    "paymentStatusUnpaid": "Non pagato",
-
-    "quickActions": "Azioni rapide",
-    "emailSent": "Email di conferma inviata",
-    "downloadReceipt": "Scarica ricevuta",
-    "addToCalendar": "Aggiungi al calendario",
-    "print": "Stampa conferma",
-
-    "needHelp": "Hai bisogno di aiuto con la tua prenotazione?",
-    "contactSupport": "Contatta l’assistenza",
-
+    "title": "Buchung Bestätigt!",
+    "subtitleCash": "Ihr Transfer wurde reserviert. Bitte zahlen Sie bar beim Fahrer.",
+    "subtitleCard": "Ihre Zahlung war erfolgreich. Ihr Transfer ist bestätigt.",
+    "bookingId": "Buchungs-ID",
+    "transferDetails": "Transfer-Details",
+    "customerDetails": "Kundendetails",
+    "paymentDetails": "Zahlungsdetails",
+    "pickup": "Abholung",
+    "dropoff": "Ziel",
+    "dateTime": "Datum & Zeit",
+    "vehicle": "Fahrzeug",
+    "passengers": "Passagiere & Gepäck",
+    "flightNumber": "Flugnummer",
+    "name": "Name",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "paymentMethod": "Zahlungsmethode",
+    "paymentStatus": "Status",
+    "totalPaid": "Gesamt bezahlt",
+    "cash": "Bar",
+    "card": "Kreditkarte",
+    "paymentStatusPaid": "Bezahlt",
+    "paymentStatusCash": "Beim Fahrer zahlen",
+    "paymentStatusProcessing": "In Bearbeitung",
+    "paymentStatusUnpaid": "Unbezahlt",
+    "quickActions": "Schnellaktionen",
+    "emailSent": "Bestätigungs-E-Mail gesendet",
+    "downloadReceipt": "Quittung herunterladen",
+    "addToCalendar": "Zum Kalender hinzufügen",
+    "print": "Bestätigung drucken",
+    "needHelp": "Hilfe bei Ihrer Buchung benötigt?",
+    "contactSupport": "Support kontaktieren",
     "whatsNext": {
-      "title": "Cosa succede ora?",
+      "title": "Wie geht es weiter?",
       "step1": {
-        "title": "Conferma inviata",
-        "description": "Controlla la tua email per i dettagli della prenotazione e la ricevuta"
+        "title": "Bestätigung gesendet",
+        "description": "Überprüfen Sie Ihre E-Mail auf Buchungsdetails und Quittung"
       },
       "step2": {
-        "title": "Assegnazione dell’autista",
-        "description": "24 ore prima del prelievo riceverai i dati di contatto dell’autista"
+        "title": "Fahrerzuweisung",
+        "description": "24h vor Abholung erhalten Sie die Kontaktdaten des Fahrers"
       },
       "step3": {
-        "title": "Goditi il viaggio",
-        "description": "L’autista ti aspetterà nel punto di prelievo"
+        "title": "Genießen Sie Ihre Fahrt",
+        "description": "Ihr Fahrer erwartet Sie am Abholort"
       }
     },
-
-    "backToHome": "Torna alla home",
-
+    "backToHome": "Zurück zur Startseite",
     "error": {
-      "title": "Verifica del pagamento non riuscita",
-      "tryAgain": "Riprova la prenotazione",
-      "contactSupport": "Contatta l’assistenza"
+      "title": "Zahlungsüberprüfung fehlgeschlagen",
+      "tryAgain": "Erneut buchen",
+      "contactSupport": "Support kontaktieren"
+    }
+  },
+  "booking": {
+    "location": {
+      "pickupPlaceholder": "Abholort eingeben...",
+      "dropoffPlaceholder": "Zielort eingeben...",
+      "useMyLocation": "Meinen aktuellen Standort verwenden",
+      "fallbackMode": "Autovervollständigung nicht verfügbar. Sie können Adressen trotzdem manuell eingeben.",
+      "noResults": "Keine Orte gefunden. Versuchen Sie eine andere Suche.",
+      "errors": {
+        "geolocationUnsupported": "Geolokalisierung wird von Ihrem Browser nicht unterstützt",
+        "geolocationDenied": "Standortermächtigung verweigert",
+        "geolocationUnavailable": "Standortinformationen nicht verfügbar",
+        "geolocationTimeout": "Zeitüberschreitung der Standortanfrage",
+        "geocodingFailed": "Adresse konnte nicht ermittelt werden"
+      }
     }
   }
 }
-

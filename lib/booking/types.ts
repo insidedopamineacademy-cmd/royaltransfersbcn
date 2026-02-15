@@ -1,13 +1,21 @@
 /**
  * Booking System Types
  * Core TypeScript interfaces for the Royal Transfers booking system
+ *
+ * ✅ Updated to align with the new canonical service model:
+ *    - serviceType: 'distance' | 'hourly'
+ *    - transferType: 'oneWay' | 'return' (distance only)
+ *    - dropoff is OPTIONAL (hourly may not have dropoff)
+ *    - DateTime includes optional returnDate/returnTime
+ *    - BookingData includes hourlyDuration
+ *    - Added safe default helpers (EMPTY_LOCATION, etc.)
  */
 
 // ============================================================================
 // SERVICE TYPES
 // ============================================================================
 
-export type ServiceType = 'airport' | 'cityToCity' | 'hourly';
+export type ServiceType = 'distance' | 'hourly';
 
 export interface ServiceTypeOption {
   id: ServiceType;
@@ -40,6 +48,9 @@ export interface LocationSuggestion {
   types: string[];
 }
 
+// Helpful defaults for “clear/reset” operations in UI/context
+export const EMPTY_LOCATION: Location = { address: '' };
+
 // ============================================================================
 // DATE & TIME TYPES
 // ============================================================================
@@ -48,7 +59,16 @@ export interface DateTime {
   date: string; // YYYY-MM-DD format
   time: string; // HH:MM format (24-hour)
   timezone?: string;
+
+  // Return journey fields (only when transferType === 'return')
+  returnDate?: string; // YYYY-MM-DD
+  returnTime?: string; // HH:MM
 }
+
+export const DEFAULT_DATE_TIME: DateTime = {
+  date: '',
+  time: '',
+};
 
 // ============================================================================
 // PASSENGER & LUGGAGE TYPES
@@ -69,11 +89,26 @@ export interface ChildSeat {
   count: number;
 }
 
+export const DEFAULT_PASSENGERS: PassengerInfo = {
+  count: 1,
+  luggage: 0,
+  childSeats: 0,
+};
+
 // ============================================================================
 // VEHICLE TYPES
 // ============================================================================
 
-export type VehicleCategory = 'standard-sedan' | 'premium-sedan' | 'standard-minivan-7' | 'executive-minivan' | 'standard-minivan-8' | 'standard' | 'luxury-sedan' | '8-seater-van' | 'luxury-van';
+export type VehicleCategory =
+  | 'standard-sedan'
+  | 'premium-sedan'
+  | 'standard-minivan-7'
+  | 'executive-minivan'
+  | 'standard-minivan-8'
+  | 'standard'
+  | 'luxury-sedan'
+  | '8-seater-van'
+  | 'luxury-van';
 
 export interface Vehicle {
   id: string;
@@ -162,7 +197,6 @@ export interface PricingRules {
 // PAYMENT TYPES
 // ============================================================================
 
-// Simple payment method selection (cash or card)
 export type PaymentMethod = 'cash' | 'card';
 
 // Transfer type for distance-based bookings
@@ -188,6 +222,8 @@ export interface PaymentDetails {
   paymentMethod: PaymentMethodDetails;
 }
 
+export const DEFAULT_PAYMENT_METHOD: PaymentMethod = 'cash';
+
 // ============================================================================
 // BOOKING DATA TYPES
 // ============================================================================
@@ -195,13 +231,27 @@ export interface PaymentDetails {
 export interface BookingData {
   // Step 1: Service Type & Ride Details
   serviceType: ServiceType | null;
-  transferType?: TransferType; // Only for distance-based bookings
+
+  /**
+   * Transfer type for distance-based bookings only.
+   * For hourly bookings this should be undefined.
+   */
+  transferType?: TransferType;
 
   // Step 1: Locations
   pickup: Location;
-  dropoff: Location;
-  distance?: number; // in kilometers
-  duration?: number; // in minutes
+
+  /**
+   * Dropoff is required only for distance bookings.
+   * Hourly bookings may omit it.
+   */
+  dropoff?: Location;
+
+  /**
+   * Distance (km) and duration (min) calculated for distance bookings only.
+   */
+  distance?: number;
+  duration?: number;
 
   // Step 1: Date & Time
   dateTime: DateTime;
@@ -214,13 +264,19 @@ export interface BookingData {
 
   // Step 3: Passenger Details & Payment Method
   passengerDetails: PassengerDetails;
-  paymentMethod?: PaymentMethod; // 'cash' or 'card'
+  paymentMethod?: PaymentMethod;
 
   // Step 4: Extras (optional)
   extras: Extras;
 
   // Pricing
   pricing: PriceBreakdown | null;
+
+  /**
+   * Hourly service duration in hours (2–24).
+   * Only set when serviceType === 'hourly'
+   */
+  hourlyDuration?: number;
 
   // Metadata
   bookingId?: string;
@@ -229,7 +285,7 @@ export interface BookingData {
   updatedAt?: string;
 }
 
-export type BookingStatus = 
+export type BookingStatus =
   | 'draft'
   | 'pending'
   | 'confirmed'
@@ -240,7 +296,7 @@ export type BookingStatus =
 // WIZARD STEP TYPES
 // ============================================================================
 
-export type WizardStep = 
+export type WizardStep =
   | 'service-type'
   | 'location'
   | 'date-time'

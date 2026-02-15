@@ -3,7 +3,7 @@
  * Helper functions for calculations, formatting, and validation
  */
 
-import type { BookingData, PriceBreakdown, Vehicle, Location } from './types';
+import type { BookingData, PriceBreakdown, Vehicle, Location, DistanceMatrixResult } from './types';
 import { PRICING_RULES, BOOKING_CONFIG } from './constants';
 
 // ============================================================================
@@ -33,8 +33,8 @@ export function calculatePrice(
 
   // Calculate based on service type
   if (bookingData.serviceType === 'hourly') {
-    // Hourly service: base price per hour
-    const hours = 4; // Default, should come from booking data
+    // [UPDATED] Use hourlyDuration from bookingData instead of hardcoded 4 hours
+    const hours = bookingData.hourlyDuration ?? 4;
     timeCharge = vehicle.pricePerHour ? vehicle.pricePerHour * hours : 0;
   } else {
     // Distance-based service
@@ -177,6 +177,8 @@ export function isCruisePort(location: Location): boolean {
 
 /**
  * Calculate distance between two coordinates (Haversine formula)
+ * Returns straight-line distance in km — use calculateDistanceByPlaceId for
+ * actual driving distance via the Google Maps Distance Matrix API.
  */
 export function calculateDistance(
   lat1: number,
@@ -370,4 +372,79 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
+}
+
+// ============================================================================
+// GOOGLE MAPS DISTANCE MATRIX
+// ============================================================================
+
+/**
+ * Calculate the real driving distance and duration between two Google Places
+ * using the Maps JavaScript API Distance Matrix Service.
+ *
+ * ⚠️  CLIENT-SIDE ONLY — requires the Google Maps JS API script to be loaded
+ *     (window.google must exist). Only call this from inside useEffect or an
+ *     event handler, never during SSR.
+ *
+ * Return values:
+ *   result.distance.value  → metres   → divide by 1000 for km
+ *   result.duration.value  → seconds  → divide by 60 for minutes
+ *
+ * Used by:
+ *   - app/[locale]/book/page.tsx        (pre-calculates before jumping to Step 2)
+ *   - components/booking/steps/BookingDetailsStep.tsx  (live calculation in Step 1)
+ */
+export function calculateDistanceByPlaceId(
+  originPlaceId: string,
+  destinationPlaceId: string
+): Promise<DistanceMatrixResult> {
+  return new Promise((resolve, reject) => {
+    // Guard: Google Maps JS API must already be loaded in the browser
+    if (
+      typeof window === 'undefined' ||
+      !window.google?.maps?.DistanceMatrixService
+    ) {
+      reject(
+        new Error(
+          'Google Maps JavaScript API is not loaded. ' +
+          'Ensure the Maps script tag is present before calling this function.'
+        )
+      );
+      return;
+    }
+
+    const service = new window.google.maps.DistanceMatrixService();
+
+    service.getDistanceMatrix(
+      {
+        origins:      [{ placeId: originPlaceId }],
+        destinations: [{ placeId: destinationPlaceId }],
+        travelMode:   window.google.maps.TravelMode.DRIVING,
+        unitSystem:   window.google.maps.UnitSystem.METRIC,
+      },
+      (response, status) => {
+        if (status !== 'OK' || !response) {
+          reject(new Error(`Distance Matrix API returned status: ${status}`));
+          return;
+        }
+
+        const element = response.rows[0]?.elements[0];
+
+        if (!element || element.status !== 'OK') {
+          reject(
+            new Error(
+              `No driving route found between the selected locations ` +
+              `(element status: ${element?.status ?? 'UNKNOWN'})`
+            )
+          );
+          return;
+        }
+
+        resolve({
+          distance: element.distance, // e.g. { text: "25.3 km", value: 25300 }
+          duration: element.duration, // e.g. { text: "32 mins", value: 1920 }
+        });
+      }
+    );
+  });
 }
