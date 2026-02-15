@@ -11,17 +11,18 @@
  *    - Added safe default helpers (EMPTY_LOCATION, etc.)
  */
 
-// ============================================================================
-// SERVICE TYPES
-// ============================================================================
-
-export type ServiceType = 'distance' | 'hourly';
+export type ServiceType = 'distance' | 'airport' | 'cityToCity' | 'hourly';
 
 export interface ServiceTypeOption {
   id: ServiceType;
   nameKey: string;
   descriptionKey: string;
   icon: string;
+}
+
+// ✅ Helper: treat airport/cityToCity/distance as distance-based
+export function isDistanceService(serviceType: ServiceType | null | undefined): boolean {
+  return serviceType === 'distance' || serviceType === 'airport' || serviceType === 'cityToCity';
 }
 
 // ============================================================================
