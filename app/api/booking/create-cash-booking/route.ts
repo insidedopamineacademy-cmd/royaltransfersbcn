@@ -154,10 +154,15 @@ function validateBookingData(bookingData: BookingData): { isValid: boolean; erro
     return { isValid: false, error: 'No vehicle selected' };
   }
 
-  if (!bookingData.pickup.address || !bookingData.dropoff.address) {
+  if (!bookingData.pickup?.address) {
+  return { isValid: false, error: 'Pickup address is required' };
+}
+
+if (bookingData.serviceType === 'distance') {
+  if (!bookingData.dropoff?.address) {
     return { isValid: false, error: 'Pickup and dropoff addresses are required' };
   }
-
+}
   if (!bookingData.dateTime.date || !bookingData.dateTime.time) {
     return { isValid: false, error: 'Date and time are required' };
   }

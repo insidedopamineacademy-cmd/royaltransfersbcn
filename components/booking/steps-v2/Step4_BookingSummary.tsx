@@ -29,6 +29,7 @@ export default function BookingSummaryStep() {
   const isHourly = bookingData.serviceType === 'hourly';
   const isDistance = bookingData.serviceType === 'distance';
   const isReturn = isDistance && bookingData.transferType === 'return';
+  const dropoffAddress = bookingData.dropoff?.address ?? '';
 
   // ✅ scroll to top on mobile when Step4 mounts
   useEffect(() => {
@@ -258,7 +259,7 @@ export default function BookingSummaryStep() {
             <InfoRow label={t('fields.pickup')} value={bookingData.pickup.address} />
 
             {/* ✅ Dropoff only for distance */}
-            {isDistance && <InfoRow label={t('fields.dropoff')} value={bookingData.dropoff.address} />}
+            {isDistance && <InfoRow label={t('fields.dropoff')} value={dropoffAddress} />}
 
             {/* ✅ DateTime includes return info when applicable */}
             <InfoRow label={t('fields.dateTime')} value={rideDateTimeLabel} />
