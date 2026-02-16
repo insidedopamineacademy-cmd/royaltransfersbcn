@@ -17,7 +17,7 @@ export async function sendEmail(options: SendEmailOptions): Promise<boolean> {
   try {
     console.log('📧 Attempting to send email to:', options.to);
     console.log('📧 Subject:', options.subject);
-    
+
     const info = await emailTransporter.sendMail({
       from: `${EMAIL_CONFIG.from.name} <${EMAIL_CONFIG.from.email}>`,
       to: options.to,
@@ -32,7 +32,7 @@ export async function sendEmail(options: SendEmailOptions): Promise<boolean> {
     console.log('   Accepted:', info.accepted);
     console.log('   Rejected:', info.rejected);
     console.log('   Response:', info.response);
-    
+
     return true;
   } catch (error) {
     console.error('❌ Failed to send email!');
@@ -52,14 +52,12 @@ export async function sendEmail(options: SendEmailOptions): Promise<boolean> {
 /**
  * Send booking confirmation email to customer
  */
-export async function sendBookingConfirmationEmail(
-  booking: DatabaseBooking
-): Promise<boolean> {
+export async function sendBookingConfirmationEmail(booking: DatabaseBooking): Promise<boolean> {
   const isCardPayment = booking.payment_method === 'card';
   const isPaid = booking.payment_status === 'paid';
 
   const subject = `Booking Confirmed - ${booking.booking_id}`;
-  
+
   const html = generateBookingConfirmationHTML(booking, isCardPayment, isPaid);
   const text = generateBookingConfirmationText(booking, isCardPayment, isPaid);
 
@@ -78,11 +76,9 @@ export async function sendBookingConfirmationEmail(
 /**
  * Send new booking notification to admin
  */
-export async function sendAdminNotificationEmail(
-  booking: DatabaseBooking
-): Promise<boolean> {
+export async function sendAdminNotificationEmail(booking: DatabaseBooking): Promise<boolean> {
   const subject = `New Booking: ${booking.booking_id} - ${booking.payment_method.toUpperCase()}`;
-  
+
   const html = generateAdminNotificationHTML(booking);
   const text = generateAdminNotificationText(booking);
 
@@ -101,23 +97,20 @@ export async function sendAdminNotificationEmail(
 /**
  * Generate HTML for customer booking confirmation email
  */
-function generateBookingConfirmationHTML(
-  booking: DatabaseBooking,
-  isCardPayment: boolean,
-  isPaid: boolean
-): string {
-  const paymentStatusBadge = isPaid 
+function generateBookingConfirmationHTML(booking: DatabaseBooking, isCardPayment: boolean, isPaid: boolean): string {
+  const paymentStatusBadge = isPaid
     ? '<span style="background-color: #10b981; color: white; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: 600;">PAID</span>'
     : '<span style="background-color: #f59e0b; color: white; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: 600;">PENDING</span>';
 
-  const paymentInstructions = isCardPayment
-    ? `<p style="color: #059669; font-weight: 600; margin: 0;">✓ Payment received via card</p>`
-    : `
-      <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-top: 10px;">
-        <p style="color: #92400e; font-weight: 600; margin: 0 0 8px 0;">⚠️ Pay Driver in Cash</p>
-        <p style="color: #78350f; margin: 0; font-size: 14px;">Please have €${Number(booking.total_price).toFixed(2)} ready for the driver. Having the exact amount is appreciated.</p>
-      </div>
-    `;
+  // ✅ UPDATED: Payment options now always show "cash or card"
+  const paymentInstructions = `
+    <div style="background-color: #f0f9ff; border-left: 4px solid #1e40af; padding: 15px; margin-top: 10px;">
+      <p style="color: #1e40af; font-weight: 600; margin: 0 0 8px 0;">💳 Payment Options</p>
+      <p style="color: #374151; margin: 0; font-size: 14px;">
+        You can pay the driver by <strong>cash or card</strong> at pickup.
+      </p>
+    </div>
+  `;
 
   return `
 <!DOCTYPE html>
@@ -129,7 +122,7 @@ function generateBookingConfirmationHTML(
 </head>
 <body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f3f4f6;">
   <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    
+
     <!-- Header -->
     <div style="background: linear-gradient(135deg, #1e40af 0%, #06b6d4 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
       <h1 style="color: white; margin: 0; font-size: 28px;">✓ Booking Confirmed!</h1>
@@ -138,7 +131,7 @@ function generateBookingConfirmationHTML(
 
     <!-- Main Content -->
     <div style="background-color: white; padding: 30px; border-radius: 0 0 10px 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-      
+
       <!-- Booking Reference -->
       <div style="text-align: center; margin-bottom: 30px;">
         <p style="color: #6b7280; margin: 0 0 8px 0; font-size: 14px;">Booking Reference</p>
@@ -148,7 +141,7 @@ function generateBookingConfirmationHTML(
       <!-- Transfer Details -->
       <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
         <h2 style="color: #1f2937; margin: 0 0 15px 0; font-size: 18px;">Transfer Details</h2>
-        
+
         <div style="margin-bottom: 12px;">
           <p style="color: #6b7280; margin: 0 0 4px 0; font-size: 13px;">📍 Pickup</p>
           <p style="color: #111827; margin: 0; font-weight: 600;">${booking.pickup_address}</p>
@@ -161,7 +154,12 @@ function generateBookingConfirmationHTML(
 
         <div style="margin-bottom: 12px;">
           <p style="color: #6b7280; margin: 0 0 4px 0; font-size: 13px;">📅 Date & Time</p>
-          <p style="color: #111827; margin: 0; font-weight: 600;">${booking.pickup_date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} at ${booking.pickup_time}</p>
+          <p style="color: #111827; margin: 0; font-weight: 600;">${booking.pickup_date.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })} at ${booking.pickup_time}</p>
         </div>
 
         <div style="margin-bottom: 12px;">
@@ -185,10 +183,10 @@ function generateBookingConfirmationHTML(
       <!-- Payment Details -->
       <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
         <h2 style="color: #1f2937; margin: 0 0 15px 0; font-size: 18px;">Payment Details</h2>
-        
+
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
           <span style="color: #6b7280;">Payment Method</span>
-          <span style="color: #111827; font-weight: 600;">${isCardPayment ? 'Credit Card' : 'Cash'}</span>
+          <span style="color: #111827; font-weight: 600;">${isCardPayment ? 'Credit Card (online)' : 'Cash (selected at booking)'}</span>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -206,10 +204,24 @@ function generateBookingConfirmationHTML(
         ${paymentInstructions}
       </div>
 
+      <!-- ✅ NEW: Driver Contact -->
+      <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+        <h2 style="color: #065f46; margin: 0 0 15px 0; font-size: 18px;">📞 Driver Contact</h2>
+        <p style="margin: 0 0 8px 0; color: #065f46; font-weight: 600;">Driver Phone Number:</p>
+        <p style="margin: 0; font-size: 16px;">
+          <a href="tel:+34617629115" style="color: #065f46; text-decoration: none; font-weight: 600;">
+            +34 617 629 115
+          </a>
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 14px; color: #374151;">
+          You may contact the driver directly if needed.
+        </p>
+      </div>
+
       <!-- What's Next -->
       <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
         <h2 style="color: #1f2937; margin: 0 0 15px 0; font-size: 18px;">📋 What's Next?</h2>
-        
+
         <div style="margin-bottom: 15px;">
           <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">1. Check Your Email</p>
           <p style="margin: 0; color: #374151; font-size: 14px;">Keep this confirmation safe for your records</p>
@@ -252,15 +264,12 @@ function generateBookingConfirmationHTML(
 /**
  * Generate plain text version for customer confirmation
  */
-function generateBookingConfirmationText(
-  booking: DatabaseBooking,
-  isCardPayment: boolean,
-  isPaid: boolean
-): string {
+function generateBookingConfirmationText(booking: DatabaseBooking, isCardPayment: boolean, isPaid: boolean): string {
   const paymentStatus = isPaid ? 'PAID' : 'PENDING';
-  const paymentInstructions = isCardPayment
-    ? 'Payment received via credit card.'
-    : `IMPORTANT: Please pay €${Number(booking.total_price).toFixed(2)} to the driver in cash. Having the exact amount is appreciated.`;
+
+  // ✅ UPDATED: payment is cash or card
+  const paymentInstructions = `PAYMENT OPTIONS:
+You can pay the driver by cash or card at pickup.`;
 
   return `
 BOOKING CONFIRMED!
@@ -277,9 +286,14 @@ Passengers: ${booking.passengers_count}
 Luggage: ${booking.luggage_count}
 ${booking.flight_number ? `Flight: ${booking.flight_number}` : ''}
 
+DRIVER CONTACT
+==============
+Phone: +34 617 629 115
+You may contact the driver directly if needed.
+
 PAYMENT DETAILS
 ===============
-Payment Method: ${isCardPayment ? 'Credit Card' : 'Cash'}
+Payment Method Selected: ${isCardPayment ? 'Credit Card (online)' : 'Cash (selected at booking)'}
 Status: ${paymentStatus}
 Total: €${Number(booking.total_price).toFixed(2)}
 
@@ -302,9 +316,10 @@ Premium Transfer Services in Barcelona
  * Generate HTML for admin notification email
  */
 function generateAdminNotificationHTML(booking: DatabaseBooking): string {
-  const paymentMethodBadge = booking.payment_method === 'card'
-    ? '<span style="background-color: #3b82f6; color: white; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;">CARD</span>'
-    : '<span style="background-color: #10b981; color: white; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;">CASH</span>';
+  const paymentMethodBadge =
+    booking.payment_method === 'card'
+      ? '<span style="background-color: #3b82f6; color: white; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;">CARD</span>'
+      : '<span style="background-color: #10b981; color: white; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;">CASH</span>';
 
   return `
 <!DOCTYPE html>
@@ -315,13 +330,13 @@ function generateAdminNotificationHTML(booking: DatabaseBooking): string {
 </head>
 <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f9fafb;">
   <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    
+
     <div style="background-color: #1f2937; padding: 20px; border-radius: 8px 8px 0 0;">
       <h1 style="color: white; margin: 0; font-size: 20px;">🔔 New Booking Received</h1>
     </div>
 
     <div style="background-color: white; padding: 25px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-      
+
       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e5e7eb;">
         <p style="margin: 0 0 5px 0; color: #6b7280; font-size: 13px;">Booking ID</p>
         <p style="margin: 0; font-size: 18px; font-weight: bold; color: #1f2937; font-family: monospace;">${booking.booking_id}</p>

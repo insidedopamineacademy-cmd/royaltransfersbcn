@@ -67,10 +67,10 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   const [pickup, setPickup] = useState<Location>({ address: '' });
   const [dropoff, setDropoff] = useState<Location>({ address: '' });
 
-  // ✅ iOS-safe input styling (prevents compact date/time look)
+  // ✅ Better input styling (fixes “text lifted” + keeps iOS date/time normal)
   const inputNormal =
-    'block w-full h-12 pl-10 pr-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
-    'text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
+    'block w-full h-12 pl-10 pr-3 py-2 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
+    'text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
     'transition-all appearance-none [color-scheme:light]';
 
   // Default pickup date/time = now + 2 hours (safe)
@@ -82,7 +82,9 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   const [date, setDate] = useState(() => getDefaultDateTime().dateString);
   const [time, setTime] = useState(() => getDefaultDateTime().timeString);
 
+  // ✅ Passengers + Luggage
   const [passengers, setPassengers] = useState(1);
+  const [luggage, setLuggage] = useState(0);
 
   // Return date/time combined state (avoids mismatched pairs)
   const [returnDateTime, setReturnDateTime] = useState<{ returnDate: string; returnTime: string }>(() =>
@@ -123,7 +125,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
     return selected.getTime() >= min.getTime();
   }, [date, time]);
 
-  // Optional: auto-correct to minimum if user chooses an invalid time
+  // Auto-correct to minimum if user chooses an invalid time
   useEffect(() => {
     if (!date || !time) return;
     const selected = new Date(`${date}T${time}:00`);
@@ -176,6 +178,9 @@ const HeroBookingForm = memo(function HeroBookingForm() {
       if (!hourlyDuration || hourlyDuration < 2) return false;
     }
 
+    // luggage is optional; if you ever want to cap it, do it here
+    if (luggage < 0) return false;
+
     return true;
   }, [
     pickup.address,
@@ -189,6 +194,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
     returnDate,
     returnTime,
     hourlyDuration,
+    luggage,
     isPickupTimeValid,
   ]);
 
@@ -251,7 +257,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
       // Passengers
       passengers: {
         count: passengers,
-        luggage: 0,
+        luggage, // ✅ added
         childSeats: 0,
       },
 
@@ -280,6 +286,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
     returnDate,
     returnTime,
     passengers,
+    luggage,
     hourlyDuration,
     router,
     locale,
@@ -298,7 +305,11 @@ const HeroBookingForm = memo(function HeroBookingForm() {
       >
         <div className="bg-white/95 sm:backdrop-blur-sm rounded-2xl shadow-2xl p-3 sm:p-6 [@media(max-height:750px)]:p-2 border border-gray-100">
           {/* Service Type Toggle */}
-          <div className="flex gap-2 mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2" role="tablist" aria-label={t('aria.serviceType')}>
+          <div
+            className="flex gap-2 mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2"
+            role="tablist"
+            aria-label={t('aria.serviceType')}
+          >
             <ServiceTypeButton
               active={serviceType === 'distance'}
               onClick={() => {
@@ -322,7 +333,9 @@ const HeroBookingForm = memo(function HeroBookingForm() {
           {/* Transfer Type (Only for Distance-Based) */}
           {serviceType === 'distance' && (
             <div className="mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2">
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">{t('transferType.label')}</label>
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+                {t('transferType.label')}
+              </label>
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <TransferTypeButton
                   active={transferType === 'oneWay'}
@@ -384,8 +397,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                   {t('transferType.returnDetails')}
                 </p>
 
-                {/* ✅ stack on mobile */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* ✅ keep return date/time in ONE row too */}
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   <div>
                     <label htmlFor="return-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                       {t('fields.returnDate.label')}
@@ -424,9 +437,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
               </div>
             )}
 
-            {/* Date & Time */}
-            {/* ✅ stack on mobile */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* ✅ Pickup Date & Time (ALWAYS one row) */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <div>
                 <label htmlFor="pickup-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                   {t('fields.date.label')}
@@ -489,27 +501,66 @@ const HeroBookingForm = memo(function HeroBookingForm() {
               </div>
             )}
 
-            {/* Passengers */}
-            <div>
-              <label htmlFor="passengers" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
-                {t('fields.passengers.label')}
-              </label>
-              <div className="relative">
-                <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
-                <select
-                  id="passengers"
-                  value={passengers}
-                  onChange={(e) => setPassengers(Number(e.target.value))}
-                  aria-label={t('fields.passengers.label')}
-                  className="w-full h-12 pl-10 pr-10 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
-                >
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-                    <option key={num} value={num}>
-                      {num} {t('fields.passengers.count', { count: num })}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            {/* ✅ Passengers + Luggage (one row) */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              <div>
+                <label htmlFor="passengers" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
+                  {t('fields.passengers.label')}
+                </label>
+                <div className="relative">
+                  <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
+                  <select
+                    id="passengers"
+                    value={passengers}
+                    onChange={(e) => setPassengers(Number(e.target.value))}
+                    aria-label={t('fields.passengers.label')}
+                    className="w-full h-12 pl-10 pr-10 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                      <option key={num} value={num}>
+                        {num} {t('fields.passengers.count', { count: num })}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="luggage" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
+                  Luggage
+                </label>
+                <div className="relative">
+                  {/* inline suitcase icon (no extra component needed) */}
+                  <svg
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 7V6a3 3 0 013-3h0a3 3 0 013 3v1m-9 0h10a2 2 0 012 2v10a3 3 0 01-3 3H8a3 3 0 01-3-3V9a2 2 0 012-2z"
+                    />
+                  </svg>
+
+                  <select
+                    id="luggage"
+                    value={luggage}
+                    onChange={(e) => setLuggage(Number(e.target.value))}
+                    aria-label="Luggage"
+                    className="w-full h-12 pl-10 pr-10 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                  >
+                    {Array.from({ length: 9 }, (_, i) => i).map((n) => (
+                      <option key={n} value={n}>
+                        {n} bag{n === 1 ? '' : 's'}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                </div>
               </div>
             </div>
 

@@ -37,6 +37,11 @@ interface BookingDetails {
 
 type PaymentStatus = 'paid' | 'unpaid' | 'processing' | 'cash';
 
+// ✅ Driver contact + payment note (requested)
+const DRIVER_PHONE_DISPLAY = '+34 617 629115';
+const DRIVER_PHONE_TEL = '+34617629115';
+const DRIVER_PAYMENT_NOTE = 'You can pay the driver by cash or card at arrival.';
+
 // ============================================================================
 // MAIN COMPONENT
 // ============================================================================
@@ -44,7 +49,7 @@ type PaymentStatus = 'paid' | 'unpaid' | 'processing' | 'cash';
 export default function BookingSuccessPage() {
   const t = useTranslations('success');
   const searchParams = useSearchParams();
-  
+
   const [isLoading, setIsLoading] = useState(true);
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('processing');
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(null);
@@ -54,54 +59,54 @@ export default function BookingSuccessPage() {
   const paymentType = searchParams.get('payment'); // 'cash' or 'card'
   const sessionId = searchParams.get('session_id');
 
-useEffect(() => {
-  async function verifyPayment() {
-    try {
-      if (paymentType === 'cash') {
-        // Cash payment - fetch booking from database
-        const bookingId = searchParams.get('booking_id');
-        
-        if (!bookingId) {
-          throw new Error('No booking ID provided');
+  useEffect(() => {
+    async function verifyPayment() {
+      try {
+        if (paymentType === 'cash') {
+          // Cash payment - fetch booking from database
+          const bookingId = searchParams.get('booking_id');
+
+          if (!bookingId) {
+            throw new Error('No booking ID provided');
+          }
+
+          // Fetch booking details from database
+          const response = await fetch(`/api/booking/get-booking?booking_id=${bookingId}`);
+          const data = await response.json();
+
+          if (!response.ok || !data.success) {
+            throw new Error(data.error || 'Failed to fetch booking');
+          }
+
+          setPaymentStatus('cash');
+          setBookingDetails(data.bookingDetails);
+        } else {
+          // Card payment - verify Stripe session
+          if (!sessionId) {
+            throw new Error('No session ID provided');
+          }
+
+          // Verify Stripe payment
+          const response = await fetch(`/api/stripe/verify-session?session_id=${sessionId}`);
+          const data = await response.json();
+
+          if (!response.ok || !data.success) {
+            throw new Error(data.error || 'Failed to verify payment');
+          }
+
+          setPaymentStatus(data.paymentStatus);
+          setBookingDetails(data.bookingDetails);
         }
-
-        // Fetch booking details from database
-        const response = await fetch(`/api/booking/get-booking?booking_id=${bookingId}`);
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-          throw new Error(data.error || 'Failed to fetch booking');
-        }
-
-        setPaymentStatus('cash');
-        setBookingDetails(data.bookingDetails);
-      } else {
-        // Card payment - verify Stripe session
-        if (!sessionId) {
-          throw new Error('No session ID provided');
-        }
-
-        // Verify Stripe payment
-        const response = await fetch(`/api/stripe/verify-session?session_id=${sessionId}`);
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-          throw new Error(data.error || 'Failed to verify payment');
-        }
-
-        setPaymentStatus(data.paymentStatus);
-        setBookingDetails(data.bookingDetails);
+      } catch (err) {
+        console.error('Verification error:', err);
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      console.error('Verification error:', err);
-      setError(err instanceof Error ? err.message : 'An error occurred');
-    } finally {
-      setIsLoading(false);
     }
-  }
 
-  verifyPayment();
-}, [sessionId, paymentType, searchParams]);
+    verifyPayment();
+  }, [sessionId, paymentType, searchParams]);
 
   // Loading state
   if (isLoading) {
@@ -137,16 +142,13 @@ useEffect(() => {
           </motion.div>
 
           {/* Title */}
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            {t('title')}
-          </h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">{t('title')}</h1>
 
           {/* Subtitle based on payment type */}
-          <p className="text-lg text-gray-600 mb-2">
-            {paymentStatus === 'cash' 
-              ? t('subtitleCash')
-              : t('subtitleCard')}
-          </p>
+          <p className="text-lg text-gray-600 mb-2">{paymentStatus === 'cash' ? t('subtitleCash') : t('subtitleCard')}</p>
+
+          {/* ✅ Payment note (requested) */}
+          <p className="text-sm text-gray-600">{DRIVER_PAYMENT_NOTE}</p>
 
           {/* Booking ID */}
           {bookingDetails?.bookingId && (
@@ -154,7 +156,7 @@ useEffect(() => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 rounded-full text-emerald-700 font-mono text-sm"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 rounded-full text-emerald-700 font-mono text-sm mt-3"
             >
               <span className="font-semibold">{t('bookingId')}:</span>
               <span>{bookingDetails.bookingId}</span>
@@ -175,78 +177,59 @@ useEffect(() => {
               <>
                 {/* Transfer Details */}
                 <DetailsCard title={t('transferDetails')}>
-                  <DetailRow 
-                    icon={<MapPinIcon />}
-                    label={t('pickup')} 
-                    value={bookingDetails.pickupAddress} 
-                  />
-                  <DetailRow 
-                    icon={<MapPinIcon />}
-                    label={t('dropoff')} 
-                    value={bookingDetails.dropoffAddress} 
-                  />
-                  <DetailRow 
-                    icon={<CalendarIcon />}
-                    label={t('dateTime')} 
-                    value={`${bookingDetails.pickupDate} at ${bookingDetails.pickupTime}`} 
-                  />
-                  <DetailRow 
-                    icon={<CarIcon />}
-                    label={t('vehicle')} 
-                    value={bookingDetails.vehicleName} 
-                  />
-                  <DetailRow 
-                    icon={<UsersIcon />}
-                    label={t('passengers')} 
-                    value={`${bookingDetails.passengers} passengers, ${bookingDetails.luggage} luggage`} 
-                  />
-                  {bookingDetails.flightNumber && (
-                    <DetailRow 
-                      icon={<PlaneIcon />}
-                      label={t('flightNumber')} 
-                      value={bookingDetails.flightNumber} 
-                    />
-                  )}
+                  <DetailRow icon={<MapPinIcon />} label={t('pickup')} value={bookingDetails.pickupAddress} />
+                  <DetailRow icon={<MapPinIcon />} label={t('dropoff')} value={bookingDetails.dropoffAddress} />
+                  <DetailRow icon={<CalendarIcon />} label={t('dateTime')} value={`${bookingDetails.pickupDate} at ${bookingDetails.pickupTime}`} />
+                  <DetailRow icon={<CarIcon />} label={t('vehicle')} value={bookingDetails.vehicleName} />
+                  <DetailRow icon={<UsersIcon />} label={t('passengers')} value={`${bookingDetails.passengers} passengers, ${bookingDetails.luggage} luggage`} />
+                  {bookingDetails.flightNumber && <DetailRow icon={<PlaneIcon />} label={t('flightNumber')} value={bookingDetails.flightNumber} />}
                 </DetailsCard>
 
                 {/* Customer Details */}
                 <DetailsCard title={t('customerDetails')}>
-                  <DetailRow 
-                    icon={<UserIcon />}
-                    label={t('name')} 
-                    value={bookingDetails.customerName} 
-                  />
-                  <DetailRow 
-                    icon={<MailIcon />}
-                    label={t('email')} 
-                    value={bookingDetails.customerEmail} 
-                  />
-                  <DetailRow 
-                    icon={<PhoneIcon />}
-                    label={t('phone')} 
-                    value={bookingDetails.customerPhone} 
-                  />
+                  <DetailRow icon={<UserIcon />} label={t('name')} value={bookingDetails.customerName} />
+                  <DetailRow icon={<MailIcon />} label={t('email')} value={bookingDetails.customerEmail} />
+                  <DetailRow icon={<PhoneIcon />} label={t('phone')} value={bookingDetails.customerPhone} />
                 </DetailsCard>
 
                 {/* Payment Details */}
                 <DetailsCard title={t('paymentDetails')}>
-                  <DetailRow 
-                    icon={<CreditCardIcon />}
-                    label={t('paymentMethod')} 
-                    value={paymentStatus === 'cash' ? t('cash') : t('card')} 
-                  />
-                  <DetailRow 
+                  <DetailRow icon={<CreditCardIcon />} label={t('paymentMethod')} value={paymentStatus === 'cash' ? t('cash') : t('card')} />
+                  <DetailRow
                     icon={<CheckCircleIcon />}
-                    label={t('paymentStatus')} 
-                    value={getPaymentStatusText(paymentStatus, t)} 
+                    label={t('paymentStatus')}
+                    value={getPaymentStatusText(paymentStatus, t)}
                     valueClassName={getPaymentStatusColor(paymentStatus)}
                   />
-                  <DetailRow 
+                  <DetailRow
                     icon={<DollarIcon />}
-                    label={t('totalPaid')} 
-                    value={formatPrice(bookingDetails.totalPrice)} 
+                    label={t('totalPaid')}
+                    value={formatPrice(bookingDetails.totalPrice)}
                     valueClassName="text-lg font-bold text-emerald-600"
                   />
+
+                  {/* ✅ Extra payment info (requested) */}
+                  <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-3">
+                    <p className="text-sm font-semibold text-emerald-700">{DRIVER_PAYMENT_NOTE}</p>
+                  </div>
+                </DetailsCard>
+
+                {/* ✅ NEW: Driver Contact Card (requested) */}
+                <DetailsCard title="Driver Contact">
+                  <DetailRow
+                    icon={<PhoneIcon />}
+                    label="Driver Phone"
+                    value={DRIVER_PHONE_DISPLAY}
+                  />
+                  <div className="mt-2">
+                    <a
+                      href={`tel:${DRIVER_PHONE_TEL}`}
+                      className="inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors"
+                    >
+                      Call Driver
+                    </a>
+                  </div>
+                  <p className="mt-3 text-sm text-gray-600">{DRIVER_PAYMENT_NOTE}</p>
                 </DetailsCard>
               </>
             )}
@@ -261,44 +244,33 @@ useEffect(() => {
           >
             <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg sticky top-4">
               <h2 className="text-lg font-bold text-gray-900 mb-4">{t('quickActions')}</h2>
-              
+
               <div className="space-y-3">
                 {/* Email Confirmation */}
-                <ActionButton
-                  icon={<MailIcon />}
-                  label={t('emailSent')}
-                  description={bookingDetails?.customerEmail || ''}
-                  variant="success"
-                />
+                <ActionButton icon={<MailIcon />} label={t('emailSent')} description={bookingDetails?.customerEmail || ''} variant="success" />
 
                 {/* Download Receipt */}
-                <ActionButton
-                  icon={<DownloadIcon />}
-                  label={t('downloadReceipt')}
-                  onClick={() => handleDownloadReceipt(bookingDetails)}
-                  variant="secondary"
-                />
+                <ActionButton icon={<DownloadIcon />} label={t('downloadReceipt')} onClick={() => handleDownloadReceipt(bookingDetails)} variant="secondary" />
 
                 {/* Add to Calendar */}
-                <ActionButton
-                  icon={<CalendarIcon />}
-                  label={t('addToCalendar')}
-                  onClick={() => handleAddToCalendar(bookingDetails)}
-                  variant="secondary"
-                />
+                <ActionButton icon={<CalendarIcon />} label={t('addToCalendar')} onClick={() => handleAddToCalendar(bookingDetails)} variant="secondary" />
 
                 {/* Print Confirmation */}
-                <ActionButton
-                  icon={<PrinterIcon />}
-                  label={t('print')}
-                  onClick={() => window.print()}
-                  variant="secondary"
-                />
+                <ActionButton icon={<PrinterIcon />} label={t('print')} onClick={() => window.print()} variant="secondary" />
               </div>
 
-              {/* Need Help */}
+              {/* ✅ Need Help (updated contact info with driver number + payment note) */}
               <div className="mt-6 pt-6 border-t border-gray-200">
-                <p className="text-sm text-gray-600 mb-3">{t('needHelp')}</p>
+                <p className="text-sm text-gray-600 mb-2">{t('needHelp')}</p>
+
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-3 mb-3">
+                  <p className="text-xs text-gray-500 mb-1">Driver Phone</p>
+                  <a href={`tel:${DRIVER_PHONE_TEL}`} className="text-sm font-semibold text-gray-900">
+                    {DRIVER_PHONE_DISPLAY}
+                  </a>
+                  <p className="text-xs text-gray-600 mt-2">{DRIVER_PAYMENT_NOTE}</p>
+                </div>
+
                 <Link
                   href="/contact"
                   className="block text-center py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-semibold text-gray-700 transition-colors"
@@ -321,32 +293,17 @@ useEffect(() => {
             <InfoIcon className="w-6 h-6 text-blue-500" />
             {t('whatsNext.title')}
           </h2>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <NextStep
-              number={1}
-              title={t('whatsNext.step1.title')}
-              description={t('whatsNext.step1.description')}
-            />
-            <NextStep
-              number={2}
-              title={t('whatsNext.step2.title')}
-              description={t('whatsNext.step2.description')}
-            />
-            <NextStep
-              number={3}
-              title={t('whatsNext.step3.title')}
-              description={t('whatsNext.step3.description')}
-            />
+            <NextStep number={1} title={t('whatsNext.step1.title')} description={t('whatsNext.step1.description')} />
+            <NextStep number={2} title={t('whatsNext.step2.title')} description={t('whatsNext.step2.description')} />
+            <NextStep number={3} title={t('whatsNext.step3.title')} description={t('whatsNext.step3.description')} />
           </div>
         </motion.div>
 
         {/* Back to Home */}
         <div className="text-center">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-          >
+          <Link href="/" className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -379,7 +336,7 @@ function LoadingState() {
 
 function ErrorState({ error }: { error: string }) {
   const t = useTranslations('success');
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-50 to-white py-12">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -389,21 +346,15 @@ function ErrorState({ error }: { error: string }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          
+
           <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('error.title')}</h1>
           <p className="text-gray-600 mb-6">{error}</p>
-          
+
           <div className="space-y-3">
-            <Link
-              href="/book"
-              className="block py-3 px-6 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-semibold transition-colors"
-            >
+            <Link href="/book" className="block py-3 px-6 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-semibold transition-colors">
               {t('error.tryAgain')}
             </Link>
-            <Link
-              href="/contact"
-              className="block py-3 px-6 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition-colors"
-            >
+            <Link href="/contact" className="block py-3 px-6 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition-colors">
               {t('error.contactSupport')}
             </Link>
           </div>
@@ -421,9 +372,7 @@ function DetailsCard({ title, children }: { title: string; children: React.React
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
       <h2 className="text-lg font-bold text-gray-900 mb-4">{title}</h2>
-      <div className="space-y-3">
-        {children}
-      </div>
+      <div className="space-y-3">{children}</div>
     </div>
   );
 }
@@ -438,9 +387,7 @@ interface DetailRowProps {
 function DetailRow({ icon, label, value, valueClassName = 'text-gray-900' }: DetailRowProps) {
   return (
     <div className="flex items-start gap-3">
-      <div className="flex-shrink-0 w-5 h-5 text-gray-400 mt-0.5">
-        {icon}
-      </div>
+      <div className="flex-shrink-0 w-5 h-5 text-gray-400 mt-0.5">{icon}</div>
       <div className="flex-1 min-w-0">
         <p className="text-sm text-gray-500">{label}</p>
         <p className={`text-sm font-semibold ${valueClassName} break-words`}>{value}</p>
@@ -458,20 +405,17 @@ interface ActionButtonProps {
 }
 
 function ActionButton({ icon, label, description, onClick, variant = 'secondary' }: ActionButtonProps) {
-  const baseClasses = "flex items-center gap-3 w-full p-3 rounded-xl transition-all";
+  const baseClasses = 'flex items-center gap-3 w-full p-3 rounded-xl transition-all';
   const variantClasses = {
-    primary: "bg-blue-500 hover:bg-blue-600 text-white",
-    secondary: "bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200",
-    success: "bg-emerald-50 text-emerald-700 border border-emerald-200",
+    primary: 'bg-blue-500 hover:bg-blue-600 text-white',
+    secondary: 'bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200',
+    success: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
   };
 
   const Component = onClick ? 'button' : 'div';
 
   return (
-    <Component
-      onClick={onClick}
-      className={`${baseClasses} ${variantClasses[variant]} ${onClick ? 'cursor-pointer' : ''}`}
-    >
+    <Component onClick={onClick} className={`${baseClasses} ${variantClasses[variant]} ${onClick ? 'cursor-pointer' : ''}`}>
       <div className="flex-shrink-0 w-5 h-5">{icon}</div>
       <div className="flex-1 text-left">
         <p className="text-sm font-semibold">{label}</p>
@@ -526,7 +470,7 @@ function getPaymentStatusColor(status: PaymentStatus): string {
 
 function handleDownloadReceipt(bookingDetails: BookingDetails | null) {
   if (!bookingDetails) return;
-  
+
   // TODO: Implement PDF generation or download
   alert('Receipt download feature coming soon!');
   console.log('Download receipt for booking:', bookingDetails.bookingId);
@@ -534,7 +478,7 @@ function handleDownloadReceipt(bookingDetails: BookingDetails | null) {
 
 function handleAddToCalendar(bookingDetails: BookingDetails | null) {
   if (!bookingDetails) return;
-  
+
   // Create iCal format event
   const event = {
     title: `Transfer: ${bookingDetails.pickupAddress} → ${bookingDetails.dropoffAddress}`,
@@ -542,7 +486,7 @@ function handleAddToCalendar(bookingDetails: BookingDetails | null) {
     location: bookingDetails.pickupAddress,
     startDate: `${bookingDetails.pickupDate}T${bookingDetails.pickupTime}`,
   };
-  
+
   // TODO: Generate proper .ics file
   alert('Add to calendar feature coming soon!');
   console.log('Add to calendar:', event);
