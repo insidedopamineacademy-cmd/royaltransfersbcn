@@ -66,7 +66,13 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   const [transferType, setTransferType] = useState<TransferType>('oneWay');
   const [pickup, setPickup] = useState<Location>({ address: '' });
   const [dropoff, setDropoff] = useState<Location>({ address: '' });
+  
 
+  const inputDateTime =
+  "w-full h-12 pl-10 pr-3 bg-white border-2 border-gray-200 rounded-xl " +
+  "text-gray-900 text-[16px] leading-normal " +
+  "focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 " +
+  "transition-all appearance-none [-webkit-appearance:none]";
   // ✅ Better input styling (fixes “text lifted” + keeps iOS date/time normal)
   const inputNormal =
     'block w-full h-12 pl-10 pr-3 py-2 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
@@ -412,7 +418,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                         onChange={(e) => setReturnDate(e.target.value)}
                         min={getMinReturnDate()}
                         aria-label={t('fields.returnDate.label')}
-                        className={inputNormal}
+                        className={inputDateTime}
                       />
                     </div>
                   </div>
@@ -429,7 +435,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                         value={returnTime}
                         onChange={(e) => setReturnTime(e.target.value)}
                         aria-label={t('fields.returnTime.label')}
-                        className={inputNormal}
+                        className={inputDateTime}
                       />
                     </div>
                   </div>
@@ -452,7 +458,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     onChange={(e) => setDate(e.target.value)}
                     min={minDateString}
                     aria-label={t('fields.date.label')}
-                    className={inputNormal}
+                    className={inputDateTime}
                   />
                 </div>
               </div>
@@ -469,7 +475,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
                     aria-label={t('fields.time.label')}
-                    className={inputNormal}
+                    className={inputDateTime}
                   />
                 </div>
               </div>

@@ -1,6 +1,6 @@
 // ✅ FIXES APPLIED:
-// 1) Removed unused `inputPlain` (no-unused-vars)
-// 2) Removed `any` usage by typing `patches` as Partial<typeof bookingData> (no-explicit-any)
+// 1) Date/Time vertical alignment fixed (WebKit/Safari/iOS “lifted text”)
+// 2) Return toggle reliability fixed (atomic updates + type="button")
 
 'use client';
 
@@ -39,18 +39,20 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   const minDateString = useMemo(() => toDateString(minDateTime), [minDateTime]);
 
   // ----------------------------
-  // ✅ Normalized input styles (match HeroBookingForm)
+  // ✅ Input styles
+  // - inputWithIcon is used by date/time too
+  // - adds WebKit pseudo selectors to vertically center date/time value
   // ----------------------------
   const inputWithIcon =
-    'block w-full h-12 pl-11 pr-4 py-2 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
-    'text-[16px] leading-[1.25] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
-    'transition-all appearance-none [color-scheme:light]';
-
-
-const selectWithIcon =
-  'w-full h-12 pl-12 pr-12 py-2 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
-  'text-[16px] leading-[1.25] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
-  'transition-all appearance-none cursor-pointer [color-scheme:light]';
+    'block w-full h-12 pl-12 pr-4 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
+    'text-[16px] leading-normal font-medium ' +
+    'focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
+    'transition-all appearance-none [-webkit-appearance:none] [color-scheme:light] ' +
+    // ✅ Safari/iOS: force internal value alignment
+    '[&::-webkit-date-and-time-value]:h-full [&::-webkit-date-and-time-value]:flex [&::-webkit-date-and-time-value]:items-center ' +
+    '[&::-webkit-date-and-time-value]:p-0 [&::-webkit-date-and-time-value]:m-0 ' +
+    // ✅ remove extra inner padding/widgets where possible
+    '[&::-webkit-inner-spin-button]:hidden [&::-webkit-clear-button]:hidden';
 
   const selectPlain =
     'w-full h-12 px-4 pr-10 py-2 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
@@ -69,9 +71,6 @@ const selectWithIcon =
 
   // ----------------------------
   // ✅ Ensure bookingData has valid defaults (run once)
-  // - date/time valid and >= min
-  // - passengers count exists
-  // - luggage exists (from HeroBookingForm draft)
   // ----------------------------
   useEffect(() => {
     if (didInitRef.current) return;
@@ -227,16 +226,15 @@ const selectWithIcon =
   }, [calculateDistance]);
 
   // ----------------------------
-  // Handlers
+  // Handlers (✅ made atomic)
   // ----------------------------
   const handleServiceCategoryChange = useCallback(
     (category: ServiceCategory) => {
       const mappedServiceType: ServiceType = category === 'hourly' ? 'hourly' : 'distance';
 
-      updateBookingData({ serviceType: mappedServiceType });
-
       if (mappedServiceType === 'hourly') {
         updateBookingData({
+          serviceType: 'hourly',
           dropoff: { address: '' },
           distance: undefined,
           duration: undefined,
@@ -250,7 +248,9 @@ const selectWithIcon =
         });
       } else {
         updateBookingData({
+          serviceType: 'distance',
           hourlyDuration: undefined,
+          // keep whatever was there, but default to oneWay if missing
           transferType: bookingData.transferType ?? 'oneWay',
         });
       }
@@ -262,28 +262,44 @@ const selectWithIcon =
     (type: TransferType) => {
       if (bookingData.serviceType !== 'distance') return;
 
-      updateBookingData({ transferType: type });
-
+      // ✅ one atomic update so it never "sometimes" fails
       if (type === 'oneWay') {
-        if (bookingData.dateTime?.returnDate || bookingData.dateTime?.returnTime) {
-          updateBookingData({
-            dateTime: { ...bookingData.dateTime, returnDate: undefined, returnTime: undefined },
-          });
-        }
+        updateBookingData({
+          transferType: 'oneWay',
+          dateTime: {
+            ...bookingData.dateTime,
+            returnDate: undefined,
+            returnTime: undefined,
+          },
+        });
         return;
       }
 
-      if (!bookingData.dateTime?.returnDate || !bookingData.dateTime?.returnTime) {
-        const base = new Date(`${bookingData.dateTime?.date || minDateString}T${bookingData.dateTime?.time || '10:00'}:00`);
+      // type === 'return'
+      const pd = bookingData.dateTime?.date || minDateString;
+      const pt = bookingData.dateTime?.time || '10:00';
+
+      const hasReturn = Boolean(bookingData.dateTime?.returnDate && bookingData.dateTime?.returnTime);
+
+      let nextReturnDate = bookingData.dateTime?.returnDate;
+      let nextReturnTime = bookingData.dateTime?.returnTime;
+
+      if (!hasReturn) {
+        const base = new Date(`${pd}T${pt}:00`);
+        base.setSeconds(0, 0);
         base.setDate(base.getDate() + 1);
-        updateBookingData({
-          dateTime: {
-            ...bookingData.dateTime,
-            returnDate: toDateString(base),
-            returnTime: toTimeString(base),
-          },
-        });
+        nextReturnDate = toDateString(base);
+        nextReturnTime = toTimeString(base);
       }
+
+      updateBookingData({
+        transferType: 'return',
+        dateTime: {
+          ...bookingData.dateTime,
+          returnDate: nextReturnDate,
+          returnTime: nextReturnTime,
+        },
+      });
     },
     [bookingData.serviceType, bookingData.dateTime, minDateString, updateBookingData]
   );
@@ -362,7 +378,7 @@ const selectWithIcon =
             className="max-w-3xl mx-auto space-y-4 sm:space-y-6"
             style={{ willChange: prefersReducedMotion ? 'auto' : 'opacity, transform' }}
           >
-            {/* ✅ Date & Time (one row, mobile too) */}
+            {/* ✅ Date & Time */}
             <div className="grid grid-cols-2 gap-2 sm:gap-6">
               <div>
                 <label htmlFor="pickup-date" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
@@ -377,8 +393,9 @@ const selectWithIcon =
                     type="date"
                     value={bookingData.dateTime?.date || ''}
                     onChange={(e) => {
-                      updateBookingData({ dateTime: { ...bookingData.dateTime, date: e.target.value } });
-                      ensureReturnIsValid(bookingData.dateTime?.returnDate, bookingData.dateTime?.returnTime);
+                      const nextDate = e.target.value;
+                      updateBookingData({ dateTime: { ...bookingData.dateTime, date: nextDate } });
+                      ensureReturnIsValid(nextDate ? nextDate : bookingData.dateTime?.returnDate, bookingData.dateTime?.returnTime);
                     }}
                     min={minDateString}
                     aria-label={t('fields.date.label')}
@@ -400,8 +417,9 @@ const selectWithIcon =
                     type="time"
                     value={bookingData.dateTime?.time || ''}
                     onChange={(e) => {
-                      updateBookingData({ dateTime: { ...bookingData.dateTime, time: e.target.value } });
-                      ensureReturnIsValid(bookingData.dateTime?.returnDate, bookingData.dateTime?.returnTime);
+                      const nextTime = e.target.value;
+                      updateBookingData({ dateTime: { ...bookingData.dateTime, time: nextTime } });
+                      ensureReturnIsValid(bookingData.dateTime?.returnDate, nextTime);
                     }}
                     aria-label={t('fields.time.label')}
                     className={inputWithIcon}
@@ -438,6 +456,7 @@ const selectWithIcon =
                 <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">
                   {t('fields.transferType.label')}
                 </label>
+
                 <div className="grid grid-cols-2 gap-2 sm:gap-4" role="radiogroup" aria-label={t('fields.transferType.label')}>
                   <TransferTypeButton
                     active={transferType === 'oneWay'}
@@ -463,10 +482,11 @@ const selectWithIcon =
                       {t('fields.returnDetailsTitle')}
                     </p>
 
-                    {/* ✅ Return date/time one row on mobile */}
                     <div className="grid grid-cols-2 gap-2 sm:gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-1.5 sm:mb-2">{t('fields.returnDate.label')}</label>
+                        <label className="block text-xs font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                          {t('fields.returnDate.label')}
+                        </label>
                         <div className="relative">
                           <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10">
                             <CalendarIcon className="w-5 h-5 text-gray-400" />
@@ -476,8 +496,9 @@ const selectWithIcon =
                             value={bookingData.dateTime?.returnDate || ''}
                             min={minReturnDate}
                             onChange={(e) => {
-                              updateBookingData({ dateTime: { ...bookingData.dateTime, returnDate: e.target.value } });
-                              ensureReturnIsValid(e.target.value, bookingData.dateTime?.returnTime);
+                              const next = e.target.value;
+                              updateBookingData({ dateTime: { ...bookingData.dateTime, returnDate: next } });
+                              ensureReturnIsValid(next, bookingData.dateTime?.returnTime);
                             }}
                             className={inputWithIcon}
                           />
@@ -485,7 +506,9 @@ const selectWithIcon =
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-1.5 sm:mb-2">{t('fields.returnTime.label')}</label>
+                        <label className="block text-xs font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                          {t('fields.returnTime.label')}
+                        </label>
                         <div className="relative">
                           <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10">
                             <ClockIconSmall className="w-5 h-5 text-gray-400" />
@@ -494,8 +517,9 @@ const selectWithIcon =
                             type="time"
                             value={bookingData.dateTime?.returnTime || ''}
                             onChange={(e) => {
-                              updateBookingData({ dateTime: { ...bookingData.dateTime, returnTime: e.target.value } });
-                              ensureReturnIsValid(bookingData.dateTime?.returnDate, e.target.value);
+                              const next = e.target.value;
+                              updateBookingData({ dateTime: { ...bookingData.dateTime, returnTime: next } });
+                              ensureReturnIsValid(bookingData.dateTime?.returnDate, next);
                             }}
                             className={inputWithIcon}
                           />
@@ -534,88 +558,75 @@ const selectWithIcon =
                 <p className="mt-2 text-[10px] sm:text-xs text-gray-500">{t('fields.duration.note')}</p>
               </div>
             )}
-            
-        
 
-{/* ✅ Passengers + Luggage (perfect aligned even if label wraps) */}
-<div className="grid grid-cols-2 gap-3 sm:gap-6 items-start">
-  {/* Passengers */}
-  <div className="min-w-0">
-    {/* fixed label slot height */}
-    <div className="min-h-[36px] sm:min-h-[40px] flex items-end">
-      <label
-        htmlFor="passengers"
-        className="block text-xs sm:text-sm font-semibold text-gray-700 leading-tight"
-      >
-        {t('fields.passengers.label')}
-      </label>
-    </div>
+            {/* ✅ Passengers + Luggage */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 items-start">
+              <div className="min-w-0">
+                <div className="min-h-[36px] sm:min-h-[40px] flex items-end">
+                  <label htmlFor="passengers" className="block text-xs sm:text-sm font-semibold text-gray-700 leading-tight">
+                    {t('fields.passengers.label')}
+                  </label>
+                </div>
 
-    <div className="relative">
-      <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-      <select
-        id="passengers"
-        value={bookingData.passengers?.count ?? 1}
-        onChange={(e) => handlePassengersChange(Number(e.target.value))}
-        aria-label={t('fields.passengers.label')}
-        className="w-full h-12 pl-12 pr-12 py-2 bg-white border-2 border-gray-200 rounded-xl
-                   text-gray-900 text-[16px] leading-[1.25] font-medium
-                   focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20
-                   transition-all appearance-none cursor-pointer [color-scheme:light]"
-      >
-        {Array.from({ length: 8 }, (_, i) => i + 1).map((num) => (
-          <option key={num} value={num}>
-            {num} {/* ✅ keep short so it never clips */}
-          </option>
-        ))}
-      </select>
-      <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-    </div>
+                <div className="relative">
+                  <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
+                  <select
+                    id="passengers"
+                    value={bookingData.passengers?.count ?? 1}
+                    onChange={(e) => handlePassengersChange(Number(e.target.value))}
+                    aria-label={t('fields.passengers.label')}
+                    className="w-full h-12 pl-12 pr-12 py-2 bg-white border-2 border-gray-200 rounded-xl
+                               text-gray-900 text-[16px] leading-[1.25] font-medium
+                               focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20
+                               transition-all appearance-none cursor-pointer [color-scheme:light]"
+                  >
+                    {Array.from({ length: 8 }, (_, i) => i + 1).map((num) => (
+                      <option key={num} value={num}>
+                        {num}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
+                </div>
 
-    {/* optional helper text (keeps UX good without bloating select) */}
-    <p className="mt-1 text-[10px] sm:text-xs text-gray-500">
-      {t('fields.passengers.count', { count: bookingData.passengers?.count ?? 1 })}
-    </p>
-  </div>
+                <p className="mt-1 text-[10px] sm:text-xs text-gray-500">
+                  {t('fields.passengers.count', { count: bookingData.passengers?.count ?? 1 })}
+                </p>
+              </div>
 
-  {/* Luggage */}
-  <div className="min-w-0">
-    {/* fixed label slot height */}
-    <div className="min-h-[36px] sm:min-h-[40px] flex items-end">
-      <label
-        htmlFor="luggage"
-        className="block text-xs sm:text-sm font-semibold text-gray-700 leading-tight"
-      >
-        Luggage
-      </label>
-    </div>
+              <div className="min-w-0">
+                <div className="min-h-[36px] sm:min-h-[40px] flex items-end">
+                  <label htmlFor="luggage" className="block text-xs sm:text-sm font-semibold text-gray-700 leading-tight">
+                    Luggage
+                  </label>
+                </div>
 
-    <div className="relative">
-      <SuitcaseIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-      <select
-        id="luggage"
-        value={bookingData.passengers?.luggage ?? 0}
-        onChange={(e) => handleLuggageChange(Number(e.target.value))}
-        aria-label="Luggage"
-        className="w-full h-12 pl-12 pr-12 py-2 bg-white border-2 border-gray-200 rounded-xl
-                   text-gray-900 text-[16px] leading-[1.25] font-medium
-                   focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20
-                   transition-all appearance-none cursor-pointer [color-scheme:light]"
-      >
-        {Array.from({ length: 9 }, (_, i) => i).map((n) => (
-          <option key={n} value={n}>
-            {n}
-          </option>
-        ))}
-      </select>
-      <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-    </div>
+                <div className="relative">
+                  <SuitcaseIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
+                  <select
+                    id="luggage"
+                    value={bookingData.passengers?.luggage ?? 0}
+                    onChange={(e) => handleLuggageChange(Number(e.target.value))}
+                    aria-label="Luggage"
+                    className="w-full h-12 pl-12 pr-12 py-2 bg-white border-2 border-gray-200 rounded-xl
+                               text-gray-900 text-[16px] leading-[1.25] font-medium
+                               focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20
+                               transition-all appearance-none cursor-pointer [color-scheme:light]"
+                  >
+                    {Array.from({ length: 9 }, (_, i) => i).map((n) => (
+                      <option key={n} value={n}>
+                        {n}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
+                </div>
 
-    <p className="mt-1 text-[10px] sm:text-xs text-gray-500">
-      {bookingData.passengers?.luggage ?? 0} bag{(bookingData.passengers?.luggage ?? 0) === 1 ? '' : 's'}
-    </p>
-  </div>
-</div>
+                <p className="mt-1 text-[10px] sm:text-xs text-gray-500">
+                  {bookingData.passengers?.luggage ?? 0} bag{(bookingData.passengers?.luggage ?? 0) === 1 ? '' : 's'}
+                </p>
+              </div>
+            </div>
 
             {/* Distance Info */}
             {serviceCategory === 'distance' && distanceInfo && !isCalculating && (
@@ -638,7 +649,6 @@ const selectWithIcon =
                       {transferType === 'oneWay' ? t('fields.transferType.oneWay') : t('fields.transferType.return')}
                     </p>
                   </div>
-                  
                 </div>
               </m.div>
             )}
@@ -662,7 +672,7 @@ const selectWithIcon =
 RideDetailsStep.displayName = 'RideDetailsStep';
 
 // ============================================================================
-// BUTTONS + ICONS (unchanged from your file)
+// BUTTONS + ICONS
 // ============================================================================
 
 const ServiceTypeButton = memo(function ServiceTypeButton({
@@ -682,6 +692,7 @@ const ServiceTypeButton = memo(function ServiceTypeButton({
 }) {
   return (
     <button
+      type="button" // ✅ important
       onClick={onClick}
       role="tab"
       aria-selected={active}
@@ -716,6 +727,7 @@ const TransferTypeButton = memo(function TransferTypeButton({
 }) {
   return (
     <button
+      type="button" // ✅ important
       onClick={onClick}
       role="radio"
       aria-checked={active}
@@ -733,6 +745,7 @@ const TransferTypeButton = memo(function TransferTypeButton({
   );
 });
 
+// Icons (unchanged)
 const RouteIcon = memo(function RouteIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

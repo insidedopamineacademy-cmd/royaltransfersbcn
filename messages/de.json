@@ -257,7 +257,7 @@
     "contact": "Kontakt",
     "address": "Barcelona, Spanien",
     "email": "info@royaltransfersbcn.com",
-    "phone": "+34 123 456 789",
+    "phone": "+34 617629115",
     "available": "24/7 verfügbar",
     "followUs": "Folgen Sie Uns",
     "copyright": "© {year} Royal Transfers BCN. Alle Rechte vorbehalten.",
@@ -1231,7 +1231,7 @@
       },
       "phone": {
         "label": "Telefonnummer",
-        "placeholder": "612345678",
+        "placeholder": "617629115",
         "countryCodeAria": "Ländervorwahl auswählen"
       },
       "flightNumber": {
