@@ -36,15 +36,16 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   const minDateString = useMemo(() => toDateString(minDateTime), [minDateTime]);
 
   // ----------------------------
-  // ✅ Normalized input styles (fix date/time sizing everywhere)
+  // ✅ Normalized input styles (iOS/Safari safe)
+  // - appearance-none + 16px prevents iOS compact/zoom weirdness
   // ----------------------------
   const inputWithIcon =
-    'w-full h-12 pl-11 pr-4 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium ' +
-    'focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]';
+    'block w-full h-12 pl-11 pr-4 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-[16px] leading-normal font-medium ' +
+    'focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none [color-scheme:light]';
 
   const inputPlain =
-    'w-full h-12 px-4 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium ' +
-    'focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]';
+    'block w-full h-12 px-4 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-[16px] leading-normal font-medium ' +
+    'focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none [color-scheme:light]';
 
   // ----------------------------
   // ✅ Single source of truth: derive UI state from bookingData
@@ -268,7 +269,11 @@ const RideDetailsStep = memo(function RideDetailsStep() {
 
         {/* Service Category Tabs */}
         <div className="max-w-md mx-auto">
-          <div className="bg-gray-100 rounded-xl p-1.5 sm:p-2 flex gap-1.5 sm:gap-2" role="tablist" aria-label={t('serviceType.aria')}>
+          <div
+            className="bg-gray-100 rounded-xl p-1.5 sm:p-2 flex gap-1.5 sm:gap-2"
+            role="tablist"
+            aria-label={t('serviceType.aria')}
+          >
             <ServiceTypeButton
               active={serviceCategory === 'distance'}
               onClick={() => handleServiceCategoryChange('distance')}
@@ -375,7 +380,11 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                 <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">
                   {t('fields.transferType.label')}
                 </label>
-                <div className="grid grid-cols-2 gap-3 sm:gap-4" role="radiogroup" aria-label={t('fields.transferType.label')}>
+                <div
+                  className="grid grid-cols-2 gap-3 sm:gap-4"
+                  role="radiogroup"
+                  aria-label={t('fields.transferType.label')}
+                >
                   <TransferTypeButton
                     active={transferType === 'oneWay'}
                     onClick={() => handleTransferTypeChange('oneWay')}
@@ -402,9 +411,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-2">
-                          {t('fields.returnDate.label')}
-                        </label>
+                        <label className="block text-xs font-semibold text-gray-700 mb-2">{t('fields.returnDate.label')}</label>
                         <input
                           type="date"
                           value={bookingData.dateTime.returnDate || ''}
@@ -418,9 +425,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-2">
-                          {t('fields.returnTime.label')}
-                        </label>
+                        <label className="block text-xs font-semibold text-gray-700 mb-2">{t('fields.returnTime.label')}</label>
                         <input
                           type="time"
                           value={bookingData.dateTime.returnTime || ''}
@@ -449,7 +454,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                     value={hourlyDuration}
                     onChange={(e) => handleHourlyDurationChange(Number(e.target.value))}
                     aria-label={t('fields.duration.label')}
-                    className="w-full h-12 pl-4 pr-10 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                    className="w-full h-12 pl-4 pr-10 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-[16px] leading-normal font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                   >
                     {Array.from({ length: 23 }, (_, i) => i + 2).map((h) => (
                       <option key={h} value={h}>
@@ -481,7 +486,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                     updateBookingData({ passengers: { ...bookingData.passengers, count: Number(e.target.value) } })
                   }
                   aria-label={t('fields.passengers.label')}
-                  className="w-full h-12 pl-11 pr-10 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-base font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                  className="w-full h-12 pl-11 pr-10 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-[16px] leading-normal font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                 >
                   {Array.from({ length: 8 }, (_, i) => i + 1).map((num) => (
                     <option key={num} value={num}>

@@ -36,7 +36,7 @@ function toTimeString(d: Date) {
 }
 
 // ============================================================================
-// [NEW] HELPER: Generate a return date/time that is always > pickup date
+// HELPER: Generate a return date/time that is always > pickup date
 // ============================================================================
 function generateReturnDateTime(baseDateString: string): { returnDate: string; returnTime: string } {
   const base = new Date(`${baseDateString}T00:00:00`);
@@ -66,8 +66,12 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   const [transferType, setTransferType] = useState<TransferType>('oneWay');
   const [pickup, setPickup] = useState<Location>({ address: '' });
   const [dropoff, setDropoff] = useState<Location>({ address: '' });
+
+  // ✅ iOS-safe input styling (prevents compact date/time look)
   const inputNormal =
-  "w-full h-12 pl-10 pr-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-base focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]";
+    'block w-full h-12 pl-10 pr-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
+    'text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
+    'transition-all appearance-none [color-scheme:light]';
 
   // Default pickup date/time = now + 2 hours (safe)
   const getDefaultDateTime = useCallback(() => {
@@ -263,7 +267,6 @@ const HeroBookingForm = memo(function HeroBookingForm() {
 
     sessionStorage.setItem('booking-draft', JSON.stringify(bookingDraft));
 
-    // ✅ Align with context.tsx: hydrateFromDraft sets currentStep(0)
     router.push(`/${locale}/book`);
   }, [
     canSearch,
@@ -295,11 +298,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
       >
         <div className="bg-white/95 sm:backdrop-blur-sm rounded-2xl shadow-2xl p-3 sm:p-6 [@media(max-height:750px)]:p-2 border border-gray-100">
           {/* Service Type Toggle */}
-          <div
-            className="flex gap-2 mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2"
-            role="tablist"
-            aria-label={t('aria.serviceType')}
-          >
+          <div className="flex gap-2 mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2" role="tablist" aria-label={t('aria.serviceType')}>
             <ServiceTypeButton
               active={serviceType === 'distance'}
               onClick={() => {
@@ -323,9 +322,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
           {/* Transfer Type (Only for Distance-Based) */}
           {serviceType === 'distance' && (
             <div className="mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2">
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
-                {t('transferType.label')}
-              </label>
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">{t('transferType.label')}</label>
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <TransferTypeButton
                   active={transferType === 'oneWay'}
@@ -387,7 +384,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                   {t('transferType.returnDetails')}
                 </p>
 
-                <div className="grid grid-cols-2 gap-3">
+                {/* ✅ stack on mobile */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label htmlFor="return-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                       {t('fields.returnDate.label')}
@@ -395,14 +393,14 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     <div className="relative">
                       <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
                       <input
-  id="return-date"
-  type="date"
-  value={returnDate}
-  onChange={(e) => setReturnDate(e.target.value)}
-  min={getMinReturnDate()}
-  aria-label={t('fields.returnDate.label')}
-  className={inputNormal}
-/>
+                        id="return-date"
+                        type="date"
+                        value={returnDate}
+                        onChange={(e) => setReturnDate(e.target.value)}
+                        min={getMinReturnDate()}
+                        aria-label={t('fields.returnDate.label')}
+                        className={inputNormal}
+                      />
                     </div>
                   </div>
 
@@ -413,13 +411,13 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     <div className="relative">
                       <ClockIconSmall className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
                       <input
-  id="return-time"
-  type="time"
-  value={returnTime}
-  onChange={(e) => setReturnTime(e.target.value)}
-  aria-label={t('fields.returnTime.label')}
-  className={inputNormal}
-/>
+                        id="return-time"
+                        type="time"
+                        value={returnTime}
+                        onChange={(e) => setReturnTime(e.target.value)}
+                        aria-label={t('fields.returnTime.label')}
+                        className={inputNormal}
+                      />
                     </div>
                   </div>
                 </div>
@@ -427,7 +425,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
             )}
 
             {/* Date & Time */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* ✅ stack on mobile */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label htmlFor="pickup-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                   {t('fields.date.label')}
@@ -435,14 +434,14 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                 <div className="relative">
                   <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
                   <input
-  id="pickup-date"
-  type="date"
-  value={date}
-  onChange={(e) => setDate(e.target.value)}
-  min={minDateString}
-  aria-label={t('fields.date.label')}
-  className={inputNormal}
-/>
+                    id="pickup-date"
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    min={minDateString}
+                    aria-label={t('fields.date.label')}
+                    className={inputNormal}
+                  />
                 </div>
               </div>
 
@@ -453,13 +452,13 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                 <div className="relative">
                   <ClockIconSmall className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
                   <input
-  id="pickup-time"
-  type="time"
-  value={time}
-  onChange={(e) => setTime(e.target.value)}
-  aria-label={t('fields.time.label')}
-  className={inputNormal}
-/>
+                    id="pickup-time"
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    aria-label={t('fields.time.label')}
+                    className={inputNormal}
+                  />
                 </div>
               </div>
             </div>
@@ -477,7 +476,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={hourlyDuration}
                     onChange={(e) => setHourlyDuration(Number(e.target.value))}
                     aria-label={t('fields.duration.label')}
-                    className="w-full pl-10 pr-10 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                    className="w-full h-12 pl-10 pr-10 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                   >
                     {Array.from({ length: 23 }, (_, i) => i + 2).map((hours) => (
                       <option key={hours} value={hours}>
@@ -502,7 +501,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                   value={passengers}
                   onChange={(e) => setPassengers(Number(e.target.value))}
                   aria-label={t('fields.passengers.label')}
-                  className="w-full pl-10 pr-10 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                  className="w-full h-12 pl-10 pr-10 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                     <option key={num} value={num}>
@@ -559,9 +558,7 @@ const ServiceTypeButton = memo(function ServiceTypeButton({
       aria-selected={active}
       aria-label={label}
       className={`flex-1 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
-        active
-          ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:scale-95'
+        active ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:scale-95'
       }`}
     >
       <div className="flex items-center justify-center gap-2">
