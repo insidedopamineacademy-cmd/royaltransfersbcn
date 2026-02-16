@@ -1,7 +1,3 @@
-// ✅ FIXES APPLIED:
-// 1) Date/Time vertical alignment fixed (WebKit/Safari/iOS “lifted text”)
-// 2) Return toggle reliability fixed (atomic updates + type="button")
-
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback, memo, useRef } from 'react';
@@ -30,6 +26,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   }, []);
 
   const toDateString = (d: Date) => d.toISOString().slice(0, 10);
+
   const toTimeString = (d: Date) => {
     const hh = String(d.getHours()).padStart(2, '0');
     const mm = String(d.getMinutes()).padStart(2, '0');
@@ -39,28 +36,22 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   const minDateString = useMemo(() => toDateString(minDateTime), [minDateTime]);
 
   // ----------------------------
-  // ✅ Input styles
-  // - inputWithIcon is used by date/time too
-  // - adds WebKit pseudo selectors to vertically center date/time value
+  // ✅ iOS-safe input styles
+  // - DO NOT force tight width on mobile
+  // - Keep 16px font to avoid iOS zoom
   // ----------------------------
   const inputWithIcon =
-    'block w-full h-12 pl-12 pr-4 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
-    'text-[16px] leading-normal font-medium ' +
-    'focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
-    'transition-all appearance-none [-webkit-appearance:none] [color-scheme:light] ' +
-    // ✅ Safari/iOS: force internal value alignment
-    '[&::-webkit-date-and-time-value]:h-full [&::-webkit-date-and-time-value]:flex [&::-webkit-date-and-time-value]:items-center ' +
-    '[&::-webkit-date-and-time-value]:p-0 [&::-webkit-date-and-time-value]:m-0 ' +
-    // ✅ remove extra inner padding/widgets where possible
-    '[&::-webkit-inner-spin-button]:hidden [&::-webkit-clear-button]:hidden';
+    'block w-full min-h-[48px] pl-11 pr-4 py-3 bg-white border-2 border-gray-300 rounded-xl ' +
+    'text-gray-900 text-[16px] leading-[1.25] font-medium focus:outline-none focus:border-blue-500 ' +
+    'focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none [color-scheme:light]';
 
-  const selectPlain =
-    'w-full h-12 px-4 pr-10 py-2 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
-    'text-[16px] leading-[1.25] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
-    'transition-all appearance-none cursor-pointer [color-scheme:light]';
+  const inputPlain =
+    'block w-full min-h-[48px] px-4 py-3 bg-white border-2 border-gray-300 rounded-xl ' +
+    'text-gray-900 text-[16px] leading-[1.25] font-medium focus:outline-none focus:border-blue-500 ' +
+    'focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none [color-scheme:light]';
 
   // ----------------------------
-  // ✅ Single source of truth: derive UI state from bookingData
+  // Single source of truth: derive UI state from bookingData
   // ----------------------------
   const serviceCategory: ServiceCategory = bookingData.serviceType === 'hourly' ? 'hourly' : 'distance';
   const transferType: TransferType = bookingData.transferType === 'return' ? 'return' : 'oneWay';
@@ -70,76 +61,40 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   const didInitRef = useRef(false);
 
   // ----------------------------
-  // ✅ Ensure bookingData has valid defaults (run once)
+  // Ensure bookingData has a valid default date/time (run once)
   // ----------------------------
   useEffect(() => {
     if (didInitRef.current) return;
     didInitRef.current = true;
 
-    const patches: Partial<typeof bookingData> = {};
+    const currentDate = bookingData.dateTime.date;
+    const currentTime = bookingData.dateTime.time;
 
-    // date/time normalize
-    const currentDate = bookingData.dateTime?.date;
-    const currentTime = bookingData.dateTime?.time;
-
-    const desiredDate = currentDate || toDateString(minDateTime);
-    const desiredTime = currentTime || toTimeString(minDateTime);
-
-    const selected = new Date(`${desiredDate}T${desiredTime}:00`);
-    if (Number.isFinite(selected.getTime())) {
-      selected.setSeconds(0, 0);
-      if (selected.getTime() < minDateTime.getTime()) {
-        patches.dateTime = {
+    if (!currentDate || !currentTime) {
+      updateBookingData({
+        dateTime: {
           ...bookingData.dateTime,
           date: toDateString(minDateTime),
           time: toTimeString(minDateTime),
-        };
-      } else if (!currentDate || !currentTime) {
-        patches.dateTime = {
+        },
+      });
+      return;
+    }
+
+    const selected = new Date(`${currentDate}T${currentTime}:00`);
+    if (!Number.isFinite(selected.getTime())) return;
+
+    selected.setSeconds(0, 0);
+
+    if (selected.getTime() < minDateTime.getTime()) {
+      updateBookingData({
+        dateTime: {
           ...bookingData.dateTime,
-          date: desiredDate,
-          time: desiredTime,
-        };
-      }
-    } else {
-      patches.dateTime = {
-        ...bookingData.dateTime,
-        date: toDateString(minDateTime),
-        time: toTimeString(minDateTime),
-      };
+          date: toDateString(minDateTime),
+          time: toTimeString(minDateTime),
+        },
+      });
     }
-
-    // passengers defaults
-    const hasPassengers = Boolean(bookingData.passengers);
-    if (!hasPassengers) {
-      patches.passengers = { count: 1, luggage: 0, childSeats: 0 };
-    } else {
-      const nextPassengers = { ...bookingData.passengers };
-
-      const c = Number(nextPassengers.count);
-      const l = Number(nextPassengers.luggage);
-
-      if (!Number.isFinite(c) || c < 1) nextPassengers.count = 1;
-      if (!Number.isFinite(l) || l < 0) nextPassengers.luggage = 0;
-
-      const cs = Number(nextPassengers.childSeats);
-      if (!Number.isFinite(cs) || cs < 0) nextPassengers.childSeats = 0;
-
-      if (
-        nextPassengers.count !== bookingData.passengers.count ||
-        nextPassengers.luggage !== bookingData.passengers.luggage ||
-        nextPassengers.childSeats !== bookingData.passengers.childSeats
-      ) {
-        patches.passengers = nextPassengers;
-      }
-    }
-
-    // ensure hourlyDuration default when hourly
-    if (bookingData.serviceType === 'hourly' && !bookingData.hourlyDuration) {
-      patches.hourlyDuration = 2;
-    }
-
-    if (Object.keys(patches).length > 0) updateBookingData(patches);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -147,23 +102,24 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   // Return date/time rules
   // ----------------------------
   const minReturnDate = useMemo(() => {
-    if (!bookingData.dateTime?.date) return '';
+    if (!bookingData.dateTime.date) return '';
     const d = new Date(`${bookingData.dateTime.date}T00:00:00`);
     d.setDate(d.getDate() + 1);
     return toDateString(d);
-  }, [bookingData.dateTime?.date]);
+  }, [bookingData.dateTime.date]);
 
   const ensureReturnIsValid = useCallback(
     (returnDate?: string, returnTime?: string) => {
       if (bookingData.serviceType !== 'distance') return;
       if (bookingData.transferType !== 'return') return;
 
-      const pd = bookingData.dateTime?.date;
-      const pt = bookingData.dateTime?.time;
+      const pd = bookingData.dateTime.date;
+      const pt = bookingData.dateTime.time;
       if (!pd || !pt || !returnDate || !returnTime) return;
 
       const pickupTS = new Date(`${pd}T${pt}:00`).getTime();
       const returnTS = new Date(`${returnDate}T${returnTime}:00`).getTime();
+
       if (!Number.isFinite(pickupTS) || !Number.isFinite(returnTS)) return;
 
       if (returnTS <= pickupTS) {
@@ -182,7 +138,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   );
 
   // ----------------------------
-  // ✅ Distance calculation (distance bookings only)
+  // Distance calculation (distance bookings only)
   // ----------------------------
   const [isCalculating, setIsCalculating] = useState(false);
   const [distanceInfo, setDistanceInfo] = useState<{
@@ -194,7 +150,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
   const calculateDistance = useCallback(async () => {
     if (bookingData.serviceType !== 'distance') return;
 
-    const p1 = bookingData.pickup?.placeId;
+    const p1 = bookingData.pickup.placeId;
     const p2 = bookingData.dropoff?.placeId;
 
     if (!p1 || !p2 || p1 === p2) return;
@@ -219,22 +175,23 @@ const RideDetailsStep = memo(function RideDetailsStep() {
     } finally {
       setIsCalculating(false);
     }
-  }, [bookingData.serviceType, bookingData.pickup?.placeId, bookingData.dropoff?.placeId, updateBookingData]);
+  }, [bookingData.serviceType, bookingData.pickup.placeId, bookingData.dropoff?.placeId, updateBookingData]);
 
   useEffect(() => {
     calculateDistance();
   }, [calculateDistance]);
 
   // ----------------------------
-  // Handlers (✅ made atomic)
+  // Handlers
   // ----------------------------
   const handleServiceCategoryChange = useCallback(
     (category: ServiceCategory) => {
       const mappedServiceType: ServiceType = category === 'hourly' ? 'hourly' : 'distance';
 
+      updateBookingData({ serviceType: mappedServiceType });
+
       if (mappedServiceType === 'hourly') {
         updateBookingData({
-          serviceType: 'hourly',
           dropoff: { address: '' },
           distance: undefined,
           duration: undefined,
@@ -248,9 +205,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
         });
       } else {
         updateBookingData({
-          serviceType: 'distance',
           hourlyDuration: undefined,
-          // keep whatever was there, but default to oneWay if missing
           transferType: bookingData.transferType ?? 'oneWay',
         });
       }
@@ -262,44 +217,30 @@ const RideDetailsStep = memo(function RideDetailsStep() {
     (type: TransferType) => {
       if (bookingData.serviceType !== 'distance') return;
 
-      // ✅ one atomic update so it never "sometimes" fails
+      updateBookingData({ transferType: type });
+
       if (type === 'oneWay') {
-        updateBookingData({
-          transferType: 'oneWay',
-          dateTime: {
-            ...bookingData.dateTime,
-            returnDate: undefined,
-            returnTime: undefined,
-          },
-        });
+        if (bookingData.dateTime.returnDate || bookingData.dateTime.returnTime) {
+          updateBookingData({
+            dateTime: { ...bookingData.dateTime, returnDate: undefined, returnTime: undefined },
+          });
+        }
         return;
       }
 
-      // type === 'return'
-      const pd = bookingData.dateTime?.date || minDateString;
-      const pt = bookingData.dateTime?.time || '10:00';
-
-      const hasReturn = Boolean(bookingData.dateTime?.returnDate && bookingData.dateTime?.returnTime);
-
-      let nextReturnDate = bookingData.dateTime?.returnDate;
-      let nextReturnTime = bookingData.dateTime?.returnTime;
-
-      if (!hasReturn) {
-        const base = new Date(`${pd}T${pt}:00`);
-        base.setSeconds(0, 0);
+      if (!bookingData.dateTime.returnDate || !bookingData.dateTime.returnTime) {
+        const base = new Date(
+          `${bookingData.dateTime.date || minDateString}T${bookingData.dateTime.time || '10:00'}:00`
+        );
         base.setDate(base.getDate() + 1);
-        nextReturnDate = toDateString(base);
-        nextReturnTime = toTimeString(base);
+        updateBookingData({
+          dateTime: {
+            ...bookingData.dateTime,
+            returnDate: toDateString(base),
+            returnTime: toTimeString(base),
+          },
+        });
       }
-
-      updateBookingData({
-        transferType: 'return',
-        dateTime: {
-          ...bookingData.dateTime,
-          returnDate: nextReturnDate,
-          returnTime: nextReturnTime,
-        },
-      });
     },
     [bookingData.serviceType, bookingData.dateTime, minDateString, updateBookingData]
   );
@@ -312,34 +253,9 @@ const RideDetailsStep = memo(function RideDetailsStep() {
     [bookingData.serviceType, updateBookingData]
   );
 
-  const handlePassengersChange = useCallback(
-    (count: number) => {
-      updateBookingData({
-        passengers: {
-          ...(bookingData.passengers ?? { luggage: 0, childSeats: 0, count: 1 }),
-          count,
-        },
-      });
-    },
-    [bookingData.passengers, updateBookingData]
-  );
-
-  const handleLuggageChange = useCallback(
-    (luggage: number) => {
-      updateBookingData({
-        passengers: {
-          ...(bookingData.passengers ?? { luggage: 0, childSeats: 0, count: 1 }),
-          luggage,
-        },
-      });
-    },
-    [bookingData.passengers, updateBookingData]
-  );
-
   return (
     <LazyMotion features={domAnimation} strict>
       <div className="space-y-6 sm:space-y-8">
-        {/* Title */}
         <header className="text-center">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">{t('title')}</h1>
           <p className="text-sm sm:text-lg text-gray-600">{t('subtitle')}</p>
@@ -367,7 +283,6 @@ const RideDetailsStep = memo(function RideDetailsStep() {
           </div>
         </div>
 
-        {/* Form Content */}
         <AnimatePresence mode="wait">
           <m.div
             key={serviceCategory}
@@ -376,12 +291,11 @@ const RideDetailsStep = memo(function RideDetailsStep() {
             exit={!prefersReducedMotion ? { opacity: 0, x: -20 } : { opacity: 1 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-3xl mx-auto space-y-4 sm:space-y-6"
-            style={{ willChange: prefersReducedMotion ? 'auto' : 'opacity, transform' }}
           >
-            {/* ✅ Date & Time */}
-            <div className="grid grid-cols-2 gap-2 sm:gap-6">
+            {/* ✅ FIX: stack date/time on mobile so iOS date does NOT wrap */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <label htmlFor="pickup-date" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                <label htmlFor="pickup-date" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('fields.date.label')}
                 </label>
                 <div className="relative">
@@ -391,11 +305,10 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                   <input
                     id="pickup-date"
                     type="date"
-                    value={bookingData.dateTime?.date || ''}
+                    value={bookingData.dateTime.date}
                     onChange={(e) => {
-                      const nextDate = e.target.value;
-                      updateBookingData({ dateTime: { ...bookingData.dateTime, date: nextDate } });
-                      ensureReturnIsValid(nextDate ? nextDate : bookingData.dateTime?.returnDate, bookingData.dateTime?.returnTime);
+                      updateBookingData({ dateTime: { ...bookingData.dateTime, date: e.target.value } });
+                      ensureReturnIsValid(bookingData.dateTime.returnDate, bookingData.dateTime.returnTime);
                     }}
                     min={minDateString}
                     aria-label={t('fields.date.label')}
@@ -405,7 +318,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
               </div>
 
               <div>
-                <label htmlFor="pickup-time" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                <label htmlFor="pickup-time" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('fields.time.label')}
                 </label>
                 <div className="relative">
@@ -415,11 +328,10 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                   <input
                     id="pickup-time"
                     type="time"
-                    value={bookingData.dateTime?.time || ''}
+                    value={bookingData.dateTime.time}
                     onChange={(e) => {
-                      const nextTime = e.target.value;
-                      updateBookingData({ dateTime: { ...bookingData.dateTime, time: nextTime } });
-                      ensureReturnIsValid(bookingData.dateTime?.returnDate, nextTime);
+                      updateBookingData({ dateTime: { ...bookingData.dateTime, time: e.target.value } });
+                      ensureReturnIsValid(bookingData.dateTime.returnDate, bookingData.dateTime.returnTime);
                     }}
                     aria-label={t('fields.time.label')}
                     className={inputWithIcon}
@@ -431,7 +343,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
             {/* Locations */}
             <div className="space-y-3 sm:space-y-4">
               <LocationAutocomplete
-                value={bookingData.pickup?.address || ''}
+                value={bookingData.pickup.address}
                 onChange={(location) => updateBookingData({ pickup: location })}
                 placeholder={t('fields.pickup.placeholder')}
                 label={t('fields.pickup.label')}
@@ -450,14 +362,14 @@ const RideDetailsStep = memo(function RideDetailsStep() {
               )}
             </div>
 
-            {/* Transfer Type (distance only) */}
+            {/* Transfer Type */}
             {serviceCategory === 'distance' && (
               <div>
                 <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">
                   {t('fields.transferType.label')}
                 </label>
 
-                <div className="grid grid-cols-2 gap-2 sm:gap-4" role="radiogroup" aria-label={t('fields.transferType.label')}>
+                <div className="grid grid-cols-2 gap-3 sm:gap-4" role="radiogroup" aria-label={t('fields.transferType.label')}>
                   <TransferTypeButton
                     active={transferType === 'oneWay'}
                     onClick={() => handleTransferTypeChange('oneWay')}
@@ -476,54 +388,39 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                 </div>
 
                 {transferType === 'return' && (
-                  <div className="mt-3 sm:mt-4 rounded-xl border-2 border-blue-100 bg-blue-50/60 p-3 sm:p-4 space-y-3">
+                  <div className="mt-4 rounded-xl border-2 border-blue-100 bg-blue-50/60 p-4 space-y-3">
                     <p className="text-xs font-semibold text-blue-700 flex items-center gap-2">
                       <ArrowsIcon className="w-4 h-4" />
                       {t('fields.returnDetailsTitle')}
                     </p>
 
-                    <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                    {/* ✅ FIX: stack return date/time on mobile so iOS date does NOT wrap */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                          {t('fields.returnDate.label')}
-                        </label>
-                        <div className="relative">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10">
-                            <CalendarIcon className="w-5 h-5 text-gray-400" />
-                          </div>
-                          <input
-                            type="date"
-                            value={bookingData.dateTime?.returnDate || ''}
-                            min={minReturnDate}
-                            onChange={(e) => {
-                              const next = e.target.value;
-                              updateBookingData({ dateTime: { ...bookingData.dateTime, returnDate: next } });
-                              ensureReturnIsValid(next, bookingData.dateTime?.returnTime);
-                            }}
-                            className={inputWithIcon}
-                          />
-                        </div>
+                        <label className="block text-xs font-semibold text-gray-700 mb-2">{t('fields.returnDate.label')}</label>
+                        <input
+                          type="date"
+                          value={bookingData.dateTime.returnDate || ''}
+                          min={minReturnDate}
+                          onChange={(e) => {
+                            updateBookingData({ dateTime: { ...bookingData.dateTime, returnDate: e.target.value } });
+                            ensureReturnIsValid(e.target.value, bookingData.dateTime.returnTime);
+                          }}
+                          className={inputPlain}
+                        />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                          {t('fields.returnTime.label')}
-                        </label>
-                        <div className="relative">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10">
-                            <ClockIconSmall className="w-5 h-5 text-gray-400" />
-                          </div>
-                          <input
-                            type="time"
-                            value={bookingData.dateTime?.returnTime || ''}
-                            onChange={(e) => {
-                              const next = e.target.value;
-                              updateBookingData({ dateTime: { ...bookingData.dateTime, returnTime: next } });
-                              ensureReturnIsValid(bookingData.dateTime?.returnDate, next);
-                            }}
-                            className={inputWithIcon}
-                          />
-                        </div>
+                        <label className="block text-xs font-semibold text-gray-700 mb-2">{t('fields.returnTime.label')}</label>
+                        <input
+                          type="time"
+                          value={bookingData.dateTime.returnTime || ''}
+                          onChange={(e) => {
+                            updateBookingData({ dateTime: { ...bookingData.dateTime, returnTime: e.target.value } });
+                            ensureReturnIsValid(bookingData.dateTime.returnDate, e.target.value);
+                          }}
+                          className={inputPlain}
+                        />
                       </div>
                     </div>
                   </div>
@@ -534,7 +431,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
             {/* Hourly Duration */}
             {serviceCategory === 'hourly' && (
               <div>
-                <label htmlFor="hourlyDuration" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                <label htmlFor="hourlyDuration" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   {t('fields.duration.label')}
                 </label>
                 <div className="relative">
@@ -543,7 +440,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
                     value={hourlyDuration}
                     onChange={(e) => handleHourlyDurationChange(Number(e.target.value))}
                     aria-label={t('fields.duration.label')}
-                    className={selectPlain}
+                    className="w-full min-h-[48px] px-4 py-3 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-[16px] leading-[1.25] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                   >
                     {Array.from({ length: 23 }, (_, i) => i + 2).map((h) => (
                       <option key={h} value={h}>
@@ -559,72 +456,33 @@ const RideDetailsStep = memo(function RideDetailsStep() {
               </div>
             )}
 
-            {/* ✅ Passengers + Luggage */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-6 items-start">
-              <div className="min-w-0">
-                <div className="min-h-[36px] sm:min-h-[40px] flex items-end">
-                  <label htmlFor="passengers" className="block text-xs sm:text-sm font-semibold text-gray-700 leading-tight">
-                    {t('fields.passengers.label')}
-                  </label>
+            {/* Passengers */}
+            <div>
+              <label htmlFor="passengers" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
+                {t('fields.passengers.label')}
+              </label>
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10">
+                  <UserIcon className="w-5 h-5 text-gray-400" />
                 </div>
-
-                <div className="relative">
-                  <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-                  <select
-                    id="passengers"
-                    value={bookingData.passengers?.count ?? 1}
-                    onChange={(e) => handlePassengersChange(Number(e.target.value))}
-                    aria-label={t('fields.passengers.label')}
-                    className="w-full h-12 pl-12 pr-12 py-2 bg-white border-2 border-gray-200 rounded-xl
-                               text-gray-900 text-[16px] leading-[1.25] font-medium
-                               focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20
-                               transition-all appearance-none cursor-pointer [color-scheme:light]"
-                  >
-                    {Array.from({ length: 8 }, (_, i) => i + 1).map((num) => (
-                      <option key={num} value={num}>
-                        {num}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
+                <select
+                  id="passengers"
+                  value={bookingData.passengers.count}
+                  onChange={(e) =>
+                    updateBookingData({ passengers: { ...bookingData.passengers, count: Number(e.target.value) } })
+                  }
+                  aria-label={t('fields.passengers.label')}
+                  className="w-full min-h-[48px] pl-11 pr-10 py-3 bg-white border-2 border-gray-300 rounded-xl text-gray-900 text-[16px] leading-[1.25] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                >
+                  {Array.from({ length: 8 }, (_, i) => i + 1).map((num) => (
+                    <option key={num} value={num}>
+                      {t('fields.passengers.count', { count: num })}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <ChevronDownIcon className="w-5 h-5 text-gray-400" />
                 </div>
-
-                <p className="mt-1 text-[10px] sm:text-xs text-gray-500">
-                  {t('fields.passengers.count', { count: bookingData.passengers?.count ?? 1 })}
-                </p>
-              </div>
-
-              <div className="min-w-0">
-                <div className="min-h-[36px] sm:min-h-[40px] flex items-end">
-                  <label htmlFor="luggage" className="block text-xs sm:text-sm font-semibold text-gray-700 leading-tight">
-                    Luggage
-                  </label>
-                </div>
-
-                <div className="relative">
-                  <SuitcaseIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-                  <select
-                    id="luggage"
-                    value={bookingData.passengers?.luggage ?? 0}
-                    onChange={(e) => handleLuggageChange(Number(e.target.value))}
-                    aria-label="Luggage"
-                    className="w-full h-12 pl-12 pr-12 py-2 bg-white border-2 border-gray-200 rounded-xl
-                               text-gray-900 text-[16px] leading-[1.25] font-medium
-                               focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20
-                               transition-all appearance-none cursor-pointer [color-scheme:light]"
-                  >
-                    {Array.from({ length: 9 }, (_, i) => i).map((n) => (
-                      <option key={n} value={n}>
-                        {n}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-                </div>
-
-                <p className="mt-1 text-[10px] sm:text-xs text-gray-500">
-                  {bookingData.passengers?.luggage ?? 0} bag{(bookingData.passengers?.luggage ?? 0) === 1 ? '' : 's'}
-                </p>
               </div>
             </div>
 
@@ -633,12 +491,12 @@ const RideDetailsStep = memo(function RideDetailsStep() {
               <m.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35 }}
-                className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-3 sm:p-6 border border-blue-100"
+                transition={{ duration: 0.4 }}
+                className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 sm:p-6 border border-blue-100"
                 role="status"
                 aria-live="polite"
               >
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                   <div>
                     <p className="text-xs sm:text-sm text-gray-600 mb-1">{t('summary.distance')}</p>
                     <p className="text-lg sm:text-xl font-bold text-gray-900">{distanceInfo.distance}</p>
@@ -653,7 +511,6 @@ const RideDetailsStep = memo(function RideDetailsStep() {
               </m.div>
             )}
 
-            {/* Calculating Indicator */}
             {isCalculating && (
               <div className="text-center py-3 sm:py-4" role="status" aria-live="polite">
                 <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-gray-50 rounded-full">
@@ -672,7 +529,7 @@ const RideDetailsStep = memo(function RideDetailsStep() {
 RideDetailsStep.displayName = 'RideDetailsStep';
 
 // ============================================================================
-// BUTTONS + ICONS
+// BUTTONS + ICONS (unchanged)
 // ============================================================================
 
 const ServiceTypeButton = memo(function ServiceTypeButton({
@@ -692,7 +549,6 @@ const ServiceTypeButton = memo(function ServiceTypeButton({
 }) {
   return (
     <button
-      type="button" // ✅ important
       onClick={onClick}
       role="tab"
       aria-selected={active}
@@ -727,7 +583,6 @@ const TransferTypeButton = memo(function TransferTypeButton({
 }) {
   return (
     <button
-      type="button" // ✅ important
       onClick={onClick}
       role="radio"
       aria-checked={active}
@@ -745,7 +600,6 @@ const TransferTypeButton = memo(function TransferTypeButton({
   );
 });
 
-// Icons (unchanged)
 const RouteIcon = memo(function RouteIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -814,18 +668,6 @@ const UserIcon = memo(function UserIcon({ className }: { className?: string }) {
   );
 });
 
-const SuitcaseIcon = memo(function SuitcaseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M9 7V6a3 3 0 013-3h0a3 3 0 013 3v1m-9 0h10a2 2 0 012 2v10a3 3 0 01-3 3H8a3 3 0 01-3-3V9a2 2 0 012-2z"
-      />
-    </svg>
-  );
-});
-
 const ChevronDownIcon = memo(function ChevronDownIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -836,13 +678,7 @@ const ChevronDownIcon = memo(function ChevronDownIcon({ className }: { className
 
 const LoadingSpinner = memo(function LoadingSpinner() {
   return (
-    <svg
-      className="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-blue-500"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
+    <svg className="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path
         className="opacity-75"
