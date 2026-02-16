@@ -41,7 +41,7 @@
     "hero": {
       "title": "Acerca de",
       "titleHighlight": "Royal Transfers BCN",
-      "subtitle": "Nos especializamos en proporcionar servicios premium de chófer y taxi tanto para turistas como para viajeros de negocios. Nuestra misión es ofrecer comodidad, fiabilidad y una experiencia de viaje fluida por la vibrante ciudad de Barcelona y más allá."
+      "subtitle": "Nos especializamos en proporcionar servicios profesionales de traslado tanto para turistas como para viajeros de negocios. Nuestra misión es ofrecer comodidad, fiabilidad y una experiencia de viaje fluida por Barcelona y más allá."
     },
     "story": {
       "title": "Nuestra",
@@ -88,9 +88,9 @@
   },
   "home": {
     "hero": {
-      "title": "Traslados de Aeropuerto Confiables",
+      "title": "Servicios de Traslado",
       "titleHighlight": "en Barcelona",
-      "subtitle": "Experimenta lujo, comodidad y fiabilidad en cada viaje. Conductores profesionales, vehículos premium y servicio sin interrupciones desde el aterrizaje hasta tu destino.",
+      "subtitle": "Servicios de traslado confiables al aeropuerto, puerto de cruceros, ciudad a ciudad y por horas en Barcelona. Conductores profesionales, vehículos cómodos y servicio sin interrupciones desde la recogida hasta el destino.",
       "bookNow": "Reserva tu Traslado",
       "viewFleet": "Ver Nuestra Flota",
       "bookingSteps": {
@@ -110,8 +110,8 @@
       "titleHighlight": "Servicios",
       "subtitle": "Soluciones de traslado integrales adaptadas a tus necesidades, ya sea que llegues al aeropuerto, salgas de un crucero o explores la región.",
       "airportTaxi": {
-        "title": "Taxi Aeropuerto Barcelona",
-        "description": "Traslados sin estrés hacia y desde el Aeropuerto de Barcelona-El Prat con seguimiento de vuelo y servicio de encuentro y saludo."
+        "title": "Traslados Aeropuerto Barcelona",
+        "description": "Servicios de traslado confiables hacia y desde el Aeropuerto de Barcelona-El Prat con seguimiento de vuelo y servicio de encuentro y saludo."
       },
       "cruisePort": {
         "title": "Traslado Puerto de Cruceros",
@@ -122,8 +122,8 @@
         "description": "Viaja más allá de Barcelona a Costa Brava, Andorra o cualquier lugar de España con nuestro servicio de larga distancia."
       },
       "hourlyBooking": {
-        "title": "Reserva de Taxi por Horas",
-        "description": "Reservas flexibles por horas para reuniones de negocios, tours por la ciudad o viajes de compras por Barcelona."
+        "title": "Servicio de Traslado por Horas",
+        "description": "Servicios de traslado flexibles por horas con conductor profesional para reuniones, turismo, compras o eventos en Barcelona."
       },
       "learnMore": "Más Información"
     },
@@ -233,10 +233,10 @@
     "fleet": "Flota",
     "bookNow": "Reservar Ahora",
     "servicesMenu": {
-      "airportTaxi": "Taxi Aeropuerto Barcelona",
+      "airportTaxi": "Traslados Aeropuerto Barcelona",
       "cruisePort": "Traslado Puerto de Cruceros",
       "longDistance": "Viajes de Larga Distancia",
-      "hourlyBooking": "Reserva de Taxi por Horas"
+      "hourlyBooking": "Servicio de Traslado por Horas"
     },
     "fleetMenu": {
       "standard": "Estándar",
@@ -250,7 +250,7 @@
   },
   "footer": {
     "companyName": "Royal Transfers BCN",
-    "tagline": "Servicios Premium de Traslado al Aeropuerto en Barcelona",
+    "tagline": "Servicios Profesionales de Traslado en Barcelona",
     "quickLinks": "Enlaces Rápidos",
     "ourServices": "Nuestros Servicios",
     "ourFleet": "Nuestra Flota",
@@ -268,13 +268,13 @@
   "services": {
     "hourlyBooking": {
       "hero": {
-        "title": "Reserva de Taxi por Horas",
+        "title": "Servicio de Traslado por Horas",
         "titleHighlight": "Barcelona",
-        "subtitle": "¿Necesitas un taxi que te espere? Reserva por horas para compras, recados, eventos o visitas turísticas. Paquetes horarios flexibles con coches y furgonetas para hasta 8 pasajeros.",
+        "subtitle": "¿Necesitas un conductor que te espere? Reserva servicios de traslado por horas para compras, eventos, turismo o negocios con vehículos cómodos y profesionales.",
         "ctaWhatsApp": "Reserva Rápida por WhatsApp",
         "ctaCall": "Llámanos 📞",
         "badge1": "Reserva 3–8 horas",
-        "badge2": "El taxi te espera",
+        "badge2": "El conductor te espera",
         "badge3": "Conductores de habla inglesa",
         "badge4": "Sedanes y furgonetas hasta 8 pax",
         "badge5": "Sillas infantiles bajo petición",
@@ -394,8 +394,8 @@
     },
     "cruisePortTaxi": {
       "structuredData": {
-        "name": "Taxi Traslados Puerto de Cruceros Barcelona",
-        "description": "Traslados en taxi confiables desde/hacia el puerto de cruceros de Barcelona. Servicio de encuentro y saludo, precios fijos, asistencia con equipaje y vehículos cómodos para pasajeros de cruceros."
+        "name": "Traslados Puerto de Cruceros Barcelona",
+        "description": "Servicios de traslado confiables desde/hacia el puerto de cruceros de Barcelona. Servicio de encuentro y saludo, precios fijos, asistencia con equipaje y vehículos cómodos para pasajeros de cruceros."
       },
       "hero": {
         "title": "Taxi Traslados Puerto de Cruceros Barcelona",
@@ -541,12 +541,12 @@
     },
     "airportTaxi": {
       "structuredData": {
-        "name": "Taxi Traslados Aeropuerto Barcelona",
-        "description": "Traslados en taxi confiables en el aeropuerto de Barcelona. Servicio de encuentro y saludo, precios fijos, seguimiento de vuelo y vehículos cómodos para traslados al aeropuerto."
+        "name": "Traslados Aeropuerto Barcelona",
+        "description": "Servicios de traslado confiables en el aeropuerto de Barcelona. Servicio de encuentro y saludo, precios fijos, seguimiento de vuelo y vehículos cómodos."
       },
       "hero": {
         "badge": "Servicio de Traslado al Aeropuerto de Confianza",
-        "title": "Taxi Traslados Aeropuerto Barcelona",
+        "title": "Traslados Aeropuerto Barcelona",
         "subtitle": "Traslados confiables con servicio de encuentro y saludo entre el Aeropuerto de Barcelona (BCN/T1/T2), hoteles y el centro de la ciudad. Precios fijos, seguimiento de vuelo y 60 minutos de espera gratuitos.",
         "ctaWhatsApp": "Reserva Rápida por WhatsApp",
         "ctaCall": "Llámanos 📞",

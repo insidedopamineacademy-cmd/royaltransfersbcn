@@ -1,7 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
+import { enforceDebugRouteAccess } from '@/lib/security/debug-auth';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const denied = enforceDebugRouteAccess(request);
+  if (denied) return denied;
+
   try {
     // Test database connection
     const result = await sql`SELECT NOW() as current_time;`;

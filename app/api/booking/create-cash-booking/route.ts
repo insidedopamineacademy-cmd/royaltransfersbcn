@@ -11,6 +11,7 @@ import { saveBooking, getBookingById } from '@/lib/database/booking';
 import { calculatePrice, generateBookingId } from '@/lib/booking/utils';
 import type { BookingData } from '@/lib/booking/types';
 import { sendBookingConfirmationEmail, sendAdminNotificationEmail } from '@/lib/email/sender';
+import { defaultLocale, locales } from '@/lib/i18n';
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -37,6 +38,7 @@ export async function POST(request: NextRequest) {
     // Parse request body
     const body = await request.json() as CreateCashBookingRequest;
     const { bookingData, locale } = body;
+    const safeLocale = locales.includes(locale as (typeof locales)[number]) ? locale : defaultLocale;
 
     // Validate booking data
     const validation = validateBookingData(bookingData);
@@ -106,14 +108,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Get origin URL for redirect
-    const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const origin = getSafeBaseUrl(request);
 
     // Return success with redirect URL
     return NextResponse.json(
       {
         success: true,
         bookingId,
-        redirectUrl: `${origin}/${locale}/book/success?payment=cash&booking_id=${bookingId}`,
+        redirectUrl: `${origin}/${safeLocale}/book/success?payment=cash&booking_id=${bookingId}`,
       } as CreateCashBookingResponse,
       { status: 200 }
     );
@@ -155,14 +157,15 @@ function validateBookingData(bookingData: BookingData): { isValid: boolean; erro
   }
 
   if (!bookingData.pickup?.address) {
-  return { isValid: false, error: 'Pickup address is required' };
-}
-
-if (bookingData.serviceType === 'distance') {
-  if (!bookingData.dropoff?.address) {
-    return { isValid: false, error: 'Pickup and dropoff addresses are required' };
+    return { isValid: false, error: 'Pickup address is required' };
   }
-}
+
+  if (bookingData.serviceType === 'distance') {
+    if (!bookingData.dropoff?.address) {
+      return { isValid: false, error: 'Pickup and dropoff addresses are required' };
+    }
+  }
+
   if (!bookingData.dateTime.date || !bookingData.dateTime.time) {
     return { isValid: false, error: 'Date and time are required' };
   }
@@ -185,6 +188,42 @@ if (bookingData.serviceType === 'distance') {
   }
 
   return { isValid: true };
+}
+
+function getSafeBaseUrl(request: NextRequest): string {
+  const configuredUrl = process.env.NEXT_PUBLIC_APP_URL;
+  if (configuredUrl) {
+    try {
+      const parsed = new URL(configuredUrl);
+      return parsed.origin;
+    } catch {
+      // Fall through to runtime request-derived URL.
+    }
+  }
+
+  const origin = request.headers.get('origin');
+  if (origin) {
+    try {
+      const parsed = new URL(origin);
+      if (
+        parsed.protocol === 'https:' ||
+        parsed.hostname === 'localhost' ||
+        parsed.hostname === '127.0.0.1'
+      ) {
+        return parsed.origin;
+      }
+    } catch {
+      // Fall through to host header.
+    }
+  }
+
+  const host = request.headers.get('host');
+  if (host) {
+    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+    return `${protocol}://${host}`;
+  }
+
+  return 'http://localhost:3000';
 }
 
 // ============================================================================

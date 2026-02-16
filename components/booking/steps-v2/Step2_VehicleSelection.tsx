@@ -205,10 +205,10 @@ export default function VehicleSelectionStep() {
 
       {/* Ride Summary */}
       <section
-        className="max-w-5xl mx-auto bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100"
+        className="max-w-5xl mx-auto bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-4 sm:p-6 border border-blue-100"
         aria-labelledby="ride-summary-heading"
       >
-        <h2 id="ride-summary-heading" className="text-xs sm:text-sm font-semibold text-gray-600 mb-3 sm:mb-4">
+        <h2 id="ride-summary-heading" className="text-sm sm:text-sm font-semibold text-gray-600 mb-3 sm:mb-4">
           {t('summary.heading')}
         </h2>
 
@@ -277,7 +277,7 @@ export default function VehicleSelectionStep() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 sm:py-12 bg-gray-50 rounded-xl" role="alert">
+          <div className="text-center py-8 sm:py-12 bg-gray-50 rounded-2xl" role="alert">
             <p className="text-sm sm:text-base text-gray-600">
               {t('vehicles.noVehicles', { count: bookingData.passengers.count })}
             </p>
@@ -290,7 +290,7 @@ export default function VehicleSelectionStep() {
         <m.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-6xl mx-auto">
           <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">{t('extras.heading')}</h2>
 
-          <div className="bg-white rounded-xl border-2 border-gray-200 p-4 sm:p-6">
+          <div className="bg-white rounded-2xl border-2 border-gray-200 p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3 sm:gap-4">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
@@ -307,7 +307,7 @@ export default function VehicleSelectionStep() {
                   onClick={decrementChildSeats}
                   disabled={childSeats === 0}
                   aria-label={t('extras.childSeat.decrease')}
-                  className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-colors touch-manipulation"
+                  className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-colors touch-manipulation"
                 >
                   <MinusIcon />
                 </button>
@@ -320,7 +320,7 @@ export default function VehicleSelectionStep() {
                   onClick={incrementChildSeats}
                   disabled={childSeats >= 3}
                   aria-label={t('extras.childSeat.increase')}
-                  className="w-10 h-10 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-colors touch-manipulation"
+                  className="w-10 h-10 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-colors touch-manipulation"
                 >
                   <PlusIcon />
                 </button>
@@ -335,11 +335,11 @@ export default function VehicleSelectionStep() {
   <m.section
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    className="max-w-6xl mx-auto bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200"
+    className="max-w-6xl mx-auto bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-4 sm:p-6 border border-amber-200"
     aria-labelledby="pricing-heading"
   >
     <div className="flex flex-col items-center justify-center text-center">
-      <p className="text-xs sm:text-sm text-gray-600 mb-1" id="pricing-heading">
+      <p className="text-sm sm:text-sm text-gray-600 mb-1" id="pricing-heading">
         {t('pricing.totalCost')} (tax included)
       </p>
       <p className="text-3xl sm:text-4xl font-bold text-gray-900">{formatPrice(bookingData.pricing.total)}</p>
@@ -378,6 +378,13 @@ const VehicleCard = React.memo(function VehicleCard({
   index: number;
 }) {
   const t = useTranslations('step2');
+  const badgeByVehicleId: Partial<Record<VehicleCardData['id'], string>> = {
+    'standard-sedan': 'Best Value',
+    'premium-sedan': 'Most Popular',
+    'luxury-sedan': 'Premium Choice',
+    'standard-minivan-8': 'Best for Groups',
+  };
+  const badgeText = badgeByVehicleId[vehicle.id];
 
   return (
     <m.button
@@ -389,10 +396,16 @@ const VehicleCard = React.memo(function VehicleCard({
       role="radio"
       aria-checked={isSelected}
       aria-label={`${vehicle.name}, ${vehicle.capacity} passengers, ${vehicle.luggage} luggage, from ${formatPrice(vehicle.basePrice)}`}
-      className={`relative text-left bg-white rounded-xl sm:rounded-2xl border-2 overflow-hidden transition-all hover:shadow-2xl touch-manipulation ${
+      className={`relative text-left bg-white rounded-2xl border-2 overflow-hidden transition-all hover:shadow-2xl touch-manipulation ${
         isSelected ? 'border-blue-500 shadow-xl shadow-blue-500/20' : 'border-gray-200 hover:border-blue-300'
       }`}
     >
+      {badgeText && (
+        <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-semibold z-10">
+          {badgeText}
+        </div>
+      )}
+
       {isSelected && (
         <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
@@ -419,10 +432,10 @@ const VehicleCard = React.memo(function VehicleCard({
 
       <div className="p-4 sm:p-5">
         <h3 className="text-base sm:text-lg font-bold text-gray-900">{vehicle.name}</h3>
-        {vehicle.subtitle && <p className="text-xs sm:text-sm text-gray-600 mb-1">{vehicle.subtitle}</p>}
-        {vehicle.description && <p className="text-xs text-gray-500 mb-2 sm:mb-3">{vehicle.description}</p>}
+        {vehicle.subtitle && <p className="text-sm sm:text-sm text-gray-600 mb-1">{vehicle.subtitle}</p>}
+        {vehicle.description && <p className="text-sm text-gray-500 mb-2 sm:mb-3">{vehicle.description}</p>}
 
-        <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 text-xs sm:text-sm text-gray-700">
+        <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 text-sm sm:text-sm text-gray-700">
           <div className="flex items-center gap-1">
             <UserIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>
@@ -438,7 +451,7 @@ const VehicleCard = React.memo(function VehicleCard({
         </div>
 
         <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
-          <span className="text-xs sm:text-sm text-gray-600">{t('vehicles.from')}</span>
+          <span className="text-sm sm:text-sm text-gray-600">{t('vehicles.from')}</span>
           <span className="text-xl sm:text-2xl font-bold text-blue-600">{formatPrice(vehicle.basePrice)}</span>
         </div>
       </div>
@@ -453,8 +466,8 @@ VehicleCard.displayName = 'VehicleCard';
 
 const SummaryItem = React.memo(({ label, value }: { label: string; value: string }) => (
   <div>
-    <p className="text-[10px] sm:text-xs text-gray-600 mb-0.5 sm:mb-1">{label}</p>
-    <p className="text-xs sm:text-sm font-semibold text-gray-900 truncate">{value}</p>
+    <p className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">{label}</p>
+    <p className="text-sm sm:text-sm font-semibold text-gray-900 line-clamp-2 break-words">{value}</p>
   </div>
 ));
 SummaryItem.displayName = 'SummaryItem';

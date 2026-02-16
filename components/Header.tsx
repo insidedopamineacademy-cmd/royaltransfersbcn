@@ -77,10 +77,10 @@ export default function Header() {
   ======================== */
 
   const servicesItems = [
-    { key: 'airportTaxi', href: '/services/airport-taxi' },
-    { key: 'cruisePort', href: '/services/cruise-port' },
-    { key: 'longDistance', href: '/services/long-distance' },
-    { key: 'hourlyBooking', href: '/services/hourly-booking' },
+    { key: 'airportTaxi', href: '/services/airport-transfer' },
+    { key: 'cruisePort', href: '/services/cruise-port-transfer' },
+    { key: 'longDistance', href: '/services/long-distance-transfer' },
+    { key: 'hourlyBooking', href: '/services/hourly-transfer' },
   ];
 
   const fleetItems = [
@@ -133,7 +133,7 @@ export default function Header() {
               </button>
 
               {servicesOpen && (
-                <div className="absolute top-full left-0 mt-1 w-56 bg-neutral-800 rounded-lg shadow-xl py-2 border border-neutral-700">
+                <div className="absolute top-full left-0 mt-1 w-56 bg-neutral-800 rounded-2xl shadow-xl py-2 border border-neutral-700">
                   {servicesItems.map(item => (
                     <Link
                       key={item.key}
@@ -161,7 +161,7 @@ export default function Header() {
               </button>
 
               {fleetOpen && (
-                <div className="absolute top-full left-0 mt-1 w-56 bg-neutral-800 rounded-lg shadow-xl py-2 border border-neutral-700">
+                <div className="absolute top-full left-0 mt-1 w-56 bg-neutral-800 rounded-2xl shadow-xl py-2 border border-neutral-700">
                   {fleetItems.map(item => (
                     <Link
                       key={item.key}
@@ -187,7 +187,7 @@ export default function Header() {
             <div ref={langRef} className="relative">
               <button
                 onClick={() => setLangOpen(!langOpen)}
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-neutral-300 border border-neutral-700 rounded-lg"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-neutral-300 border border-neutral-700 rounded-xl"
               >
                 <GlobeIcon className="w-4 h-4" />
                 {locale.toUpperCase()}
@@ -195,7 +195,7 @@ export default function Header() {
               </button>
 
               {langOpen && (
-                <div className="absolute top-full right-0 mt-1 w-40 bg-neutral-800 rounded-lg shadow-xl py-2 border border-neutral-700">
+                <div className="absolute top-full right-0 mt-1 w-40 bg-neutral-800 rounded-2xl shadow-xl py-2 border border-neutral-700">
                   {locales.map(loc => (
                     <button
                       key={loc}
@@ -215,7 +215,7 @@ export default function Header() {
 
             <Link
               href="/book"
-              className="px-5 py-2.5 text-sm font-semibold bg-amber-500 text-neutral-900 rounded-lg hover:bg-amber-400"
+              className="px-5 py-2.5 text-sm font-semibold bg-amber-500 text-neutral-900 rounded-xl hover:bg-amber-400"
             >
               {t('bookNow')}
             </Link>
@@ -303,7 +303,7 @@ export default function Header() {
                   <button
                     key={loc}
                     onClick={() => handleLanguageChange(loc)}
-                    className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                    className={`px-4 py-2 text-sm font-medium rounded-xl transition-colors ${
                       loc === locale
                         ? 'bg-amber-500 text-neutral-900'
                         : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
@@ -323,7 +323,7 @@ export default function Header() {
               <Link
                 href="/book"
                 onClick={closeMobileMenu}
-                className="block w-full text-center px-5 py-3 font-semibold bg-amber-500 text-neutral-900 rounded-lg"
+                className="block w-full text-center px-5 py-3 font-semibold bg-amber-500 text-neutral-900 rounded-xl"
               >
                 {t('bookNow')}
               </Link>

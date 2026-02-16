@@ -508,31 +508,12 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.cr
               {/* Image container */}
               <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-blue-800 to-navy-900">
                 {/* Car Image */}
-                <img 
+                <Image
                   src={vehicleImages[vehicle.key as keyof typeof vehicleImages]}
                   alt={t(`fleet.${vehicle.key}.name`)}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  onError={(e) => {
-                    // Fallback if image fails to load
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    // Show icon fallback
-                    const parent = target.parentElement;
-                    if (parent) {
-                      const fallback = document.createElement('div');
-                      fallback.className = 'w-full h-full flex items-center justify-center';
-                      fallback.innerHTML = `
-                        <div class="text-center">
-                          <svg class="w-12 h-12 sm:w-16 sm:h-16 text-blue-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17h8M8 17a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 11l2-6h12l2 6M4 11h16M4 11v6h16v-6" />
-                          </svg>
-                          <p class="text-white text-sm mt-2">${t(`fleet.${vehicle.key}.name`)}</p>
-                        </div>
-                      `;
-                      parent.appendChild(fallback);
-                    }
-                  }}
                 />
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent" />

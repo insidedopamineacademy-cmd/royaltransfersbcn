@@ -19,8 +19,12 @@ const MIN_ADVANCE_MINUTES = 120;
 // DATE HELPERS
 // ============================================================================
 function getMinPickupDateTime() {
+  // Use current system time and add minimum advance minutes
   const d = new Date(Date.now() + MIN_ADVANCE_MINUTES * 60 * 1000);
+
+  // Normalize seconds and milliseconds
   d.setSeconds(0, 0);
+
   return d;
 }
 
@@ -65,10 +69,11 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   const [transferType, setTransferType] = useState<TransferType>('oneWay');
   const [pickup, setPickup] = useState<Location>({ address: '' });
   const [dropoff, setDropoff] = useState<Location>({ address: '' });
+  const [formError, setFormError] = useState<string | null>(null);
 
   // ✅ iOS-safe date/time input style (fix “lifted text”)
   const inputDateTime =
-    'block w-full min-h-[48px] pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
+    'block w-full min-h-[40px] sm:min-h-[48px] pl-10 pr-3 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
     'text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
     'transition-all appearance-none [color-scheme:light]';
 
@@ -186,9 +191,15 @@ const HeroBookingForm = memo(function HeroBookingForm() {
     isPickupTimeValid,
   ]);
 
+  useEffect(() => {
+    if (canSearch && formError) {
+      setFormError(null);
+    }
+  }, [canSearch, formError]);
+
   const handleSearch = useCallback(() => {
     if (!canSearch) {
-      alert(t('validation.fillAllFields'));
+      setFormError(t('validation.fillAllFields'));
       return;
     }
 
@@ -245,6 +256,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   }, [
     canSearch,
     t,
+    setFormError,
     serviceType,
     transferType,
     pickup,
@@ -271,7 +283,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
         aria-label={t('aria.bookingForm')}
         style={{ willChange: 'opacity, transform' }}
       >
-        <div className="bg-white/95 sm:backdrop-blur-sm rounded-2xl shadow-2xl p-3 sm:p-6 [@media(max-height:750px)]:p-2 border border-gray-100">
+        <div className="bg-white/95 sm:backdrop-blur-sm rounded-2xl shadow-2xl p-2 sm:p-6 [@media(max-height:750px)]:p-1.5 border border-gray-100">
           {/* Service Type Toggle */}
           <div className="flex gap-2 mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2" role="tablist" aria-label={t('aria.serviceType')}>
             <ServiceTypeButton
@@ -313,7 +325,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
             </div>
           )}
 
-          <div className="space-y-2 sm:space-y-3 [@media(max-height:750px)]:space-y-1.5">
+          <div className="space-y-1.5 sm:space-y-3 [@media(max-height:750px)]:space-y-1">
             {/* Pickup */}
             <div>
               <label htmlFor="pickup-location" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
@@ -354,7 +366,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                 </p>
 
                 {/* ✅ FIX: stack on mobile to prevent iOS date wrapping */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   <div>
                     <label htmlFor="return-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                       {t('fields.returnDate.label')}
@@ -395,7 +407,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
 
             {/* Pickup Date & Time */}
             {/* ✅ FIX: stack on mobile to prevent iOS date wrapping */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <div>
                 <label htmlFor="pickup-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                   {t('fields.date.label')}
@@ -445,7 +457,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={hourlyDuration}
                     onChange={(e) => setHourlyDuration(Number(e.target.value))}
                     aria-label={t('fields.duration.label')}
-                    className="block w-full min-h-[48px] pl-10 pr-10 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                    className="block w-full min-h-[40px] sm:min-h-[48px] pl-10 pr-10 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                   >
                     {Array.from({ length: 23 }, (_, i) => i + 2).map((hours) => (
                       <option key={hours} value={hours}>
@@ -471,7 +483,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={passengers}
                     onChange={(e) => setPassengers(Number(e.target.value))}
                     aria-label={t('fields.passengers.label')}
-                    className="block w-full min-h-[48px] pl-10 pr-10 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                    className="block w-full min-h-[40px] sm:min-h-[48px] pl-10 pr-10 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                   >
                     {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                       <option key={num} value={num}>
@@ -507,7 +519,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={luggage}
                     onChange={(e) => setLuggage(Number(e.target.value))}
                     aria-label="Luggage"
-                    className="block w-full min-h-[48px] pl-10 pr-10 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                    className="block w-full min-h-[40px] sm:min-h-[48px] pl-10 pr-10 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                   >
                     {Array.from({ length: 9 }, (_, i) => i).map((n) => (
                       <option key={n} value={n}>
@@ -520,12 +532,22 @@ const HeroBookingForm = memo(function HeroBookingForm() {
               </div>
             </div>
 
+            {formError && (
+              <div
+                role="alert"
+                aria-live="polite"
+                className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm font-medium"
+              >
+                {formError}
+              </div>
+            )}
+
             {/* Search Button */}
             <button
               onClick={handleSearch}
               disabled={!canSearch}
               aria-label={t('button.search')}
-              className={`w-full px-6 py-3 sm:py-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg active:scale-95 ${
+              className={`w-full px-6 py-2.5 sm:py-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg active:scale-95 ${
                 canSearch
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-amber-500/25'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
@@ -564,7 +586,7 @@ const ServiceTypeButton = memo(function ServiceTypeButton({
       role="tab"
       aria-selected={active}
       aria-label={label}
-      className={`flex-1 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
+      className={`flex-1 px-3 py-2 sm:px-4 sm:py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
         active ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:scale-95'
       }`}
     >
@@ -592,7 +614,7 @@ const TransferTypeButton = memo(function TransferTypeButton({
       onClick={onClick}
       aria-pressed={active}
       aria-label={label}
-      className={`px-4 py-3 rounded-xl border-2 font-semibold text-sm transition-all duration-200 active:scale-95 ${
+      className={`px-3 py-2 sm:px-4 sm:py-3 rounded-xl border-2 font-semibold text-sm transition-all duration-200 active:scale-95 ${
         active ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-700 hover:border-gray-300'
       }`}
     >

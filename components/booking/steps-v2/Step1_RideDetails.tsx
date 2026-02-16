@@ -553,7 +553,7 @@ const ServiceTypeButton = memo(function ServiceTypeButton({
       role="tab"
       aria-selected={active}
       aria-label={ariaLabel}
-      className={`flex-1 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 active:scale-95 ${
+      className={`flex-1 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold text-sm sm:text-base transition-all duration-200 active:scale-95 ${
         active ? 'bg-white text-blue-600 shadow-md' : 'text-gray-600 hover:text-gray-900'
       }`}
     >

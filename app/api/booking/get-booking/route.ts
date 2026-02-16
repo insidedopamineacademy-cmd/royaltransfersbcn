@@ -56,6 +56,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Prevent malformed identifiers and reduce brute-force probing.
+    if (!/^RT-[A-Z0-9-]{6,64}$/.test(bookingId)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Invalid booking_id format',
+        } as GetBookingResponse,
+        { status: 400 }
+      );
+    }
+
     // Fetch booking from database
     const booking = await getBookingById(bookingId);
 

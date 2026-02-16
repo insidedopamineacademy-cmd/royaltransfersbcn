@@ -632,7 +632,7 @@ export default function LocationAutocomplete({
         <m.div
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg"
+          className="mt-2 p-3 bg-red-50 border border-red-200 rounded-2xl"
         >
           <div className="flex items-start gap-2">
             <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -69,7 +69,7 @@ export default function ContactDetailsStep() {
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* Contact Information */}
           <section
-            className="bg-white rounded-xl sm:rounded-2xl border-2 border-gray-200 p-4 sm:p-6"
+            className="bg-white rounded-2xl border-2 border-gray-200 p-4 sm:p-6"
             aria-labelledby="contact-info-heading"
           >
             <h2 id="contact-info-heading" className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
@@ -193,7 +193,7 @@ export default function ContactDetailsStep() {
 
           {/* Payment Method */}
           <section
-            className="bg-white rounded-xl sm:rounded-2xl border-2 border-gray-200 p-4 sm:p-6"
+            className="bg-white rounded-2xl border-2 border-gray-200 p-4 sm:p-6"
             aria-labelledby="payment-heading"
           >
             <h2 id="payment-heading" className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
@@ -283,7 +283,7 @@ export default function ContactDetailsStep() {
 
         {/* Right Column: Summary */}
         <aside className="lg:col-span-1">
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 lg:sticky lg:top-4">
+          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4 sm:p-6 border border-blue-100 lg:sticky lg:top-4">
             <h2 className="text-xs sm:text-sm font-semibold text-gray-600 mb-3 sm:mb-4">{t('summary.heading')}</h2>
 
             <div className="space-y-3 sm:space-y-4">
@@ -326,6 +326,27 @@ export default function ContactDetailsStep() {
                   </div>
                 </div>
               )}
+
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 sm:p-4">
+                <ul className="space-y-1.5 sm:space-y-2">
+                  <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                    <span className="text-emerald-600 font-semibold">✓</span>
+                    <span>Free cancellation</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                    <span className="text-emerald-600 font-semibold">✓</span>
+                    <span>Licensed professional chauffeurs</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                    <span className="text-emerald-600 font-semibold">✓</span>
+                    <span>Instant confirmation</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                    <span className="text-emerald-600 font-semibold">✓</span>
+                    <span>24/7 support</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </aside>

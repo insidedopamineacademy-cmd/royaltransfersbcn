@@ -82,7 +82,7 @@ const BookingWizard = memo(function BookingWizard() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={!prefersReducedMotion ? { opacity: 0, x: -20 } : { opacity: 1 }}
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-gray-100"
+                className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-gray-100"
                 role="main"
                 aria-label={t(`steps.${WIZARD_STEPS[currentStep].titleKey}.aria`)}
                 style={{ willChange: prefersReducedMotion ? 'auto' : 'opacity, transform' }}
@@ -274,7 +274,7 @@ const StepIndicator = memo(function StepIndicator({
 const StepLoadingFallback = memo(function StepLoadingFallback() {
   return (
     <div 
-      className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-gray-100"
+      className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-gray-100"
       role="status"
       aria-label="Loading booking step"
     >

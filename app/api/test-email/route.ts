@@ -5,10 +5,14 @@
  * Tests SMTP connection and sends a test email
  */
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { emailTransporter, EMAIL_CONFIG } from '@/lib/email/config';
+import { enforceDebugRouteAccess } from '@/lib/security/debug-auth';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const denied = enforceDebugRouteAccess(request);
+  if (denied) return denied;
+
   try {
     // First, verify SMTP connection
     await emailTransporter.verify();

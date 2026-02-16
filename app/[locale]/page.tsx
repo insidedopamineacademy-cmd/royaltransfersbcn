@@ -16,7 +16,6 @@ export default function HomePage() {
       <HeroWithBookingSection t={t} />
       <ServicesSection t={t} />
       <HowItWorksSection t={t} />
-      <FleetSection t={t} />
       <WhyChooseUsSection t={t} />
       <TestimonialsSection t={t} />
       <CTASection t={t} />
@@ -89,11 +88,13 @@ function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'h
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="mb-8 sm:mb-12"
+          className="my-10 sm:my-14 lg:my-16"
         >
-          <BookingProvider>
-            <BookingWizard />
-          </BookingProvider>
+          <div className="relative mx-auto max-w-5xl rounded-3xl bg-white/5 p-2 sm:p-3 lg:p-4 ring-1 ring-white/20 shadow-[0_20px_70px_-20px_rgba(0,0,0,0.65)]">
+            <BookingProvider>
+              <BookingWizard />
+            </BookingProvider>
+          </div>
         </motion.div>
 
         {/* Trust indicators below form */}
@@ -101,41 +102,27 @@ function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'h
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="grid grid-cols-2 lg:flex lg:flex-wrap items-center justify-center gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm text-gray-400"
+          className="grid grid-cols-2 lg:flex lg:flex-wrap items-center justify-center gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm text-gray-400 text-center"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
             <span className="text-gray-300">{t('hero.features.freeCancellation')}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
             <span className="text-gray-300">{t('hero.features.instantConfirmation')}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
             <span className="text-gray-300">{t('hero.features.bestPriceGuarantee')}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
             <span className="text-gray-300">{t('hero.features.support24')}</span>
           </div>
         </motion.div>
 
-        {/* Additional CTA Buttons (optional - can be removed if not needed) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10"
-        >
-          <Link
-            href="/fleet/standard"
-            className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all"
-          >
-            {t('hero.viewFleet')}
-            <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-          </Link>
-        </motion.div>
+        {/* Additional CTA Buttons removed */}
       </div>
 
       {/* Scroll indicator - hidden on mobile */}
@@ -162,10 +149,10 @@ function ServicesSection({ t }: { t: ReturnType<typeof useTranslations<'home'>> 
   const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   const services = [
-    { key: 'airportTaxi', href: '/services/airport-taxi', icon: PlaneIcon, color: 'from-blue-500 to-cyan-400' },
-    { key: 'cruisePort', href: '/services/cruise-port', icon: ShipIcon, color: 'from-amber-500 to-orange-400' },
-    { key: 'longDistance', href: '/services/long-distance', icon: MapIcon, color: 'from-emerald-500 to-green-400' },
-    { key: 'hourlyBooking', href: '/services/hourly-booking', icon: ClockIcon, color: 'from-purple-500 to-pink-400' },
+    { key: 'airportTaxi', href: '/services/airport-transfer', icon: PlaneIcon, color: 'from-blue-500 to-cyan-400' },
+    { key: 'cruisePort', href: '/services/cruise-port-transfer', icon: ShipIcon, color: 'from-amber-500 to-orange-400' },
+    { key: 'longDistance', href: '/services/long-distance-transfer', icon: MapIcon, color: 'from-emerald-500 to-green-400' },
+    { key: 'hourlyBooking', href: '/services/hourly-transfer', icon: ClockIcon, color: 'from-purple-500 to-pink-400' },
   ];
 
   return (
@@ -608,9 +595,16 @@ function CTASection({ t }: { t: ReturnType<typeof useTranslations<'home'>> }) {
               
               <Link
                 href="/contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-medium text-blue-100 bg-transparent rounded-xl border border-white/25 hover:border-white/40 hover:text-white transition-colors"
               >
                 {t('cta.contactUs')}
+              </Link>
+              <Link
+                href="/fleet/standard"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-medium text-blue-100 bg-transparent rounded-xl border border-white/25 hover:border-white/40 hover:text-white transition-colors"
+              >
+                {t('hero.viewFleet')}
+                <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
               </Link>
             </div>
           </div>

@@ -11,6 +11,7 @@ import { stripe, STRIPE_CONFIG, METADATA_KEYS, eurosToCents } from '@/lib/stripe
 import { calculatePrice, generateBookingId } from '@/lib/booking/utils';
 import type { BookingData } from '@/lib/booking/types';
 import { saveBooking } from '@/lib/database/booking';
+import { defaultLocale, locales } from '@/lib/i18n';
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -37,6 +38,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as CreateCheckoutRequest;
     const { bookingData, locale } = body;
+    const safeLocale = locales.includes(locale as (typeof locales)[number]) ? locale : defaultLocale;
 
     const validation = validateBookingData(bookingData);
     if (!validation.isValid) {
@@ -58,10 +60,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const origin =
-      request.headers.get('origin') ||
-      request.headers.get('referer')?.split('/').slice(0, 3).join('/') ||
-      'http://localhost:3000';
+    const origin = getSafeBaseUrl(request);
 
     console.log('🔗 Using origin for Stripe redirects:', origin);
 
@@ -96,14 +95,14 @@ export async function POST(request: NextRequest) {
         },
       ],
 
-      success_url: `${origin}/${locale}/book/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/${locale}/book?step=3&cancelled=true`,
+      success_url: `${origin}/${safeLocale}/book/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/${safeLocale}/book?step=3&cancelled=true`,
 
       customer_email: bookingData.passengerDetails.email,
 
       billing_address_collection: STRIPE_CONFIG.billingAddressCollection,
       customer_creation: STRIPE_CONFIG.customerCreation,
-      locale: mapLocaleToStripe(locale),
+      locale: mapLocaleToStripe(safeLocale),
       expires_at: Math.floor(Date.now() / 1000) + STRIPE_CONFIG.expiresAfter,
 
       // ✅ SAFE METADATA (dropoff optional)
@@ -207,25 +206,26 @@ function validateBookingData(bookingData: BookingData): { isValid: boolean; erro
 
 function buildMetadata(bookingData: BookingData, bookingId: string, totalPrice: number): Record<string, string> {
   const dropoffAddress = bookingData.dropoff?.address ?? '';
+  const metadataValue = (value: string) => value.trim().slice(0, 500);
 
   return {
-    [METADATA_KEYS.BOOKING_ID]: bookingId,
-    [METADATA_KEYS.CUSTOMER_NAME]: `${bookingData.passengerDetails.firstName} ${bookingData.passengerDetails.lastName}`,
-    [METADATA_KEYS.CUSTOMER_EMAIL]: bookingData.passengerDetails.email,
-    [METADATA_KEYS.CUSTOMER_PHONE]: `${bookingData.passengerDetails.countryCode}${bookingData.passengerDetails.phone}`,
-    [METADATA_KEYS.SERVICE_TYPE]: bookingData.serviceType || 'airport',
-    [METADATA_KEYS.PICKUP_ADDRESS]: bookingData.pickup.address,
+    [METADATA_KEYS.BOOKING_ID]: metadataValue(bookingId),
+    [METADATA_KEYS.CUSTOMER_NAME]: metadataValue(`${bookingData.passengerDetails.firstName} ${bookingData.passengerDetails.lastName}`),
+    [METADATA_KEYS.CUSTOMER_EMAIL]: metadataValue(bookingData.passengerDetails.email),
+    [METADATA_KEYS.CUSTOMER_PHONE]: metadataValue(`${bookingData.passengerDetails.countryCode}${bookingData.passengerDetails.phone}`),
+    [METADATA_KEYS.SERVICE_TYPE]: metadataValue(bookingData.serviceType || 'airport'),
+    [METADATA_KEYS.PICKUP_ADDRESS]: metadataValue(bookingData.pickup.address),
     // ✅ Safe
-    [METADATA_KEYS.DROPOFF_ADDRESS]: dropoffAddress,
-    [METADATA_KEYS.PICKUP_DATE]: bookingData.dateTime.date,
-    [METADATA_KEYS.PICKUP_TIME]: bookingData.dateTime.time,
-    [METADATA_KEYS.VEHICLE_NAME]: bookingData.selectedVehicle?.name || 'Unknown',
-    [METADATA_KEYS.PASSENGERS]: bookingData.passengers.count.toString(),
-    [METADATA_KEYS.LUGGAGE]: bookingData.passengers.luggage.toString(),
-    [METADATA_KEYS.FLIGHT_NUMBER]: bookingData.passengerDetails.flightNumber || '',
-    totalPrice: totalPrice.toString(),
-    currency: 'EUR',
-    environment: process.env.NODE_ENV || 'development',
+    [METADATA_KEYS.DROPOFF_ADDRESS]: metadataValue(dropoffAddress),
+    [METADATA_KEYS.PICKUP_DATE]: metadataValue(bookingData.dateTime.date),
+    [METADATA_KEYS.PICKUP_TIME]: metadataValue(bookingData.dateTime.time),
+    [METADATA_KEYS.VEHICLE_NAME]: metadataValue(bookingData.selectedVehicle?.name || 'Unknown'),
+    [METADATA_KEYS.PASSENGERS]: metadataValue(bookingData.passengers.count.toString()),
+    [METADATA_KEYS.LUGGAGE]: metadataValue(bookingData.passengers.luggage.toString()),
+    [METADATA_KEYS.FLIGHT_NUMBER]: metadataValue(bookingData.passengerDetails.flightNumber || ''),
+    totalPrice: metadataValue(totalPrice.toString()),
+    currency: metadataValue('EUR'),
+    environment: metadataValue(process.env.NODE_ENV || 'development'),
   };
 }
 
@@ -263,6 +263,42 @@ function mapLocaleToStripe(locale: string): 'auto' | 'en' | 'es' | 'de' | 'it' |
   };
 
   return localeMap[locale] || 'auto';
+}
+
+function getSafeBaseUrl(request: NextRequest): string {
+  const configuredUrl = process.env.NEXT_PUBLIC_APP_URL;
+  if (configuredUrl) {
+    try {
+      const parsed = new URL(configuredUrl);
+      return parsed.origin;
+    } catch {
+      // Fall through to runtime request-derived URL.
+    }
+  }
+
+  const origin = request.headers.get('origin');
+  if (origin) {
+    try {
+      const parsed = new URL(origin);
+      if (
+        parsed.protocol === 'https:' ||
+        parsed.hostname === 'localhost' ||
+        parsed.hostname === '127.0.0.1'
+      ) {
+        return parsed.origin;
+      }
+    } catch {
+      // Fall through to host header.
+    }
+  }
+
+  const host = request.headers.get('host');
+  if (host) {
+    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+    return `${protocol}://${host}`;
+  }
+
+  return 'http://localhost:3000';
 }
 
 // ============================================================================

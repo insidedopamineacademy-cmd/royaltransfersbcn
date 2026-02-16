@@ -3,16 +3,17 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/lib/navigation';
 import Image from 'next/image';
 
-export default function LongDistancePage() {
-  const t = useTranslations('services.longDistance');
+export default function HourlyBookingPage() {
+  const t = useTranslations('services.hourlyBooking');
 
   return (
     <>
       <HeroSection t={t} />
       <FeaturesSection t={t} />
-      <RoutesSection t={t} />
+      <PackagesSection t={t} />
       <HowItWorksSection t={t} />
       <FleetSection t={t} />
       <FAQSection t={t} />
@@ -24,11 +25,13 @@ export default function LongDistancePage() {
 // ============================================================================
 // HERO SECTION
 // ============================================================================
-function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.longDistance'>> }) {
+function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.hourlyBooking'>> }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
-  const badges = ['badge1', 'badge2', 'badge3', 'badge4', 'badge5', 'badge6'];
+  const badges = [
+    'badge1', 'badge2', 'badge3', 'badge4', 'badge5', 'badge6'
+  ];
 
   return (
     <section
@@ -37,8 +40,8 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.lon
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 -left-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,7 +53,7 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.lon
         >
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             {t('hero.title')}{' '}
-            <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               {t('hero.titleHighlight')}
             </span>
           </h1>
@@ -88,7 +91,7 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.lon
                 transition={{ duration: 0.4, delay: 0.3 + index * 0.05 }}
                 className="flex items-center gap-2 text-sm text-gray-300"
               >
-                <CheckIcon className="w-5 h-5 text-emerald-400 shrink-0" />
+                <CheckIcon className="w-5 h-5 text-green-400 shrink-0" />
                 <span>{t(`hero.${badge}`)}</span>
               </motion.div>
             ))}
@@ -102,15 +105,15 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.lon
 // ============================================================================
 // FEATURES SECTION
 // ============================================================================
-function FeaturesSection({ t }: { t: ReturnType<typeof useTranslations<'services.longDistance'>> }) {
+function FeaturesSection({ t }: { t: ReturnType<typeof useTranslations<'services.hourlyBooking'>> }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   const features = [
-    { key: 'specialists', icon: MapIcon, color: 'from-emerald-500 to-teal-400' },
+    { key: 'flexible', icon: ClockIcon, color: 'from-purple-500 to-pink-400' },
     { key: 'fleet', icon: CarIcon, color: 'from-blue-500 to-cyan-400' },
-    { key: 'pricing', icon: TagIcon, color: 'from-amber-500 to-orange-400' },
-    { key: 'stops', icon: CameraIcon, color: 'from-purple-500 to-pink-400' },
+    { key: 'rates', icon: TagIcon, color: 'from-emerald-500 to-green-400' },
+    { key: 'occasion', icon: CalendarIcon, color: 'from-amber-500 to-orange-400' },
   ];
 
   return (
@@ -143,19 +146,17 @@ function FeaturesSection({ t }: { t: ReturnType<typeof useTranslations<'services
 }
 
 // ============================================================================
-// ROUTES SECTION
+// PACKAGES SECTION
 // ============================================================================
-function RoutesSection({ t }: { t: ReturnType<typeof useTranslations<'services.longDistance'>> }) {
+function PackagesSection({ t }: { t: ReturnType<typeof useTranslations<'services.hourlyBooking'>> }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  const routes = [
-    { key: 'girona', popular: true },
-    { key: 'tarragona', popular: false },
-    { key: 'sitges', popular: false },
-    { key: 'lloret', popular: false },
-    { key: 'andorra', popular: true },
-    { key: 'intercity', popular: false },
+  const packages = [
+    { key: 'threeHours', hours: '3', popular: false },
+    { key: 'fourHours', hours: '4', popular: true },
+    { key: 'sixHours', hours: '6', popular: false },
+    { key: 'eightHours', hours: '8', popular: false },
   ];
 
   return (
@@ -169,48 +170,50 @@ function RoutesSection({ t }: { t: ReturnType<typeof useTranslations<'services.l
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            {t('routes.title')}{' '}
-            <span className="bg-gradient-to-r from-emerald-600 to-cyan-500 bg-clip-text text-transparent">
-              {t('routes.titleHighlight')}
+            {t('packages.title')}{' '}
+            <span className="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
+              {t('packages.titleHighlight')}
             </span>
           </h2>
         </motion.div>
 
-        {/* Routes grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {routes.map((route, index) => (
+        {/* Packages grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {packages.map((pkg, index) => (
             <motion.div
-              key={route.key}
+              key={pkg.key}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.5, delay: 0.1 + index * 0.08 }}
+              transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
               className={`relative bg-white rounded-2xl p-6 border-2 ${
-                route.popular ? 'border-emerald-500 shadow-xl' : 'border-gray-100 shadow-lg'
+                pkg.popular ? 'border-purple-500 shadow-xl' : 'border-gray-100 shadow-lg'
               }`}
             >
-              {route.popular && (
-                <div className="absolute -top-3 right-4">
-                  <span className="px-3 py-1 text-xs font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full">
-                    {t('routes.popular')}
+              {pkg.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="px-4 py-1 text-xs font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">
+                    {t('packages.popular')}
                   </span>
                 </div>
               )}
 
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <RouteIcon className="w-5 h-5 text-emerald-500" />
-                  <h3 className="text-lg font-bold text-gray-900">
-                    {t(`routes.${route.key}.name`)}
-                  </h3>
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-purple-100 to-pink-100 text-purple-600 mb-4">
+                  <span className="text-2xl font-bold">{pkg.hours}h</span>
                 </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-1">
+                  {t(`packages.${pkg.key}.title`)}
+                </h3>
+                <p className="text-sm text-gray-500 mb-4">
+                  {t(`packages.${pkg.key}.subtitle`)}
+                </p>
+                <p className="text-2xl font-bold text-gray-900 mb-1">
+                  {t(`packages.${pkg.key}.price`)}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {t(`packages.${pkg.key}.note`)}
+                </p>
               </div>
-
-              <p className="text-2xl font-bold text-gray-900 mb-1">
-                {t(`routes.${route.key}.price`)}
-              </p>
-              <p className="text-sm text-gray-500">
-                {t(`routes.${route.key}.note`)}
-              </p>
             </motion.div>
           ))}
         </div>
@@ -223,15 +226,15 @@ function RoutesSection({ t }: { t: ReturnType<typeof useTranslations<'services.l
           className="text-center mt-10"
         >
           <p className="text-gray-600 mb-6">
-            {t('routes.note')}
+            {t('packages.note')}
           </p>
           <a
             href="https://wa.me/34617629115"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all shadow-lg"
+            className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all shadow-lg"
           >
-            {t('routes.cta')}
+            {t('packages.cta')}
           </a>
         </motion.div>
       </div>
@@ -242,7 +245,7 @@ function RoutesSection({ t }: { t: ReturnType<typeof useTranslations<'services.l
 // ============================================================================
 // HOW IT WORKS SECTION
 // ============================================================================
-function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'services.longDistance'>> }) {
+function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'services.hourlyBooking'>> }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
@@ -269,7 +272,7 @@ function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'servic
         {/* Steps */}
         <div className="relative">
           {/* Connecting line - desktop */}
-          <div className="hidden lg:block absolute top-16 left-[16.67%] right-[16.67%] h-0.5 bg-gradient-to-r from-emerald-200 via-blue-200 to-teal-200" />
+          <div className="hidden lg:block absolute top-16 left-[16.67%] right-[16.67%] h-0.5 bg-gradient-to-r from-purple-200 via-blue-200 to-emerald-200" />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {steps.map((step, index) => (
@@ -281,7 +284,7 @@ function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'servic
                 className="text-center"
               >
                 <div className="flex justify-center mb-6">
-                  <div className="relative z-10 w-14 h-14 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center text-xl font-bold shadow-lg">
+                  <div className="relative z-10 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white flex items-center justify-center text-xl font-bold shadow-lg">
                     {index + 1}
                   </div>
                 </div>
@@ -352,27 +355,12 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.lo
             >
               {/* Image container */}
               <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
-                <img 
+                <Image
                   src={vehicleImages[vehicle.key as keyof typeof vehicleImages]}
                   alt={t(`fleet.${vehicle.key}.name`)}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  onError={(e) => {
-                    // Fallback if image fails to load
-                    console.error(`Failed to load image: ${vehicleImages[vehicle.key as keyof typeof vehicleImages]}`);
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const fallback = document.createElement('div');
-                    fallback.className = 'w-full h-full flex items-center justify-center';
-                    fallback.innerHTML = `
-                      <div class="text-center">
-                        <svg class="w-16 h-16 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17h8M8 17a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM4 11l2-6h12l2 6M4 11h16M4 11v6h16v-6" />
-                        </svg>
-                      </div>
-                    `;
-                    target.parentElement?.appendChild(fallback);
-                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent" />
               </div>
@@ -395,11 +383,10 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.lo
     </section>
   );
 }
-
 // ============================================================================
 // FAQ SECTION
 // ============================================================================
-function FAQSection({ t }: { t: ReturnType<typeof useTranslations<'services.longDistance'>> }) {
+function FAQSection({ t }: { t: ReturnType<typeof useTranslations<'services.hourlyBooking'>> }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -418,7 +405,7 @@ function FAQSection({ t }: { t: ReturnType<typeof useTranslations<'services.long
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             {t('faq.title')}{' '}
-            <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
               {t('faq.titleHighlight')}
             </span>
           </h2>
@@ -466,7 +453,7 @@ function FAQSection({ t }: { t: ReturnType<typeof useTranslations<'services.long
 // ============================================================================
 // CTA SECTION
 // ============================================================================
-function CTASection({ t }: { t: ReturnType<typeof useTranslations<'services.longDistance'>> }) {
+function CTASection({ t }: { t: ReturnType<typeof useTranslations<'services.hourlyBooking'>> }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
@@ -477,12 +464,12 @@ function CTASection({ t }: { t: ReturnType<typeof useTranslations<'services.long
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
-          className="text-center bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-600 rounded-3xl p-10 lg:p-16 shadow-2xl"
+          className="text-center bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 rounded-3xl p-10 lg:p-16 shadow-2xl"
         >
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
             {t('cta.title')}
           </h2>
-          <p className="text-lg text-emerald-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-purple-100 mb-8 max-w-2xl mx-auto">
             {t('cta.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -490,7 +477,7 @@ function CTASection({ t }: { t: ReturnType<typeof useTranslations<'services.long
               href="https://wa.me/34617629115"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-emerald-700 bg-white rounded-xl hover:bg-gray-100 transition-colors shadow-lg w-full sm:w-auto"
+              className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-purple-700 bg-white rounded-xl hover:bg-gray-100 transition-colors shadow-lg w-full sm:w-auto"
             >
               <WhatsAppIcon className="w-5 h-5 mr-2" />
               {t('cta.whatsapp')}
@@ -536,10 +523,10 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-function MapIcon({ className }: { className?: string }) {
+function ClockIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   );
 }
@@ -560,19 +547,10 @@ function TagIcon({ className }: { className?: string }) {
   );
 }
 
-function CameraIcon({ className }: { className?: string }) {
+function CalendarIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-  );
-}
-
-function RouteIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
     </svg>
   );
 }

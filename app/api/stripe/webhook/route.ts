@@ -118,13 +118,24 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       return;
     }
 
+    // Idempotency guard: Stripe may deliver the same webhook multiple times.
+    if (booking.payment_status === 'paid') {
+      console.log('ℹ️ Booking already marked as paid. Skipping duplicate processing:', booking.booking_id);
+      return;
+    }
+
     // Check payment status
     if (session.payment_status === 'paid') {
+      const paymentIntentId =
+        typeof session.payment_intent === 'string'
+          ? session.payment_intent
+          : session.payment_intent?.id;
+
       // Update booking to paid
       const updatedBooking = await updateBookingPaymentStatus(
         booking.booking_id,
         'paid',
-        session.payment_intent as string
+        paymentIntentId
       );
 
       console.log('✅ Booking updated to paid:', booking.booking_id);

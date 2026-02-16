@@ -16,10 +16,10 @@ export default function Footer() {
   ];
 
   const servicesLinks = [
-    { label: tHeader('servicesMenu.airportTaxi'), href: '/services/airport-taxi' },
-    { label: tHeader('servicesMenu.cruisePort'), href: '/services/cruise-port' },
-    { label: tHeader('servicesMenu.longDistance'), href: '/services/long-distance' },
-    { label: tHeader('servicesMenu.hourlyBooking'), href: '/services/hourly-booking' },
+    { label: tHeader('servicesMenu.airportTaxi'), href: '/services/airport-transfer' },
+    { label: tHeader('servicesMenu.cruisePort'), href: '/services/cruise-port-transfer' },
+    { label: tHeader('servicesMenu.longDistance'), href: '/services/long-distance-transfer' },
+    { label: tHeader('servicesMenu.hourlyBooking'), href: '/services/hourly-transfer' },
   ];
 
   const fleetLinks = [
@@ -43,42 +43,6 @@ export default function Footer() {
             <p className="text-neutral-400 text-sm leading-relaxed mb-6">
               {t('tagline')}
             </p>
-            
-            {/* Social Media */}
-            <div>
-              <p className="text-sm font-semibold text-neutral-300 mb-3">
-                {t('followUs')}
-              </p>
-              <div className="flex gap-3">
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-neutral-800 text-neutral-400 hover:bg-amber-500 hover:text-neutral-900 transition-colors"
-                  aria-label="Facebook"
-                >
-                  <FacebookIcon className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-neutral-800 text-neutral-400 hover:bg-amber-500 hover:text-neutral-900 transition-colors"
-                  aria-label="Instagram"
-                >
-                  <InstagramIcon className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-neutral-800 text-neutral-400 hover:bg-amber-500 hover:text-neutral-900 transition-colors"
-                  aria-label="Twitter"
-                >
-                  <TwitterIcon className="w-5 h-5" />
-                </a>
-              </div>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -210,31 +174,6 @@ export default function Footer() {
 }
 
 // Icon Components
-function FacebookIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z" />
-    </svg>
-  );
-}
-
-function InstagramIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
-      <path d="M17.5 6.5h.01" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function TwitterIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
 
 function LocationIcon({ className }: { className?: string }) {
   return (

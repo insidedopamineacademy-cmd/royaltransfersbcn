@@ -223,7 +223,7 @@ export default function BookingSummaryStep() {
             </div>
 
             {paymentMethod === 'card' && (
-              <m.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <m.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-2xl">
                 <div className="flex items-start gap-2">
                   <svg className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -301,7 +301,7 @@ export default function BookingSummaryStep() {
 
         {/* Right Column: Price Summary */}
 <aside className="lg:col-span-1">
-  <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 lg:sticky lg:top-4">
+  <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4 sm:p-6 border border-blue-100 lg:sticky lg:top-4">
     <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-4 sm:mb-6">{t('priceSummary.heading')}</h2>
 
     {bookingData.pricing ? (
@@ -353,6 +353,45 @@ export default function BookingSummaryStep() {
           </p>
         </div>
 
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 sm:p-4">
+          <ul className="space-y-1.5 sm:space-y-2">
+            <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+              <span className="text-emerald-600 font-semibold">✓</span>
+                      <span>Free cancellation</span>
+                    </li>
+                    <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                      <span className="text-emerald-600 font-semibold">✓</span>
+                      <span>Licensed professional chauffeurs</span>
+                    </li>
+                    <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                      <span className="text-emerald-600 font-semibold">✓</span>
+                      <span>Instant confirmation</span>
+                    </li>
+                    <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                      <span className="text-emerald-600 font-semibold">✓</span>
+                      <span>24/7 support</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="bg-white border border-gray-200 rounded-xl p-3 sm:p-4">
+          <p className="text-sm sm:text-base font-semibold text-gray-900 mb-2">What happens next:</p>
+          <ul className="space-y-1.5 sm:space-y-2">
+            <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+              <span className="text-blue-600 font-semibold">•</span>
+              <span>Driver assigned before pickup</span>
+            </li>
+            <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+              <span className="text-blue-600 font-semibold">•</span>
+              <span>Instant confirmation email</span>
+            </li>
+            <li className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+              <span className="text-blue-600 font-semibold">•</span>
+              <span>Full support available anytime</span>
+            </li>
+          </ul>
+        </div>
+
                 {/* Confirm */}
                 <m.button
                   whileHover={!isProcessing ? { scale: 1.02 } : {}}
@@ -400,7 +439,7 @@ export default function BookingSummaryStep() {
 // ============================================================================
 
 const EditableSection = React.memo(({ title, children }: { title: string; children: React.ReactNode }) => (
-  <section className="bg-white rounded-xl sm:rounded-2xl border-2 border-gray-200 p-4 sm:p-6">
+  <section className="bg-white rounded-2xl border-2 border-gray-200 p-4 sm:p-6">
     <div className="flex items-center justify-between mb-3 sm:mb-4">
       <h2 className="text-base sm:text-lg font-bold text-gray-900">{title}</h2>
     </div>

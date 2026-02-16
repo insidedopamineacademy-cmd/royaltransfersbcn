@@ -41,7 +41,7 @@
     "hero": {
       "title": "Über",
       "titleHighlight": "Royal Transfers BCN",
-      "subtitle": "Wir sind spezialisiert auf erstklassige Chauffeur- und Taxidienste sowohl für Touristen als auch für Geschäftsreisende. Unsere Mission ist es, Komfort, Zuverlässigkeit und ein nahtloses Reiseerlebnis in der pulsierenden Stadt Barcelona und darüber hinaus zu bieten."
+      "subtitle": "Wir sind spezialisiert auf professionelle Transferdienste sowohl für Touristen als auch für Geschäftsreisende. Unsere Mission ist es, Komfort, Zuverlässigkeit und ein nahtloses Reiseerlebnis in Barcelona und darüber hinaus zu bieten."
     },
     "story": {
       "title": "Unsere",
@@ -88,9 +88,9 @@
   },
   "home": {
     "hero": {
-      "title": "Zuverlässige Flughafentransfers",
+      "title": "Transferdienste",
       "titleHighlight": "in Barcelona",
-      "subtitle": "Erleben Sie Luxus, Komfort und Zuverlässigkeit bei jeder Fahrt. Professionelle Fahrer, erstklassige Fahrzeuge und nahtloser Service von der Landung bis zum Ziel.",
+      "subtitle": "Zuverlässige Transferdienste für Flughafen, Kreuzfahrthafen, Stadt-zu-Stadt und stündliche Fahrten in Barcelona. Professionelle Fahrer, komfortable Fahrzeuge und nahtloser Service von der Abholung bis zum Ziel.",
       "bookNow": "Ihren Transfer Buchen",
       "viewFleet": "Unsere Flotte Ansehen",
       "bookingSteps": {
@@ -110,8 +110,8 @@
       "titleHighlight": "Dienstleistungen",
       "subtitle": "Umfassende Transferlösungen, maßgeschneidert auf Ihre Bedürfnisse, ob Sie am Flughafen ankommen, von einer Kreuzfahrt abreisen oder die Region erkunden.",
       "airportTaxi": {
-        "title": "Flughafentaxi Barcelona",
-        "description": "Stressfreie Transfers zum und vom Flughafen Barcelona-El Prat mit Flugverfolgung und Meet-&-Greet-Service."
+        "title": "Flughafentransfer Barcelona",
+        "description": "Zuverlässige Transferdienste zum und vom Flughafen Barcelona-El Prat mit Flugverfolgung und Meet-&-Greet-Service."
       },
       "cruisePort": {
         "title": "Kreuzfahrthafen-Transfer",
@@ -122,8 +122,8 @@
         "description": "Reisen Sie über Barcelona hinaus nach Costa Brava, Andorra oder überall in Spanien mit unserem Fernverkehrsservice."
       },
       "hourlyBooking": {
-        "title": "Stündliche Taxibuchung",
-        "description": "Flexible Buchung nach Stunden für Geschäftstreffen, Stadtrundfahrten oder Einkaufstouren in Barcelona."
+        "title": "Stündlicher Transferdienst",
+        "description": "Flexible Transferdienste nach Stunden mit professionellem Fahrer für Geschäftstreffen, Stadtrundfahrten oder Einkaufstouren in Barcelona."
       },
       "learnMore": "Mehr Erfahren"
     },
@@ -233,10 +233,10 @@
     "fleet": "Flotte",
     "bookNow": "Jetzt Buchen",
     "servicesMenu": {
-      "airportTaxi": "Flughafentaxi Barcelona",
+      "airportTaxi": "Flughafentransfer Barcelona",
       "cruisePort": "Kreuzfahrthafen-Transfer",
       "longDistance": "Fernreisen",
-      "hourlyBooking": "Stündliche Taxibuchung"
+      "hourlyBooking": "Stündlicher Transferdienst"
     },
     "fleetMenu": {
       "standard": "Standard",
@@ -250,7 +250,7 @@
   },
   "footer": {
     "companyName": "Royal Transfers BCN",
-    "tagline": "Premium Flughafentransfer-Service in Barcelona",
+    "tagline": "Professionelle Transferdienste in Barcelona",
     "quickLinks": "Schnelllinks",
     "ourServices": "Unsere Dienstleistungen",
     "ourFleet": "Unsere Flotte",
@@ -268,20 +268,20 @@
   "services": {
     "hourlyBooking": {
       "hero": {
-        "title": "Stündliche Taxibuchung",
+        "title": "Stündlicher Transferdienst",
         "titleHighlight": "Barcelona",
-        "subtitle": "Brauchen Sie ein Taxi, das auf Sie wartet? Buchen Sie stundenweise für Einkäufe, Besorgungen, Veranstaltungen oder Besichtigungen. Flexible Stundenpakete mit Autos und Vans für bis zu 8 Passagiere.",
+        "subtitle": "Benötigen Sie einen Fahrer, der auf Sie wartet? Buchen Sie stündliche Transferdienste für Einkäufe, Veranstaltungen, Besichtigungen oder Geschäftstermine mit komfortablen Fahrzeugen.",
         "ctaWhatsApp": "Schnell via WhatsApp Buchen",
         "ctaCall": "Rufen Sie Uns An 📞",
         "badge1": "Buchen Sie 3–8 Stunden",
-        "badge2": "Das Taxi wartet auf Sie",
+        "badge2": "Der Fahrer wartet auf Sie",
         "badge3": "Englischsprachige Fahrer",
         "badge4": "Limousinen & Vans bis zu 8 Pers.",
         "badge5": "Kindersitze auf Anfrage",
         "badge6": "24/7 Verfügbarkeit"
       },
       "features": {
-        "flexible": { "title": "Bleiben Sie Flexibel", "description": "Sie müssen nicht jedes Mal eine neue Fahrt bestellen – Ihr Taxi wartet auf Sie." },
+        "flexible": { "title": "Bleiben Sie Flexibel", "description": "Sie müssen nicht jedes Mal eine neue Fahrt bestellen – Ihr Fahrer bleibt während Ihres Transfers bei Ihnen." },
         "fleet": { "title": "Moderne Flotte", "description": "Komfortable Limousinen, Hybride und geräumige Vans für 7–8 Passagiere." },
         "rates": { "title": "Klare Stundensätze", "description": "Fester Stundensatz, keine versteckten Kosten. Wartezeit inklusive." },
         "occasion": { "title": "Jeder Anlass", "description": "Perfekt für Einkäufe, Arztbesuche, Besichtigungen und Veranstaltungen." }
@@ -293,16 +293,16 @@
         "threeHours": { "title": "3 Stunden", "subtitle": "Schnelle Besorgungen", "price": "ab 85 €", "note": "120 € (Van)" },
         "fourHours": { "title": "4 Stunden", "subtitle": "Einkaufen / Termine", "price": "ab 110 €", "note": "Inkl. Warten & Rückfahrt" },
         "sixHours": { "title": "6 Stunden", "subtitle": "Halber Tag", "price": "ab 160 €", "note": "Für Events & Besichtigungen" },
-        "eightHours": { "title": "8 Stunden", "subtitle": "Ganztagestaxi", "price": "ab 210 €", "note": "Ideal für lange Programme" },
+        "eightHours": { "title": "8 Stunden", "subtitle": "Ganztagstransfer", "price": "ab 210 €", "note": "Ideal für lange Programme" },
         "note": "Die Preise hängen von der Fahrzeuggröße und der Tageszeit ab. Erhalten Sie sofort Ihr genaues Angebot.",
         "cta": "Preis Erhalten"
       },
       "howItWorks": {
         "title": "So Funktioniert die Stündliche",
-        "titleHighlight": "Taxibuchung",
+        "titleHighlight": "Transferbuchung",
         "step1": { "title": "Wählen Sie Ihre Stunden", "description": "Wählen Sie Ihre Stunden (3–8h) und teilen Sie uns Ihre Route mit." },
         "step2": { "title": "Erhalten Sie Ihr Angebot", "description": "Erhalten Sie ein festes Stundengebot für Limousine, Luxuslimousine oder Van." },
-        "step3": { "title": "Genießen Sie Ihren Tag", "description": "Genießen Sie Ihren Tag mit einem Taxi, das wartet und Sie überall hinfährt." }
+        "step3": { "title": "Genießen Sie Ihren Tag", "description": "Genießen Sie Ihren Tag mit einem professionellen Fahrer, der bei Ihnen bleibt und Sie überall hinbringt." }
       },
       "fleet": {
         "title": "Unsere",
@@ -315,14 +315,14 @@
       },
       "faq": {
         "title": "Häufig Gestellte Fragen",
-        "titleHighlight": "Stundentaxi",
+        "titleHighlight": "Stundentransfer",
         "faq1": { "question": "Was ist im Stundensatz enthalten?", "answer": "Der Fahrer, das Fahrzeug, Kraftstoff und Wartezeit innerhalb der Stadtgrenzen Barcelonas." },
         "faq2": { "question": "Kann ich meine Buchung verlängern?", "answer": "Ja, zusätzliche Stunden können am selben Tag hinzugefügt werden, falls verfügbar, zum gleichen Satz." },
         "faq3": { "question": "Bieten Sie Vans für Gruppen an?", "answer": "Ja, Mercedes Vito & V-Klasse Vans für bis zu 7–8 Personen mit Gepäck." },
-        "faq4": { "question": "Kann ich das Stundentaxi für Besichtigungen nutzen?", "answer": "Natürlich – ideal, um an einem Tag mehrere Sehenswürdigkeiten stressfrei zu besuchen." }
+        "faq4": { "question": "Kann ich den stündlichen Transferdienst für Besichtigungen nutzen?", "answer": "Natürlich – ideal, um an einem Tag mehrere Sehenswürdigkeiten stressfrei zu besuchen." }
       },
       "cta": {
-        "title": "Bereit, Ihr Stundentaxi zu Buchen?",
+        "title": "Bereit, Ihren stündlichen Transfer zu buchen?",
         "subtitle": "Nehmen Sie jetzt Kontakt auf und genießen Sie flexiblen Transport in Barcelona.",
         "whatsapp": "Chatten & Buchen",
         "call": "Rufen Sie Uns An 📞"
@@ -330,7 +330,7 @@
     },
     "longDistance": {
       "hero": {
-        "title": "Fern-Taxi & Private Transfers",
+        "title": "Ferntransferdienste",
         "titleHighlight": "ab Barcelona",
         "subtitle": "Komfortable Stadt-zu-Stadt Transfers durch Katalonien, Spanien und die Pyrenäen. Feste Preise, Tür-zu-Tür Service und professionelle Fahrer. Perfekt für Familien, Geschäftsreisen und kleine Gruppen.",
         "ctaWhatsApp": "Schnell via WhatsApp Buchen",
@@ -394,11 +394,11 @@
     },
     "cruisePortTaxi": {
       "structuredData": {
-        "name": "Taxi-Transfers Kreuzfahrthafen Barcelona",
-        "description": "Zuverlässige Taxi-Transfers vom/zum Kreuzfahrthafen in Barcelona. Meet-&-Greet-Service, feste Preise, Gepäckassistenz und komfortable Fahrzeuge für Kreuzfahrtpassagiere."
+        "name": "Transferdienste Kreuzfahrthafen Barcelona",
+        "description": "Zuverlässige Transferdienste vom/zum Kreuzfahrthafen in Barcelona. Meet-&-Greet-Service, feste Preise, Gepäckassistenz und komfortable Fahrzeuge für Kreuzfahrtpassagiere."
       },
       "hero": {
-        "title": "Taxi-Transfers Kreuzfahrthafen Barcelona",
+        "title": "Transferdienste Kreuzfahrthafen Barcelona",
         "subtitle": "Zuverlässige Meet-&-Greet-Transfers zwischen den Kreuzfahrtterminals von Barcelona, Flughäfen, Hotels und der Innenstadt. Feste Preise, Gepäckassistenz und Unterstützung bei der prioritären Einschiffung.",
         "ctaWhatsApp": "Schnell via WhatsApp Buchen",
         "ctaCall": "Rufen Sie Uns An 📞",
@@ -541,12 +541,12 @@
     },
     "airportTaxi": {
       "structuredData": {
-        "name": "Taxi-Transfers Flughafen Barcelona",
-        "description": "Zuverlässige Taxi-Transfers vom/zum Flughafen Barcelona. Meet-&-Greet-Service, feste Preise, Flugverfolgung und komfortable Fahrzeuge für Flughafentransfers."
+        "name": "Transferdienste Flughafen Barcelona",
+        "description": "Zuverlässige Transferdienste vom/zum Flughafen Barcelona. Meet-&-Greet-Service, feste Preise, Flugverfolgung und komfortable Fahrzeuge."
       },
       "hero": {
         "badge": "Vertrauenswürdiger Flughafentransfer-Service",
-        "title": "Taxi-Transfers Flughafen Barcelona",
+        "title": "Transferdienste Flughafen Barcelona",
         "subtitle": "Zuverlässige Meet-&-Greet-Transfers zwischen dem Flughafen Barcelona (BCN/T1/T2), Hotels und der Innenstadt. Feste Preise, Flugverfolgung und 60 Minuten kostenlose Wartezeit.",
         "ctaWhatsApp": "Schnell via WhatsApp Buchen",
         "ctaCall": "Rufen Sie Uns An 📞",

@@ -118,7 +118,7 @@ export async function saveBooking(input: SaveBookingInput): Promise<DatabaseBook
         ${bookingData.passengerDetails.countryCode},
         ${bookingData.serviceType || 'airport'},
         ${bookingData.pickup.address},
-        ${bookingData.dropoff?.address ?? null},
+        ${bookingData.dropoff?.address ?? ''},
         ${bookingData.dateTime.date},
         ${bookingData.dateTime.time},
         ${bookingData.pickup.lat || null},
