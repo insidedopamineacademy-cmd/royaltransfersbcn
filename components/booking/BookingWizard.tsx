@@ -66,6 +66,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   const [transferType, setTransferType] = useState<TransferType>('oneWay');
   const [pickup, setPickup] = useState<Location>({ address: '' });
   const [dropoff, setDropoff] = useState<Location>({ address: '' });
+  const inputNormal =
+  "w-full h-12 pl-10 pr-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-base focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]";
 
   // Default pickup date/time = now + 2 hours (safe)
   const getDefaultDateTime = useCallback(() => {
@@ -393,14 +395,14 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     <div className="relative">
                       <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
                       <input
-                        id="return-date"
-                        type="date"
-                        value={returnDate}
-                        onChange={(e) => setReturnDate(e.target.value)}
-                        min={getMinReturnDate()}
-                        aria-label={t('fields.returnDate.label')}
-                        className="w-full pl-10 pr-3 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
-                      />
+  id="return-date"
+  type="date"
+  value={returnDate}
+  onChange={(e) => setReturnDate(e.target.value)}
+  min={getMinReturnDate()}
+  aria-label={t('fields.returnDate.label')}
+  className={inputNormal}
+/>
                     </div>
                   </div>
 
@@ -411,13 +413,13 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     <div className="relative">
                       <ClockIconSmall className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
                       <input
-                        id="return-time"
-                        type="time"
-                        value={returnTime}
-                        onChange={(e) => setReturnTime(e.target.value)}
-                        aria-label={t('fields.returnTime.label')}
-                        className="w-full pl-10 pr-3 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
-                      />
+  id="return-time"
+  type="time"
+  value={returnTime}
+  onChange={(e) => setReturnTime(e.target.value)}
+  aria-label={t('fields.returnTime.label')}
+  className={inputNormal}
+/>
                     </div>
                   </div>
                 </div>
@@ -433,14 +435,14 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                 <div className="relative">
                   <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
                   <input
-                    id="pickup-date"
-                    type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    min={minDateString}
-                    aria-label={t('fields.date.label')}
-                    className="w-full pl-10 pr-3 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
-                  />
+  id="pickup-date"
+  type="date"
+  value={date}
+  onChange={(e) => setDate(e.target.value)}
+  min={minDateString}
+  aria-label={t('fields.date.label')}
+  className={inputNormal}
+/>
                 </div>
               </div>
 
@@ -451,13 +453,13 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                 <div className="relative">
                   <ClockIconSmall className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10" />
                   <input
-                    id="pickup-time"
-                    type="time"
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    aria-label={t('fields.time.label')}
-                    className="w-full pl-10 pr-3 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all [color-scheme:light]"
-                  />
+  id="pickup-time"
+  type="time"
+  value={time}
+  onChange={(e) => setTime(e.target.value)}
+  aria-label={t('fields.time.label')}
+  className={inputNormal}
+/>
                 </div>
               </div>
             </div>
