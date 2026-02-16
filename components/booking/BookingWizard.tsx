@@ -20,7 +20,6 @@ const MIN_ADVANCE_MINUTES = 120;
 // ============================================================================
 function getMinPickupDateTime() {
   const d = new Date(Date.now() + MIN_ADVANCE_MINUTES * 60 * 1000);
-  // important: strip seconds/ms so validation never fails by seconds
   d.setSeconds(0, 0);
   return d;
 }
@@ -66,16 +65,10 @@ const HeroBookingForm = memo(function HeroBookingForm() {
   const [transferType, setTransferType] = useState<TransferType>('oneWay');
   const [pickup, setPickup] = useState<Location>({ address: '' });
   const [dropoff, setDropoff] = useState<Location>({ address: '' });
-  
 
+  // ✅ iOS-safe date/time input style (fix “lifted text”)
   const inputDateTime =
-  "w-full h-12 pl-10 pr-3 bg-white border-2 border-gray-200 rounded-xl " +
-  "text-gray-900 text-[16px] leading-normal " +
-  "focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 " +
-  "transition-all appearance-none [-webkit-appearance:none]";
-  // ✅ Better input styling (fixes “text lifted” + keeps iOS date/time normal)
-  const inputNormal =
-    'block w-full h-12 pl-10 pr-3 py-2 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
+    'block w-full min-h-[48px] pl-10 pr-3 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 ' +
     'text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ' +
     'transition-all appearance-none [color-scheme:light]';
 
@@ -117,9 +110,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date, transferType, serviceType]);
 
-  // --------------------------------------------------------------------------
-  // ✅ FIX: Pickup time validity (minute precision; no seconds/ms bug)
-  // --------------------------------------------------------------------------
+  // ✅ Pickup time validity
   const isPickupTimeValid = useCallback((): boolean => {
     if (!date || !time) return false;
     const selected = new Date(`${date}T${time}:00`);
@@ -127,11 +118,10 @@ const HeroBookingForm = memo(function HeroBookingForm() {
 
     selected.setSeconds(0, 0);
     const min = getMinPickupDateTime();
-
     return selected.getTime() >= min.getTime();
   }, [date, time]);
 
-  // Auto-correct to minimum if user chooses an invalid time
+  // Auto-correct to minimum if invalid
   useEffect(() => {
     if (!date || !time) return;
     const selected = new Date(`${date}T${time}:00`);
@@ -146,19 +136,14 @@ const HeroBookingForm = memo(function HeroBookingForm() {
     }
   }, [date, time]);
 
-  // Min date for input[type="date"] (based on min pickup datetime)
   const minDateString = useMemo(() => toDateString(getMinPickupDateTime()), []);
 
-  // Minimum return date: at least next day after pickup date
   const getMinReturnDate = useCallback(() => {
     const base = new Date(`${date}T00:00:00`);
     base.setDate(base.getDate() + 1);
     return toDateString(base);
   }, [date]);
 
-  // --------------------------------------------------------------------------
-  // ✅ SINGLE SOURCE OF TRUTH: Button enabled + submit validation
-  // --------------------------------------------------------------------------
   const canSearch = useMemo(() => {
     if (!pickup.address) return false;
     if (!date || !time) return false;
@@ -166,8 +151,6 @@ const HeroBookingForm = memo(function HeroBookingForm() {
 
     if (serviceType === 'distance') {
       if (!dropoff.address) return false;
-
-      // Require placeIds for distance bookings so Step2 distance calc works
       if (!pickup.placeId || !dropoff.placeId) return false;
 
       if (transferType === 'return') {
@@ -184,7 +167,6 @@ const HeroBookingForm = memo(function HeroBookingForm() {
       if (!hourlyDuration || hourlyDuration < 2) return false;
     }
 
-    // luggage is optional; if you ever want to cap it, do it here
     if (luggage < 0) return false;
 
     return true;
@@ -204,26 +186,20 @@ const HeroBookingForm = memo(function HeroBookingForm() {
     isPickupTimeValid,
   ]);
 
-  // --------------------------------------------------------------------------
-  // SEARCH ACTION (Aligned with context.tsx HeroDraftV2)
-  // --------------------------------------------------------------------------
   const handleSearch = useCallback(() => {
     if (!canSearch) {
       alert(t('validation.fillAllFields'));
       return;
     }
 
-    // HeroDraft v2.0 (this matches hydrateFromDraft in context.tsx)
     const bookingDraft = {
       version: '2.0' as const,
       timestamp: Date.now(),
       fromHomepage: true,
 
-      // PRESERVE EXACT USER SELECTIONS
-      serviceType, // 'distance' | 'hourly'
-      transferType, // 'oneWay' | 'return'
+      serviceType,
+      transferType,
 
-      // Locations
       pickup: {
         address: pickup.address,
         placeId: pickup.placeId || '',
@@ -244,33 +220,20 @@ const HeroBookingForm = memo(function HeroBookingForm() {
           }
         : {}),
 
-      // Pickup date/time
-      pickupDateTime: {
-        date,
-        time,
-      },
+      pickupDateTime: { date, time },
 
-      // Return date/time (ONLY if distance + return)
       ...(serviceType === 'distance' && transferType === 'return'
-        ? {
-            returnDateTime: {
-              date: returnDate,
-              time: returnTime,
-            },
-          }
+        ? { returnDateTime: { date: returnDate, time: returnTime } }
         : {}),
 
-      // Passengers
       passengers: {
         count: passengers,
-        luggage, // ✅ added
+        luggage,
         childSeats: 0,
       },
 
-      // Hourly duration (ONLY if hourly)
       ...(serviceType === 'hourly' ? { hourlyDuration } : {}),
 
-      // BACKWARD COMPATIBILITY (temporary)
       _legacy: {
         serviceType: serviceType === 'distance' ? 'airport' : 'hourly',
         transferType: 'oneWay',
@@ -278,7 +241,6 @@ const HeroBookingForm = memo(function HeroBookingForm() {
     };
 
     sessionStorage.setItem('booking-draft', JSON.stringify(bookingDraft));
-
     router.push(`/${locale}/book`);
   }, [
     canSearch,
@@ -311,11 +273,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
       >
         <div className="bg-white/95 sm:backdrop-blur-sm rounded-2xl shadow-2xl p-3 sm:p-6 [@media(max-height:750px)]:p-2 border border-gray-100">
           {/* Service Type Toggle */}
-          <div
-            className="flex gap-2 mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2"
-            role="tablist"
-            aria-label={t('aria.serviceType')}
-          >
+          <div className="flex gap-2 mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2" role="tablist" aria-label={t('aria.serviceType')}>
             <ServiceTypeButton
               active={serviceType === 'distance'}
               onClick={() => {
@@ -336,19 +294,12 @@ const HeroBookingForm = memo(function HeroBookingForm() {
             />
           </div>
 
-          {/* Transfer Type (Only for Distance-Based) */}
+          {/* Transfer Type */}
           {serviceType === 'distance' && (
             <div className="mb-3 sm:mb-4 [@media(max-height:750px)]:mb-2">
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
-                {t('transferType.label')}
-              </label>
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">{t('transferType.label')}</label>
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                <TransferTypeButton
-                  active={transferType === 'oneWay'}
-                  onClick={() => setTransferType('oneWay')}
-                  label={t('transferType.oneWay')}
-                  icon={ArrowRightIcon}
-                />
+                <TransferTypeButton active={transferType === 'oneWay'} onClick={() => setTransferType('oneWay')} label={t('transferType.oneWay')} icon={ArrowRightIcon} />
                 <TransferTypeButton
                   active={transferType === 'return'}
                   onClick={() => {
@@ -362,7 +313,6 @@ const HeroBookingForm = memo(function HeroBookingForm() {
             </div>
           )}
 
-          {/* Form Fields */}
           <div className="space-y-2 sm:space-y-3 [@media(max-height:750px)]:space-y-1.5">
             {/* Pickup */}
             <div>
@@ -403,8 +353,8 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                   {t('transferType.returnDetails')}
                 </p>
 
-                {/* ✅ keep return date/time in ONE row too */}
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                {/* ✅ FIX: stack on mobile to prevent iOS date wrapping */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                   <div>
                     <label htmlFor="return-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                       {t('fields.returnDate.label')}
@@ -443,8 +393,9 @@ const HeroBookingForm = memo(function HeroBookingForm() {
               </div>
             )}
 
-            {/* ✅ Pickup Date & Time (ALWAYS one row) */}
-            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            {/* Pickup Date & Time */}
+            {/* ✅ FIX: stack on mobile to prevent iOS date wrapping */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
               <div>
                 <label htmlFor="pickup-date" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
                   {t('fields.date.label')}
@@ -494,7 +445,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={hourlyDuration}
                     onChange={(e) => setHourlyDuration(Number(e.target.value))}
                     aria-label={t('fields.duration.label')}
-                    className="w-full h-12 pl-10 pr-10 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                    className="block w-full min-h-[48px] pl-10 pr-10 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                   >
                     {Array.from({ length: 23 }, (_, i) => i + 2).map((hours) => (
                       <option key={hours} value={hours}>
@@ -507,7 +458,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
               </div>
             )}
 
-            {/* ✅ Passengers + Luggage (one row) */}
+            {/* Passengers + Luggage */}
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <div>
                 <label htmlFor="passengers" className="block text-xs font-medium text-gray-700 mb-1 sm:mb-1.5">
@@ -520,7 +471,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={passengers}
                     onChange={(e) => setPassengers(Number(e.target.value))}
                     aria-label={t('fields.passengers.label')}
-                    className="w-full h-12 pl-10 pr-10 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                    className="block w-full min-h-[48px] pl-10 pr-10 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                   >
                     {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                       <option key={num} value={num}>
@@ -537,7 +488,6 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                   Luggage
                 </label>
                 <div className="relative">
-                  {/* inline suitcase icon (no extra component needed) */}
                   <svg
                     className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none z-10"
                     fill="none"
@@ -557,7 +507,7 @@ const HeroBookingForm = memo(function HeroBookingForm() {
                     value={luggage}
                     onChange={(e) => setLuggage(Number(e.target.value))}
                     aria-label="Luggage"
-                    className="w-full h-12 pl-10 pr-10 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-normal focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                    className="block w-full min-h-[48px] pl-10 pr-10 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 text-[16px] leading-[1.25] focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
                   >
                     {Array.from({ length: 9 }, (_, i) => i).map((n) => (
                       <option key={n} value={n}>
@@ -657,11 +607,7 @@ const TransferTypeButton = memo(function TransferTypeButton({
 const RouteIcon = memo(function RouteIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
     </svg>
   );
 });
@@ -685,11 +631,7 @@ const ClockIconSmall = memo(function ClockIconSmall({ className }: { className?:
 const CalendarIcon = memo(function CalendarIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
     </svg>
   );
 });
@@ -697,11 +639,7 @@ const CalendarIcon = memo(function CalendarIcon({ className }: { className?: str
 const UserIcon = memo(function UserIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
     </svg>
   );
 });
