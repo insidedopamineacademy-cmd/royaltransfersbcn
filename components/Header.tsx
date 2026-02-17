@@ -227,6 +227,10 @@ export default function Header() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 text-neutral-300"
+            aria-label="Toggle mobile navigation menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            type="button"
           >
             {mobileMenuOpen ? <CloseIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
           </button>
@@ -236,7 +240,10 @@ export default function Header() {
             MOBILE MENU
         ======================== */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-neutral-800 py-4">
+          <div
+            id="mobile-menu"
+            className="lg:hidden border-t border-neutral-800 py-4"
+          >
             <Link href="/" onClick={closeMobileMenu} className="block px-4 py-3">
               {t('home')}
             </Link>

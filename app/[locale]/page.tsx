@@ -35,7 +35,7 @@ function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'h
     <section
   id="booking"
   ref={ref}
-  className="relative min-h-screen flex items-start sm:items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+  className="relative min-h-[85vh] sm:min-h-screen flex items-start sm:items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
 >
       {/* Background decorative elements */}
       <div className="absolute inset-0">
@@ -53,7 +53,7 @@ function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'h
         }}
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-20">
         {/* Hero Content */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -75,7 +75,7 @@ function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'h
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
+          <p className="hidden sm:block text-base sm:text-lg md:text-xl text-gray-400 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
             {t('hero.subtitle')}
           </p>
 
@@ -97,12 +97,17 @@ function HeroWithBookingSection({ t }: { t: ReturnType<typeof useTranslations<'h
           </div>
         </motion.div>
 
+        {/* Mobile subtitle (moved below booking form for better mobile fit) */}
+        <p className="block sm:hidden text-sm text-gray-400 mt-8 sm:mt-10 max-w-xl mx-auto text-center px-4 leading-relaxed">
+          {t('hero.subtitle')}
+        </p>
+
         {/* Trust indicators below form */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="grid grid-cols-2 lg:flex lg:flex-wrap items-center justify-center gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm text-gray-400 text-center"
+          className="mt-6 sm:mt-8 lg:mt-10 grid grid-cols-2 lg:flex lg:flex-wrap items-center justify-center gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm text-gray-400 text-center"
         >
           <div className="flex items-center justify-center gap-2">
             <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
