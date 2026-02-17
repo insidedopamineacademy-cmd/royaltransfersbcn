@@ -25,7 +25,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 2,
     basePrice: 35,
-    image: '/images/fleet/toyota-prius.png',
+    image: '/images/fleet/standard-sedan-barcelona-transfer.webp',
     features: ['Air-conditioned', 'Hybrid efficiency', 'Professional driver'],
   },
   {
@@ -35,7 +35,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 3,
     basePrice: 55,
-    image: '/images/fleet/eclass.png',
+    image: '/images/fleet/premium-sedan-barcelona-transfer.webp',
     features: ['Executive seating', 'Premium interior', 'Climate control'],
   },
   {
@@ -45,7 +45,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 3,
     basePrice: 103,
-    image: '/images/fleet/sclass.png',
+    image: '/images/fleet/mercedes-sclass-barcelona-transfer.webp',
     features: ['First-class seating', 'Massage seats', 'Premium sound system'],
   },
   {
@@ -56,7 +56,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 7,
     luggage: 7,
     basePrice: 75,
-    image: '/images/fleet/vclass.png',
+    image: '/images/fleet/standard-minivan-barcelona-transfer.webp',
     features: ['Spacious interior', 'Dual climate control', 'Large luggage space'],
   },
   {
@@ -67,7 +67,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 8,
     luggage: 8,
     basePrice: 85,
-    image: '/images/fleet/vito.png',
+    image: '/images/fleet/custom-8plazas-minivan-barcelona-transfer.webp',
     features: ['8 full-size seats', 'Ample legroom', 'Large luggage capacity'],
   },
   {
@@ -78,7 +78,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 7,
     luggage: 7,
     basePrice: 95,
-    image: '/images/fleet/vclass.png',
+    image: '/images/fleet/mercedes-vclass-executive-barcelona-transfer.webp',
     features: ['Premium leather seats', 'Conference seating', 'Executive comfort'],
   },
 ] as const;
@@ -427,6 +427,7 @@ const VehicleCard = React.memo(function VehicleCard({
           className="object-contain p-4 sm:p-6"
           priority={index < 3}
           quality={90}
+          placeholder="empty"
         />
       </div>
 
