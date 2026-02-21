@@ -25,6 +25,8 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 2,
     basePrice: 4,
+    pricePerKm: 1.4,
+    pricePerHour: 55,
     image: '/images/fleet/standard-sedan-barcelona-transfer.png',
     features: ['Air-conditioned', 'Hybrid efficiency', 'Professional driver'],
   },
@@ -35,6 +37,8 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 3,
     basePrice: 7,
+    pricePerKm: 1.6,
+    pricePerHour: 65,
     image: '/images/fleet/premium-sedan-barcelona-transfer.png',
     features: ['Executive seating', 'Premium interior', 'Climate control'],
   },
@@ -45,6 +49,8 @@ const VEHICLE_CATEGORIES = [
     capacity: 3,
     luggage: 3,
     basePrice: 60,
+    pricePerKm: 2.6,
+    pricePerHour: 110,
     image: '/images/fleet/mercedes-sclass-barcelona-transfer.png',
     features: ['First-class seating', 'Massage seats', 'Premium sound system'],
   },
@@ -56,6 +62,8 @@ const VEHICLE_CATEGORIES = [
     capacity: 7,
     luggage: 7,
     basePrice: 15,
+    pricePerKm: 1.8,
+    pricePerHour: 70,
     image: '/images/fleet/standard-minivan-barcelona-transfer.png',
     features: ['Spacious interior', 'Dual climate control', 'Large luggage space'],
   },
@@ -67,6 +75,8 @@ const VEHICLE_CATEGORIES = [
     capacity: 8,
     luggage: 8,
     basePrice: 20,
+    pricePerKm: 2.0,
+    pricePerHour: 70,
     image: '/images/fleet/custom-8plazas-minivan-barcelona-transfer.png',
     features: ['8 full-size seats', 'Ample legroom', 'Large luggage capacity'],
   },
@@ -78,6 +88,8 @@ const VEHICLE_CATEGORIES = [
     capacity: 7,
     luggage: 7,
     basePrice: 20,
+    pricePerKm: 2.0,
+    pricePerHour: 80,
     image: '/images/fleet/mercedes-vclass-executive-barcelona-transfer.png',
     features: ['Premium leather seats', 'Conference seating', 'Executive comfort'],
   },
@@ -122,9 +134,9 @@ export default function VehicleSelectionStep() {
       capacity: { passengers: v.capacity, luggage: v.luggage },
       features: [...v.features], // convert readonly -> mutable string[]
       basePrice: v.basePrice,
-      // pricing inputs (adjust if your rules differ)
-      pricePerKm: 1.7,
-      pricePerHour: 60,
+      // pricing inputs (now per-vehicle)
+      pricePerKm: (v as any).pricePerKm,
+      pricePerHour: (v as any).pricePerHour,
     };
 
     return mockVehicle;
@@ -266,15 +278,32 @@ export default function VehicleSelectionStep() {
 
         {availableVehicles.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" role="radiogroup" aria-label={t('vehicles.aria')}>
-            {availableVehicles.map((vehicle, index) => (
-              <VehicleCard
-                key={vehicle.id}
-                vehicle={vehicle}
-                isSelected={selectedVehicleId === vehicle.id}
-                onSelect={() => handleSelectVehicle(vehicle.id)}
-                index={index}
-              />
-            ))}
+            {availableVehicles.map((vehicle, index) => {
+              const previewVehicle = buildVehicle(vehicle.id);
+
+              let previewTotal: number = vehicle.basePrice;
+
+              if (previewVehicle) {
+                const previewBooking = {
+                  ...bookingData,
+                  selectedVehicle: previewVehicle,
+                };
+
+                const previewPricing = calculatePrice(previewBooking, bookingData.distance);
+                previewTotal = previewPricing.total;
+              }
+
+              return (
+                <VehicleCard
+                  key={vehicle.id}
+                  vehicle={vehicle}
+                  isSelected={selectedVehicleId === vehicle.id}
+                  onSelect={() => handleSelectVehicle(vehicle.id)}
+                  index={index}
+                  displayPrice={previewTotal}
+                />
+              );
+            })}
           </div>
         ) : (
           <div className="text-center py-8 sm:py-12 bg-gray-50 rounded-2xl" role="alert">
@@ -371,11 +400,13 @@ const VehicleCard = React.memo(function VehicleCard({
   isSelected,
   onSelect,
   index,
+  displayPrice,
 }: {
   vehicle: VehicleCardData;
   isSelected: boolean;
   onSelect: () => void;
   index: number;
+  displayPrice: number;
 }) {
   const t = useTranslations('step2');
   const badgeByVehicleId: Partial<Record<VehicleCardData['id'], string>> = {
@@ -395,7 +426,7 @@ const VehicleCard = React.memo(function VehicleCard({
       onClick={onSelect}
       role="radio"
       aria-checked={isSelected}
-      aria-label={`${vehicle.name}, ${vehicle.capacity} passengers, ${vehicle.luggage} luggage, from ${formatPrice(vehicle.basePrice)}`}
+      aria-label={`${vehicle.name}, ${vehicle.capacity} passengers, ${vehicle.luggage} luggage, from ${formatPrice(displayPrice)}`}
       className={`relative text-left bg-white rounded-2xl border-2 overflow-hidden transition-all hover:shadow-2xl touch-manipulation ${
         isSelected ? 'border-blue-500 shadow-xl shadow-blue-500/20' : 'border-gray-200 hover:border-blue-300'
       }`}
@@ -453,7 +484,7 @@ const VehicleCard = React.memo(function VehicleCard({
 
         <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
           <span className="text-sm sm:text-sm text-gray-600">{t('vehicles.from')}</span>
-          <span className="text-xl sm:text-2xl font-bold text-blue-600">{formatPrice(vehicle.basePrice)}</span>
+          <span className="text-xl sm:text-2xl font-bold text-blue-600">{formatPrice(displayPrice)}</span>
         </div>
       </div>
     </m.button>

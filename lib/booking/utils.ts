@@ -4,7 +4,27 @@
  */
 
 import type { BookingData, PriceBreakdown, Vehicle, Location, DistanceMatrixResult } from './types';
+
 import { PRICING_RULES, BOOKING_CONFIG } from './constants';
+
+// ============================================================================
+// PRICING PROTECTION CONSTANTS
+// ============================================================================
+
+// Minimum fare protection per vehicle category (EUR)
+const MINIMUM_FARE: Record<string, number> = {
+  'standard-sedan': 30,
+  'premium-sedan': 38,
+  'luxury-sedan': 80,
+  'standard-minivan-7': 45,
+  'standard-minivan-8': 55,
+  'executive-minivan': 55,
+};
+
+// Night pricing multiplier configuration
+const NIGHT_MULTIPLIER = 1.2; // +20%
+const NIGHT_START_HOUR = 20;
+const NIGHT_END_HOUR = 6;
 
 // ============================================================================
 // PRICE CALCULATION
@@ -64,7 +84,7 @@ export function calculatePrice(
   }
 
   // Calculate subtotal
-  const subtotal =
+  let subtotal =
     basePrice +
     distanceCharge +
     timeCharge +
@@ -73,11 +93,35 @@ export function calculatePrice(
     childSeatsCharge +
     airportFee;
 
-  // Calculate tax
-  const tax = (subtotal * PRICING_RULES.taxRate) / 100;
+  // Apply night multiplier BEFORE tax
+  if (bookingData?.dateTime?.time) {
+    const hour = parseInt(bookingData.dateTime.time.split(':')[0], 10);
 
-  // Calculate total
-  const total = subtotal + tax;
+    if (!isNaN(hour) && (hour >= NIGHT_START_HOUR || hour < NIGHT_END_HOUR)) {
+      subtotal = subtotal * NIGHT_MULTIPLIER;
+    }
+  }
+
+  // Calculate tax and total
+  let tax = (subtotal * PRICING_RULES.taxRate) / 100;
+  let total = subtotal + tax;
+
+  // Apply minimum fare protection (after tax)
+  const vehicleCategory = (vehicle as any).category ?? vehicle.id;
+  const minimumFare = MINIMUM_FARE[vehicleCategory];
+
+  if (typeof minimumFare === 'number' && total < minimumFare) {
+    total = minimumFare;
+
+    // Recalculate subtotal and tax proportionally
+    subtotal = total / (1 + PRICING_RULES.taxRate / 100);
+    tax = total - subtotal;
+  }
+
+  // Currency‑safe rounding
+  subtotal = Math.round(subtotal * 100) / 100;
+  tax = Math.round(tax * 100) / 100;
+  total = Math.round(total * 100) / 100;
 
   return {
     basePrice,
