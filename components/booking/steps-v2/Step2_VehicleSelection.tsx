@@ -24,7 +24,7 @@ const VEHICLE_CATEGORIES = [
     description: 'Toyota Prius+ or similar',
     capacity: 3,
     luggage: 2,
-    basePrice: 5,
+    basePrice: 4,
     image: '/images/fleet/standard-sedan-barcelona-transfer.png',
     features: ['Air-conditioned', 'Hybrid efficiency', 'Professional driver'],
   },
@@ -34,7 +34,7 @@ const VEHICLE_CATEGORIES = [
     description: 'Mercedes E-Class or similar',
     capacity: 3,
     luggage: 3,
-    basePrice: 10,
+    basePrice: 7,
     image: '/images/fleet/premium-sedan-barcelona-transfer.png',
     features: ['Executive seating', 'Premium interior', 'Climate control'],
   },
@@ -123,7 +123,7 @@ export default function VehicleSelectionStep() {
       features: [...v.features], // convert readonly -> mutable string[]
       basePrice: v.basePrice,
       // pricing inputs (adjust if your rules differ)
-      pricePerKm: 2.0,
+      pricePerKm: 1.7,
       pricePerHour: 60,
     };
 
