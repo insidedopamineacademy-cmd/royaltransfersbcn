@@ -33,7 +33,7 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.lon
   return (
     <section
       ref={ref}
-      className="relative py-20 lg:py-28 overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+      className="relative py-12 sm:py-16 overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -41,7 +41,7 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.lon
         <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -71,7 +71,7 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.lon
             </a>
             <a
               href="tel:+34617629115"
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all"
+              className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all"
             >
               <PhoneIcon className="w-5 h-5 mr-2" />
               {t('hero.ctaCall')}
@@ -114,8 +114,8 @@ function FeaturesSection({ t }: { t: ReturnType<typeof useTranslations<'services
   ];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={ref} className="py-12 sm:py-16 bg-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {features.map((feature, index) => (
             <motion.div
@@ -159,8 +159,8 @@ function RoutesSection({ t }: { t: ReturnType<typeof useTranslations<'services.l
   ];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={ref} className="py-12 sm:py-16 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -249,8 +249,8 @@ function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'servic
   const steps = ['step1', 'step2', 'step3'];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={ref} className="py-12 sm:py-16 bg-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -323,8 +323,8 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.lo
   ];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={ref} className="py-12 sm:py-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -356,8 +356,8 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.lo
                   src={vehicleImages[vehicle.key as keyof typeof vehicleImages]}
                   alt={t(`fleet.${vehicle.key}.name`)}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent" />
               </div>
@@ -392,7 +392,7 @@ function FAQSection({ t }: { t: ReturnType<typeof useTranslations<'services.long
   const faqs = ['faq1', 'faq2', 'faq3', 'faq4'];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-gray-50">
+    <section ref={ref} className="py-12 sm:py-16 bg-gray-50">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
@@ -417,7 +417,7 @@ function FAQSection({ t }: { t: ReturnType<typeof useTranslations<'services.long
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-              className="bg-white rounded-xl border border-gray-200 overflow-hidden"
+              className="bg-white rounded-2xl border border-gray-200 overflow-hidden"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -456,7 +456,7 @@ function CTASection({ t }: { t: ReturnType<typeof useTranslations<'services.long
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-white">
+    <section ref={ref} className="py-12 sm:py-16 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -482,7 +482,7 @@ function CTASection({ t }: { t: ReturnType<typeof useTranslations<'services.long
             </a>
             <a
               href="tel:+34617629115"
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-colors w-full sm:w-auto"
+              className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/15 transition-colors w-full sm:w-auto"
             >
               <PhoneIcon className="w-5 h-5 mr-2" />
               {t('cta.call')}

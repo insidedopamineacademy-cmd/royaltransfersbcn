@@ -107,7 +107,7 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.cru
   return (
     <section 
       ref={ref}
-      className="relative py-16 lg:py-24 overflow-hidden bg-gradient-to-br from-blue-900 via-navy-800 to-blue-900"
+      className="relative py-12 sm:py-16 overflow-hidden bg-gradient-to-br from-blue-900 via-navy-800 to-blue-900"
       aria-labelledby="hero-title"
       itemScope
       itemType="https://schema.org/WPHeader"
@@ -119,7 +119,7 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.cru
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-blue-900 to-transparent" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -156,7 +156,7 @@ function HeroSection({ t }: { t: ReturnType<typeof useTranslations<'services.cru
             </a>
             <a
               href="tel:+34617629115"
-              className="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 touch-manipulation"
+              className="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all active:scale-95 touch-manipulation"
               aria-label={t('hero.aria.call')}
             >
               <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
@@ -207,10 +207,10 @@ function FeaturesSection({ t }: { t: ReturnType<typeof useTranslations<'services
   return (
     <section 
       ref={ref} 
-      className="py-16 lg:py-24 bg-white"
+      className="py-12 sm:py-16 bg-white"
       aria-labelledby="features-title"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {features.map((feature, index) => (
             <motion.article
@@ -218,7 +218,7 @@ function FeaturesSection({ t }: { t: ReturnType<typeof useTranslations<'services
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-              className="text-center p-5 sm:p-6 lg:p-8 bg-gray-50 rounded-xl sm:rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow"
+              className="text-center p-5 sm:p-6 lg:p-8 bg-gray-50 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow"
               itemScope
               itemType="https://schema.org/Service"
             >
@@ -265,10 +265,10 @@ function RoutesSection({ t }: { t: ReturnType<typeof useTranslations<'services.c
   return (
     <section 
       ref={ref} 
-      className="py-16 lg:py-24 bg-gray-50"
+      className="py-12 sm:py-16 bg-gray-50"
       aria-labelledby="routes-title"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.header
           initial={{ opacity: 0, y: 15 }}
@@ -295,7 +295,7 @@ function RoutesSection({ t }: { t: ReturnType<typeof useTranslations<'services.c
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-              className={`relative bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border-2 ${
+              className={`relative bg-white rounded-2xl p-5 sm:p-6 border-2 ${
                 route.popular ? 'border-blue-500 shadow-lg' : 'border-gray-100 shadow-md'
               }`}
               itemScope
@@ -380,10 +380,10 @@ function HowItWorksSection({ t }: { t: ReturnType<typeof useTranslations<'servic
   return (
     <section 
       ref={ref} 
-      className="py-16 lg:py-24 bg-white"
+      className="py-12 sm:py-16 bg-white"
       aria-labelledby="how-it-works-title"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.header
           initial={{ opacity: 0, y: 15 }}
@@ -471,10 +471,10 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.cr
   return (
     <section 
       ref={ref} 
-      className="py-16 lg:py-24 bg-gradient-to-br from-navy-900 via-blue-800 to-navy-900 text-white"
+      className="py-12 sm:py-16 bg-gradient-to-br from-navy-900 via-blue-800 to-navy-900 text-white"
       aria-labelledby="fleet-title"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.header
           initial={{ opacity: 0, y: 15 }}
@@ -501,7 +501,7 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.cr
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-              className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-blue-500/30 transition-all hover:shadow-xl group"
+              className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-blue-500/30 transition-all hover:shadow-xl group"
               itemScope
               itemType="https://schema.org/Product"
             >
@@ -512,8 +512,8 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.cr
                   src={vehicleImages[vehicle.key as keyof typeof vehicleImages]}
                   alt={t(`fleet.${vehicle.key}.name`)}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
                 />
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent" />
@@ -563,7 +563,7 @@ function FAQSection({ t }: { t: ReturnType<typeof useTranslations<'services.crui
   return (
     <section 
       ref={ref} 
-      className="py-16 lg:py-24 bg-gray-50"
+      className="py-12 sm:py-16 bg-gray-50"
       aria-labelledby="faq-title"
       itemScope
       itemType="https://schema.org/FAQPage"
@@ -595,7 +595,7 @@ function FAQSection({ t }: { t: ReturnType<typeof useTranslations<'services.crui
               initial={{ opacity: 0, y: 15 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-              className="bg-white rounded-lg sm:rounded-xl border border-gray-200 overflow-hidden"
+              className="bg-white rounded-2xl border border-gray-200 overflow-hidden"
               itemScope
               itemType="https://schema.org/Question"
               itemProp="mainEntity"
@@ -662,7 +662,7 @@ function CTASection({ t }: { t: ReturnType<typeof useTranslations<'services.crui
   return (
     <section 
       ref={ref} 
-      className="py-16 lg:py-24 bg-white"
+      className="py-12 sm:py-16 bg-white"
       aria-labelledby="cta-title"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -694,7 +694,7 @@ function CTASection({ t }: { t: ReturnType<typeof useTranslations<'services.crui
             </a>
             <a
               href="tel:+34617629115"
-              className="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-colors active:scale-95 touch-manipulation w-full sm:w-auto"
+              className="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-white bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/15 transition-colors active:scale-95 touch-manipulation w-full sm:w-auto"
               aria-label={t('cta.aria.call')}
             >
               <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
