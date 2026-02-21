@@ -75,7 +75,7 @@ const VEHICLE_CATEGORIES = [
     capacity: 8,
     luggage: 8,
     basePrice: 20,
-    pricePerKm: 2.0,
+    pricePerKm: 1.9,
     pricePerHour: 70,
     image: '/images/fleet/custom-8plazas-minivan-barcelona-transfer.png',
     features: ['8 full-size seats', 'Ample legroom', 'Large luggage capacity'],
@@ -290,7 +290,7 @@ export default function VehicleSelectionStep() {
                 };
 
                 const previewPricing = calculatePrice(previewBooking, bookingData.distance);
-                previewTotal = previewPricing.total;
+                previewTotal = Math.round(previewPricing.total);
               }
 
               return (
@@ -426,7 +426,7 @@ const VehicleCard = React.memo(function VehicleCard({
       onClick={onSelect}
       role="radio"
       aria-checked={isSelected}
-      aria-label={`${vehicle.name}, ${vehicle.capacity} passengers, ${vehicle.luggage} luggage, from ${formatPrice(displayPrice)}`}
+      aria-label={`${vehicle.name}, ${vehicle.capacity} passengers, ${vehicle.luggage} luggage, from ${formatPrice(Math.round(displayPrice))}`}
       className={`relative text-left bg-white rounded-2xl border-2 overflow-hidden transition-all hover:shadow-2xl touch-manipulation ${
         isSelected ? 'border-blue-500 shadow-xl shadow-blue-500/20' : 'border-gray-200 hover:border-blue-300'
       }`}
@@ -484,7 +484,7 @@ const VehicleCard = React.memo(function VehicleCard({
 
         <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
           <span className="text-sm sm:text-sm text-gray-600">{t('vehicles.from')}</span>
-          <span className="text-xl sm:text-2xl font-bold text-blue-600">{formatPrice(displayPrice)}</span>
+          <span className="text-xl sm:text-2xl font-bold text-blue-600">{formatPrice(Math.round(displayPrice))}</span>
         </div>
       </div>
     </m.button>
