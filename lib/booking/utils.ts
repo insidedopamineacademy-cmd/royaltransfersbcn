@@ -17,7 +17,7 @@ const MINIMUM_FARE: Record<string, number> = {
   'premium-sedan': 38,
   'luxury-sedan': 80,
   'standard-minivan-7': 45,
-  'standard-minivan-8': 55,
+  'standard-minivan-8': 50,
   'executive-minivan': 55,
 };
 
