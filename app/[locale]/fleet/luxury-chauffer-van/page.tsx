@@ -122,8 +122,8 @@ const VehicleSection = memo(function VehicleSection({
   const features = useMemo(() => ['luggage', 'passengers', 'climate', 'interiors', 'chauffeur'], []);
   const perfectFor = useMemo(() => ['airport', 'cruise', 'longDistance', 'business', 'hourly', 'tours'], []);
   
-  // Add image path for vclass luxury van
-  const vanImage = '/images/fleet/vclass.png';
+  // Add image path for luxury chauffeur van
+  const vanImage = '/images/luxury-chauffeur-van-barcelona-service.webp';
 
   return (
     <section ref={ref} className="py-16 sm:py-20 lg:py-24 bg-gray-50">
@@ -159,8 +159,8 @@ const VehicleSection = memo(function VehicleSection({
                 src={vanImage}
                 alt={t('vehicle.name')}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
                 quality={90}
                 priority
                 onError={(e) => {

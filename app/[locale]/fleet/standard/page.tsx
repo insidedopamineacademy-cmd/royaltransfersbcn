@@ -114,8 +114,8 @@ const VehiclesSection = memo(function VehiclesSection({
 
   // Define image paths for each vehicle
   const vehicleImages = {
-    tesla: '/images/fleet/tesla.png',
-    prius: '/images/fleet/toyata-prius.png', // or toyota-prius.png based on actual filename
+    tesla: '/images/tesla-Model-3-Front-View-standard-scaled.webp',
+    prius: '/images/toyota-prius-plus-transfer-front.webp',
   };
 
   const vehicles = useMemo(() => [
@@ -202,8 +202,8 @@ const VehicleCard = memo(function VehicleCard({
               src={vehicle.image}
               alt={t(`vehicles.${vehicle.key}.name`)}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
               quality={85}
               priority={index < 2} // Load first 2 images with priority
               onError={(e) => {

@@ -115,9 +115,9 @@ const VehiclesSection = memo(function VehiclesSection({
 
   // Define image paths for each luxury vehicle
   const vehicleImages = {
-    sclass: '/images/fleet/sclass.png',
-    eclass: '/images/fleet/eclass.png',
-    bmw5: '/images/fleet/bmw.png',
+    sclass: '/images/fleet/mercedes-sclass-barcelona-transfer.png',
+    eclass: '/images/fleet/premium-sedan-barcelona-transfer.png',
+    bmw5: '/images/bmw-serie-5-front-view-luxury-sedan.webp',
   };
 
   const vehicles = useMemo(() => [
@@ -227,8 +227,8 @@ const VehicleCard = memo(function VehicleCard({
               src={vehicle.image}
               alt={t(`vehicles.${vehicle.key}.name`)}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
               quality={90} // Higher quality for luxury images
               priority={index < 2} // Load first 2 images with priority
               onError={(e) => {

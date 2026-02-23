@@ -335,10 +335,10 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.ai
 
   // Create a mapping of vehicle keys to image paths
   const vehicleImages = {
-    tesla: '/images/fleet/tesla.png',
-    prius: '/images/fleet/toyata-prius.png',
-    vito: '/images/fleet/vito.png',
-    vclass: '/images/fleet/vclass.png'
+    tesla: '/images/tesla-Model-3-Front-View-standard-scaled.webp',
+    prius: '/images/toyota-prius-plus-transfer-front.webp',
+    vito: '/images/7-seater-standard-van-barcelona-taxi.webp',
+    vclass: '/images/luxury-chauffeur-van-barcelona-service.webp',
   };
 
   const vehicles = [

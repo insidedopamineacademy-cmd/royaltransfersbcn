@@ -309,10 +309,10 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.lo
 
   // Define image paths for each vehicle
   const vehicleImages = {
-    tesla: '/images/fleet/tesla.png',
-    prius: '/images/fleet/toyata-prius.png', // Note: spelling "toyata" not "toyota"
-    vito: '/images/fleet/vito.png',
-    vclass: '/images/fleet/vclass.png'
+    tesla: '/images/tesla-Model-3-Front-View-standard-scaled.webp',
+    prius: '/images/toyota-prius-plus-transfer-front.webp',
+    vito: '/images/ford-tourneo-custom-front-barcelona.webp',
+    vclass: '/images/luxury-chauffeur-van-barcelona-service.webp'
   };
 
   const vehicles = [
@@ -356,7 +356,7 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.lo
                   src={vehicleImages[vehicle.key as keyof typeof vehicleImages]}
                   alt={t(`fleet.${vehicle.key}.name`)}
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent" />
