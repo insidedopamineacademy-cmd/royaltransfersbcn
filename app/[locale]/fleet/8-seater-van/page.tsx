@@ -114,8 +114,10 @@ const VehiclesSection = memo(function VehiclesSection({
 
   // Define image paths for each van
   const vehicleImages = {
+    // Mercedes Vito
     vito: '/images/7-seater-standard-van-barcelona-taxi.webp',
-    tourneo: '/images/fleet/ford.png',
+    // Ford Tourneo Custom
+    tourneo: '/images/ford-tourneo-custom-front-barcelona.webp',
   };
 
   const vehicles = useMemo(() => [
@@ -210,8 +212,8 @@ const VehicleCard = memo(function VehicleCard({
               src={vehicle.image}
               alt={t(`vehicles.${vehicle.key}.name`)}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
               quality={85}
               priority={index < 2} // Load both images with priority
               onError={(e) => {
