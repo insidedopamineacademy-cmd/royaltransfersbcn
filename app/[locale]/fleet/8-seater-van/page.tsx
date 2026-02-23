@@ -114,8 +114,8 @@ const VehiclesSection = memo(function VehiclesSection({
 
   // Define image paths for each van
   const vehicleImages = {
-    vito: '/images/fleet/vito.png',
-    tourneo: '/images/fleet/ford.png', // Assuming ford.png is the Tourneo
+    vito: '/images/7-seater-standard-van-barcelona-taxi.webp',
+    tourneo: '/images/fleet/ford.png',
   };
 
   const vehicles = useMemo(() => [

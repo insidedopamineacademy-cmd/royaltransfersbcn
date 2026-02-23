@@ -457,7 +457,7 @@ function FleetSection({ t }: { t: ReturnType<typeof useTranslations<'services.cr
   const vehicleImages = {
     tesla: '/images/tesla-Model-3-Front-View-standard-scaled.webp',
     prius: '/images/toyota-prius-plus-transfer-front.webp',
-    vito: '/images/ford-tourneo-custom-front-barcelona.webp',
+    vito: '/images/7-seater-standard-van-barcelona-taxi.webp',
     vclass: '/images/luxury-chauffeur-van-barcelona-service.webp'
   };
 
