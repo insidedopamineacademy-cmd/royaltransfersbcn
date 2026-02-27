@@ -1,43 +1,46 @@
-import { notFound } from 'next/navigation';
-import { NextIntlClientProvider } from 'next-intl';
-import type { Metadata } from 'next';
-import { getMessages } from 'next-intl/server';
-import { locales, type Locale } from '@/lib/i18n';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import '../globals.css';
+import { notFound } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
+import type { Metadata } from "next";
+import { getMessages } from "next-intl/server";
+import { locales, type Locale } from "@/lib/i18n";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { GTM } from "@/components/GTM"; // ✅ ADD THIS
+import "../globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://royaltransfersbcn.com'),
+  metadataBase: new URL("https://royaltransfersbcn.com"),
   title: {
-    default: 'Royal Transfers BCN | Premium Chauffeur & Airport Transfers Barcelona',
-    template: '%s | Royal Transfers BCN',
+    default:
+      "Royal Transfers BCN | Premium Chauffeur & Airport Transfers Barcelona",
+    template: "%s | Royal Transfers BCN",
   },
   description:
-    'Book premium chauffeur and airport transfers in Barcelona with Royal Transfers BCN. Luxury vehicles, professional drivers, fixed pricing, and instant confirmation.',
+    "Book premium chauffeur and airport transfers in Barcelona with Royal Transfers BCN. Luxury vehicles, professional drivers, fixed pricing, and instant confirmation.",
   keywords: [
-    'Barcelona airport transfer',
-    'chauffeur Barcelona',
-    'luxury transfer Barcelona',
-    'private transfer Barcelona',
-    'Barcelona chauffeur service',
-    'airport transfer BCN',
-    'Royal Transfers BCN',
+    "Barcelona airport transfer",
+    "chauffeur Barcelona",
+    "luxury transfer Barcelona",
+    "private transfer Barcelona",
+    "Barcelona chauffeur service",
+    "airport transfer BCN",
+    "Royal Transfers BCN",
   ],
   openGraph: {
-    title: 'Royal Transfers BCN | Premium Chauffeur & Airport Transfers Barcelona',
+    title:
+      "Royal Transfers BCN | Premium Chauffeur & Airport Transfers Barcelona",
     description:
-      'Premium private transfers and chauffeur services in Barcelona. Professional drivers, luxury vehicles, and seamless booking.',
-    url: 'https://royaltransfersbcn.com',
-    siteName: 'Royal Transfers BCN',
-    locale: 'en_ES',
-    type: 'website',
+      "Premium private transfers and chauffeur services in Barcelona. Professional drivers, luxury vehicles, and seamless booking.",
+    url: "https://royaltransfersbcn.com",
+    siteName: "Royal Transfers BCN",
+    locale: "en_ES",
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Royal Transfers BCN',
+    card: "summary_large_image",
+    title: "Royal Transfers BCN",
     description:
-      'Premium chauffeur and airport transfer services in Barcelona.',
+      "Premium chauffeur and airport transfer services in Barcelona.",
   },
   robots: {
     index: true,
@@ -67,6 +70,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className="min-h-screen flex flex-col bg-neutral-950 text-white antialiased">
+        <GTM /> {/* ✅ INSERTED HERE */}
         <NextIntlClientProvider messages={messages}>
           <Header />
           <main className="flex-1">{children}</main>
