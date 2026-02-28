@@ -5,9 +5,9 @@ import { getMessages } from "next-intl/server";
 import { locales, type Locale } from "@/lib/i18n";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { GTM } from "@/components/GTM"; // ✅ ADD THIS
 import "../globals.css";
 
+import GTM from "@/components/GTM";
 export const metadata: Metadata = {
   metadataBase: new URL("https://royaltransfersbcn.com"),
   title: {
@@ -70,7 +70,8 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className="min-h-screen flex flex-col bg-neutral-950 text-white antialiased">
-        <GTM /> {/* ✅ INSERTED HERE */}
+        <GTM />
+
         <NextIntlClientProvider messages={messages}>
           <Header />
           <main className="flex-1">{children}</main>
